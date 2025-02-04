@@ -11,7 +11,7 @@ Classes use properties and methods to encapsulate data and behavior. Properties 
 
 In this exercise, you update an existing code project by developing properties and methods.
 
-This exercise takes approximately **25** minutes to complete.
+This exercise takes approximately **35** minutes to complete.
 
 ## Before you start
 
@@ -27,9 +27,9 @@ For addition help configuring the Visual Studio Code environment, see [https://l
 
 Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You have an initial version of the app that includes the following files:
 
-    - BankCustomer.cs: The BankCustomer class includes fields for first name, last name, and customer ID. The class also includes a constructor that initializes the fields.
-    - BankAccount.cs: The BankAccount class includes fields for account number, balance, interest rate, account type, and customer ID. The class also includes constructors that initialize the fields.
-    - Program.cs: The Program class includes code that creates instances of the BankCustomer and BankAccount classes. The code also demonstrates the use of the classes.
+- BankCustomer.cs: The BankCustomer class includes fields for first name, last name, and customer ID. The class also includes a constructor that initializes the fields.
+- BankAccount.cs: The BankAccount class includes fields for account number, balance, interest rate, account type, and customer ID. The class also includes constructors that initialize the fields.
+- Program.cs: The Program class includes code that creates instances of the BankCustomer and BankAccount classes. The code also demonstrates the use of the classes.
 
 This exercise includes the following tasks:
 
