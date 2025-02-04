@@ -54,6 +54,6 @@ jobs:
     - name: Commit and push
       uses: Endbug/add-and-commit@v7
       with:
-        add: '["LearnModuleExercises/Downloads/SampleApps.zip"]'
+        add: '["DownloadableCodeProjects/Downloads/LP1SampleApps.zip"]'
         message: 'Updating Zip with sample app source files'
         push: true
