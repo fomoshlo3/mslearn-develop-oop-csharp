@@ -7,19 +7,11 @@ lab:
 
 # Update a class with properties and methods in CSharp
 
-In this exercise, you encapsulate the data and behavior of a class by implementing properties and methods.
+Classes use properties and methods to encapsulate data and behavior. Properties define the data that a class contains, and methods define the behavior that the class can perform
 
-This exercise includes the following tasks:
+In this exercise, you update an existing code project by developing properties and methods.
 
-1. Review the existing code
-1. Create properties for the BankCustomer class
-1. Create automatically implemented properties for the BankAccount class
-1. Create read-only properties for the BankAccount class
-1. Create methods for the BankCustomer and BankAccount classes
-1. Create extension methods for the BankCustomer and BankAccount classes
-1. Update the Program.cs file to demonstrate the updated classes, properties, and methods
-
-This exercise should take approximately **30** minutes to complete.
+This exercise takes approximately **25** minutes to complete.
 
 ## Before you start
 
@@ -31,13 +23,51 @@ Before you can start this exercise, you will need to...
 
 For addition help configuring the Visual Studio Code environment, see [https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/](https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/)
 
+## Exercise scenario
+
+Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You have an initial version of the app that includes the following files:
+
+    - BankCustomer.cs: The BankCustomer class includes fields for first name, last name, and customer ID. The class also includes a constructor that initializes the fields.
+    - BankAccount.cs: The BankAccount class includes fields for account number, balance, interest rate, account type, and customer ID. The class also includes constructors that initialize the fields.
+    - Program.cs: The Program class includes code that creates instances of the BankCustomer and BankAccount classes. The code also demonstrates the use of the classes.
+
+This exercise includes the following tasks:
+
+1. Review the existing code
+1. Create properties for the BankCustomer class
+1. Create automatically implemented properties for the BankAccount class
+1. Create read-only properties for the BankAccount class
+1. Create methods for the BankCustomer and BankAccount classes
+1. Create extension methods for the BankCustomer and BankAccount classes
+1. Update the Program.cs file to demonstrate the updated classes, properties, and methods
+
 ## Review the existing code
 
 In this task, you open an existing project and review the code.
 
 Use the following steps to complete this section of the exercise:
 
-1. Open Visual Studio Code.
+1. Download the starter code from the following URL: [Implement classes, properties, and methods - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/raw/refs/heads/main/DownloadableCodeProjects/Downloads/LP1SampleApps.zip)
+
+1. Extract the contents of the LP1SampleApps.zip file to a folder on your computer, and then navigate to the Classes_M2 folder.
+
+1. Expand the Classes_M2 folder.
+
+    You should see the following code folders:
+
+    - Solution
+    - Starter
+
+    The **Solution** folder contains the completed project files. The **Starter** folder contains the starter project files.
+
+1. Open the **Starter** folder in Visual Studio Code.
+
+    You should see the following project files:
+
+    - BankAccount.cs
+    - BankCustomer.cs
+    - Program.cs
+    - Classes_M2.csproj
 
 1. Open the BankCustomer.cs file.
 
