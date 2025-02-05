@@ -1,11 +1,11 @@
 ---
 lab:
-    title: 'Exercise - Update a class with properties and methods in C#'
-    module: 'Implement properties and methods in C# classes'
+    title: 'Exercise - Update a class with properties and methods'
+    description: 'Learn how to implement read-write and read-only class properties using property accessors and access modifiers, and how to implement methods and extension methods for a class.'
 ---
 
 
-# Update a class with properties and methods in CSharp
+# Update a class with properties and methods
 
 Classes use properties and methods to encapsulate data and behavior. Properties define the data that a class contains, and methods define the behavior that the class can perform
 
@@ -66,8 +66,8 @@ Use the following steps to complete this section of the exercise:
 
     - BankAccount.cs
     - BankCustomer.cs
-    - Program.cs
     - Classes_M2.csproj
+    - Program.cs
 
 1. Open the BankCustomer.cs file.
 
@@ -103,7 +103,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that the `BankCustomer` class ...
+    Notice that the `BankCustomer` class includes fields for `fname` (first name), `lName` (last name), customerId (customer ID), and a static field `nextCustomerId`. The `nextCustomerId` field is used to generate a unique customer ID for each customer.
+
+    The class also includes two constructors. The first constructor is a static constructor that initializes the `nextCustomerId` field with a random number eight-digit integer. The second constructor takes two parameters, `firstName` and `lastName`, and initializes the `fname` and `lName` fields with the values of the parameters. The constructor also increments `nextCustomerId` and uses the value to assign a unique value to `customerId`.
 
 1. Open the BankAccount.cs file.
 

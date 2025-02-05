@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Exercise - Implement classes in C# applications'
-    module: 'Implement classes in C# applications'
+    title: 'Exercise - Implement classes in applications'
+    description: 'Learn how to implement classes using advanced techniques like static classes, partial classes, and object initializers that can improve the readability, maintainability, and organization of your code.'
 ---
 
 

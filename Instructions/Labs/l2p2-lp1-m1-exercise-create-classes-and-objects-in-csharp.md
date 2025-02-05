@@ -1,11 +1,11 @@
 ---
 lab:
-    title: 'Exercise - Create classes and objects in C#'
-    module: 'Get started with classes and objects in C#'
+    title: 'Exercise - Create class definitions and instantiate objects'
+    description: 'Learn how to create classes and instantiate objects that expose encapsulated field data by using class definitions, constructors, and the "new" operator.'
 ---
 
 
-# Create classes and objects in C#
+# Create class definitions and instantiate objects
 
 A class is a blueprint for creating objects and objects are the building-blocks that make up a program. In C#, you define classes using the `class` keyword. You can create objects from a class using the `new` operator. Each object created from a class is an instance of that class.
 
@@ -29,11 +29,11 @@ Suppose you're helping a non-profit company with a software project. You have ex
 
 This exercise includes the following tasks:
 
-1. Create a console app and a class named **BankCustomer**.
-1. Update the Program.cs file to create instances of the **BankCustomer** class.
+1. Create a console app and a class named BankCustomer.
+1. Update the Program.cs file to create instances of the BankCustomer class.
 1. Add public fields and updated constructors to the BankCustomer class.
 1. Update the BankCustomer class using static members to ensure unique customer IDs.
-1. Create a class named BankAccount that implements static members.
+1. Create a class named BankAccount that implements private, public, and static members.
 
 ## Create a console app and a class named BankCustomer
 
@@ -466,7 +466,7 @@ Use the following steps to complete this task:
 
     ```
 
-    Notice customer1 and customer2 share the same ID number. The public fields are initialized with default values. Although the constructors update the fields with the values passed as parameters, there are clearly some issues to address.
+    Notice that customer1 and customer2 share the same ID number. The public fields are initialized with default values. Although the constructors update the fields with the values passed as parameters, there are clearly some issues to address.
 
 ## Update the BankCustomer class using static members to ensure unique customer IDs
 
@@ -474,70 +474,29 @@ In this task, you update the `BankCustomer` class using a static field and stati
 
 Use the following steps to complete this task:
 
-1. Use the **Classes_M1** project to create a class named `BankAccount`.
-
 1. Open the `BankCustomer`class.
 
-1. next step
-
-1. next step
-
-1. Take a minute to review the updated Program.cs and Customer.cs files.
-
-    Program.cs file:
-
-    ```csharp
-
-    using Classes_M1;
-
-    string firstName = "John";
-    string lastName = "Doe";
-    int accountNumber = 0;
-    
-    BankCustomer customer1 = new BankCustomer();
-    
-    firstName = "Jane";
-    BankCustomer customer2 = new BankCustomer(firstName, lastName);
-    
-    firstName = "Leonardo";
-    lastName = "Rossi";
-    accountNumber = 12345;
-    BankCustomer customer3 = new BankCustomer(firstName, lastName, accountNumber);
-    
-    Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.accNumber}");
-    Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.accNumber}");
-    Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.accNumber}");
-    
-    
-    ```
-
-    BankCustomer.cs file:
+    The `BankCustomer` should be similar to the following code snippet:
 
     ```csharp
 
     public class BankCustomer
     {
-        private static int nextCustomerId;
+        // add public fields for fName, lName, and accountID
         public string fName = "John";
         public string lName = "Doe";
-        public readonly string customerId;
-    
-        static BankCustomer()
-        {
-            Random random = new Random();
-            nextCustomerId = random.Next(10000000, 20000000);
-        }
+        public string customerId = "1010101010";
     
         public BankCustomer()
         {
-            this.customerId = (nextCustomerId++).ToString("D10");
+    
         }
     
         public BankCustomer(string firstName, string lastName)
         {
             fName = firstName;
             lName = lastName;
-            this.customerId = (nextCustomerId++).ToString("D10");
+    
         }
     
         public BankCustomer(string firstName, string lastName, string customerIdNumber)
@@ -550,27 +509,66 @@ Use the following steps to complete this task:
 
     ```
 
-## Create a class named BankAccount that implements static members
+1. To create a static field named `nextCustomerId`, add the following code to the `BankCustomer` class definition:
 
-In this task, you create an `BankAccount` class that initializes the interest rate as a static field.
+    ```csharp
 
-Use the following steps to complete this task:
+    private static int nextCustomerId;
 
-1. Use the **Classes_M1** project to create a class named `BankAccount`.
+    ```
 
-1. Create public fields for `accountNumber`, `balance`, `interestRate`, and `accountType`. Initialize the fields using default values.
+    The `nextCustomerId` field is used to ensure that each new instance of the `BankCustomer` class is assigned a unique customer ID. The field is declared as a static field, which means that it's shared among all instances of the `BankCustomer` class.`
 
-1. Add a static field named `nextAccountNumber` to the `BankAccount` class. Initialize the field.
+1. To create a static constructor that initializes the `nextCustomerId` field, add the following code to the `BankCustomer` class definition:
 
-1. next step
+    ```csharp
 
-1. next step
+    static BankCustomer()
+    {
+        Random random = new Random();
+        nextCustomerId = random.Next(10000000, 20000000);
+    }
 
-1. next step
+    ```
 
-1. next step
+    The static constructor is called when the `BankCustomer` class is loaded into memory. The static constructor initializes the `nextCustomerId` field with a random value between 10,000,000 and 20,000,000.
 
-1. Take a minute to review your code.
+1. To update the parameterless constructor to assign the `customerId` field using the `nextCustomerId` field, add the following code to the `BankCustomer` class definition:
+
+    ```csharp
+
+    public BankCustomer()
+    {
+        this.customerId = (nextCustomerId++).ToString("D10");
+    }
+
+    ```
+
+    The constructor initializes the `customerId` field using the `nextCustomerId` field. The `nextCustomerId` field is incremented by 1 after the `customerId` field is assigned a value.
+
+    > [!NOTE]
+    > The `this` keyword is used to refer to the current instance of the class. It's used to access fields, properties, and methods of the current instance.
+
+1. To update the constructor that accepts the first and last name fields, add the following code to the `BankCustomer` class definition:
+
+    ```csharp
+
+    public BankCustomer(string firstName, string lastName)
+    {
+        fName = firstName;
+        lName = lastName;
+        this.customerId = (nextCustomerId++).ToString("D10");
+    }
+
+    ```
+
+    The constructor initializes the `customerId` field using the `nextCustomerId` field. The `nextCustomerId` field is incremented by 1 after the `customerId` field is assigned a value.
+
+1. Delete the constructor accepts the `customerIdNumber` as a parameter.
+
+    The static constructor ensures that each new instance of the `BankCustomer` class is assigned a unique customer ID. As a result, the constructor that accepts the `customerIdNumber` parameter is no longer needed.
+
+1. Take a minute to review the updated Program.cs and BankCustomer.cs files.
 
     Program.cs file:
 
@@ -595,11 +593,6 @@ Use the following steps to complete this task:
     Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.accNumber}");
     Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.accNumber}");
     Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.accNumber}");
-    
-    // create an account for customer 3
-    BankAccount bankAccount1 = new BankAccount(customer3.accNumber, 500, "Checking");
-    
-    Console.WriteLine($"BankAccount 1: Account # {bankAccount1.accountNumber}, type {bankAccount1.accountType}, ballance {bankAccount1.balance}, rate {BankAccount.interestRate}");
     
     ```
 
@@ -632,12 +625,171 @@ Use the following steps to complete this task:
             this.customerId = (nextCustomerId++).ToString("D10");
         }
     
-        public BankCustomer(string firstName, string lastName, string customerIdNumber)
+    }
+
+    ```
+
+## Create a class named BankAccount that implements private, public, and static members
+
+In this task, you create an `BankAccount` class that initializes a combination of public and static fields. You also create constructors that initialize the fields with default values and values passed as parameters.
+
+The `BankAccount` class includes the following fields:
+
+- `accountNumber` - A public field that stores the account number.
+- `balance` - A public field that stores the account balance.
+- `interestRate` - A static field that stores the interest rate.
+- `accountType` - A public field that stores the account type.
+- `nextAccountNumber` - A static field that stores the next account number. This field is used to ensure that each object is assigned a unique account number.
+
+Use the following steps to complete this task:
+
+1. Use the **Classes_M1** project to create a class named `BankAccount`.
+
+    You can use the `Classes_M1` project to create the `BankAccount` class. Right-click the **Classes_M1** project in the Solution Explorer, select **New File**, select **Class**, and then enter **BankAccount**.
+
+    Your `BankAccount` class should look similar to the following code snippet:
+
+    ```csharp
+
+    using System;
+
+    namespace Classes_M1;
+
+    public class BankAccount
+    {
+
+    }
+
+    ```
+
+1. To create public fields for the `accountNumber`, `balance`, `interestRate`, and `accountType` fields, add the following code to the `BankAccount` class definition:
+
+    ```csharp
+
+    public int accountNumber;
+    public double balance = 0;
+    public static double interestRate = 0;
+    public string accountType = "Checking";
+
+    ```
+
+    Notice that the `interestRate` field is declared as a static field. Static fields are shared among all instances of a class. The `interestRate` field is initialized with a default value of 0.
+
+1. To create a static field named `nextAccountNumber`, add the following code to the `BankAccount` class definition:
+
+    ```csharp
+
+    private static int nextAccountNumber = 1;
+
+    ```
+
+    The `nextAccountNumber` field is used to ensure that each new instance of the `BankAccount` class is assigned a unique account number. The field is initialized with a value of 1.
+
+1. To create a static constructor that initializes the `nextAccountNumber`  and `interestRate` fields, add the following code to the `BankAccount` class definition:
+
+    ```csharp
+
+    static BankAccount()
+    {
+        Random random = new Random();
+        nextAccountNumber = random.Next(10000000, 20000000);
+        interestRate = 0;
+    }
+
+    ```
+
+    The static constructor is called when the `BankAccount` class is loaded into memory. The static constructor initializes the `nextAccountNumber` and `interestRate` fields. These fields cannot be accessed from outside the class.
+
+1. To create a constructor that accepts a `customerId` parameter and initializes the other fields with default values, add the following code to the `BankAccount` class definition:
+
+    ```csharp
+
+    public BankAccount(string customerIdNumber)
+    {
+        this.accountNumber = nextAccountNumber++;
+        this.customerId = customerIdNumber;
+    }
+
+    ```
+
+    The constructor initializes the `accountNumber` field using the `nextAccountNumber` field. The `customerId` field is initialized with the value of the `customerIdNumber` parameter.
+
+1. To create a constructor that accepts parameters for the `customerId`, `balance`, and `accountType` fields, add the following code to the `BankAccount` class definition:
+
+    ```csharp
+
+    public BankAccount(string customerIdNumber, double balance, string accountType)
+    {
+        this.accountNumber = nextAccountNumber++;
+        this.customerId = customerIdNumber;
+        this.balance = balance;
+        this.accountType = accountType;
+    }
+
+    ```
+
+    The constructor initializes the `accountNumber` field using the `nextAccountNumber` field. The `customerId`, `balance`, and `accountType` fields are initialized with the values of the `customerIdNumber`, `balance`, and `accountType` parameters, respectively.
+
+1. Take a minute to review your code files.
+
+    Program.cs file:
+
+    ```csharp
+
+    using Classes_M1;
+    
+    string firstName = "John";
+    string lastName = "Doe";
+    
+    BankCustomer customer1 = new BankCustomer(firstName, lastName);
+    
+    firstName = "Jane";
+    BankCustomer customer2 = new BankCustomer(firstName, lastName);
+    
+    firstName = "Leonardo";
+    lastName = "Rossi";
+    BankCustomer customer3 = new BankCustomer(firstName, lastName);
+    
+    Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.customerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.customerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.customerId}");
+    
+    // Create accounts for customers
+    BankAccount account1 = new BankAccount(customer1.customerId);
+    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    
+    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
+    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
+    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+
+    
+    ```
+
+    BankCustomer.cs file:
+
+    ```csharp
+
+    public class BankCustomer
+    {
+        private static int nextCustomerId;
+        public string fName = "John";
+        public string lName = "Doe";
+        public readonly string customerId;
+    
+        static BankCustomer()
+        {
+            Random random = new Random();
+            nextCustomerId = random.Next(10000000, 20000000);
+        }
+    
+        public BankCustomer(string firstName, string lastName)
         {
             fName = firstName;
             lName = lastName;
-            customerId = customerIdNumber;
+            this.customerId = (nextCustomerId++).ToString("D10");
         }
+        
     }
 
     ```
@@ -648,24 +800,34 @@ Use the following steps to complete this task:
 
     public class BankAccount
     {
-        private static int nextAccountNumber = 1;
-        public int accountNumber;
+        private static int nextAccountNumber;
+        public readonly int accountNumber;
         public double balance = 0;
-        public static double interestRate = 0;
+        public static double interestRate;
         public string accountType = "Checking";
+        public readonly string customerId;
     
-        public BankAccount()
+        static BankAccount()
         {
-            this.accountNumber = nextAccountNumber++;
-            Console.WriteLine($"BankAccount created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}");
+            Random random = new Random();
+            nextAccountNumber = random.Next(10000000, 20000000);
+            interestRate = 0;
         }
     
-        public BankAccount(double balance, string accountType)
+        public BankAccount(string customerIdNumber)
         {
             this.accountNumber = nextAccountNumber++;
+            this.customerId = customerIdNumber;
+            //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
+        }
+    
+        public BankAccount(string customerIdNumber, double balance, string accountType)
+        {
+            this.accountNumber = nextAccountNumber++;
+            this.customerId = customerIdNumber;
             this.balance = balance;
             this.accountType = accountType;
-            Console.WriteLine($"BankAccount created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}");
+            //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
         }
     }
 
