@@ -7,7 +7,7 @@ lab:
 
 # Create class definitions and instantiate objects
 
-A class is a blueprint for creating objects and objects are the building-blocks that make up a program. In C#, you define classes using the `class` keyword. You can create objects from a class using the `new` operator. Each object created from a class is an instance of that class.
+A class is a blueprint for creating objects, and objects are the building-blocks that make up a program. In C#, you define classes using the `class` keyword. You can create objects from a class using the `new` operator. Each object created from a class is an instance of that class.
 
 In this exercise, you create a console app that uses class definitions to instantiate objects.
 
@@ -189,13 +189,9 @@ Use the following steps to complete this task:
 
 1. Switch to the Program.cs file
 
-    The Program.cs file is where you write the code that creates instances of the `BankCustomer` class.
+    You're using the Program.cs file to create instances of the `BankCustomer` class, but at this point it should be empty. If the "hello, world" code is still present, delete it now.
 
-1. In the Program.cs file, add the following code to create an instance of the `BankCustomer` class:
-
-    At this point, the Program.cs file should be empty. If the "hello, world" code is still present, delete it now.
-
-1. Add a `using` statement that specifies the namespace defined by the customer `BankCustomer` class.
+1. To create a `using` statement that specifies the namespace defined by the customer `BankCustomer` class, add the following code to the Program.cs file:
 
     ```csharp
 
@@ -215,7 +211,7 @@ Use the following steps to complete this task:
 
     The `new` operator is used to create a new instance of the `BankCustomer` class. The `BankCustomer` class constructor is called when the new instance is created.
 
-1. To create a second instance of the `BankCustomer` class that uses the new constructor, add the following code to the Program.cs file:
+1. To create a second instance of the `BankCustomer` class using the second constructor, add the following code to the Program.cs file:
 
     ```csharp
 
@@ -325,11 +321,14 @@ Use the following steps to complete this task:
         fName = firstName;
         lName = lastName;
 
+        Console.WriteLine($"BankCustomer created: {firstName} {lastName}");
+    }
+
     ```
 
 1. Delete the `Console.WriteLine()` messages from the constructors.
 
-    You the update the Program.cs file to display the data using the public fields. The updated constructors should be similar to the following code snippet:
+    You'll update the Program.cs file to display object data using the public fields. The updated constructors should be similar to the following code snippet:
 
     ```csharp
 
@@ -349,7 +348,7 @@ Use the following steps to complete this task:
 
 1. Switch to the Program.cs file
 
-1. Create local variables for `firstName`, `lastName`, and `accountNumber`. .
+1. To create local variables for `firstName`, `lastName`, and `accountNumber` just below the `namespace` declaration, enter the following code:
 
     ```csharp
 
@@ -359,7 +358,7 @@ Use the following steps to complete this task:
 
     ```
 
-1. Update the code that creates the second instance of the `BankCustomer` class to use local variables.
+1. To use `firstName` and `lastName` when creating `customer2`, replace your existing code for `customer2` with the following code snippet:
 
     ```csharp
 
@@ -367,7 +366,7 @@ Use the following steps to complete this task:
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     ```
 
-1. Add code that creates a third instance of the `BankCustomer` class using the third constructor.
+1. To create a third object named `customer3` that uses your third constructor, add the following code to the Program.cs file:
 
     ```csharp
 
@@ -378,7 +377,7 @@ Use the following steps to complete this task:
 
     ```
 
-1. Add `Console.WriteLine` statements that uses the objects to display the public data fields.
+1. To display the public data fields for each object, add the following code to the end of the Program.cs file:
 
     ```csharp
 
@@ -730,6 +729,30 @@ Use the following steps to complete this task:
 
     The constructor initializes the `accountNumber` field using the `nextAccountNumber` field. The `customerId`, `balance`, and `accountType` fields are initialized with the values of the `customerIdNumber`, `balance`, and `accountType` parameters, respectively.
 
+1. Switch to the Program.cs file.
+
+1. To create instances of the `BankAccount` class, add the following code to the end of the Program.cs file:
+
+    ```csharp
+
+    BankAccount account1 = new BankAccount(customer1.customerId);
+    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+
+    ```
+
+    The `new` operator is used to create new instances of the `BankAccount` class. The constructors are called when the new instances are created.
+
+1. To display the public data fields for each of the bank account objects, add the following code to the end of the Program.cs file:
+
+    ```csharp
+
+    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
+    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
+    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+
+    ```
+
 1. Take a minute to review your code files.
 
     Program.cs file:
@@ -818,7 +841,6 @@ Use the following steps to complete this task:
         {
             this.accountNumber = nextAccountNumber++;
             this.customerId = customerIdNumber;
-            //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
         }
     
         public BankAccount(string customerIdNumber, double balance, string accountType)
@@ -827,7 +849,6 @@ Use the following steps to complete this task:
             this.customerId = customerIdNumber;
             this.balance = balance;
             this.accountType = accountType;
-            //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
         }
     }
 
