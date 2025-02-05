@@ -74,14 +74,10 @@ Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account
 // Task 3
 
 
-
-
 // Task 4
 
 
 // Task 5
-
-
 
 
 // Task 6

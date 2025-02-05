@@ -2,6 +2,8 @@ using System;
 
 namespace Classes_M1;
 
+// Task 1
+// Task 2
 // Task 3
 
 /*
@@ -133,10 +135,6 @@ public class BankAccount
         //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
     }
 }
-
-
-
-
 
 
 
