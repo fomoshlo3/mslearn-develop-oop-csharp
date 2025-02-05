@@ -50,7 +50,7 @@ jobs:
     - name: Create LP1 SampleApps zip
       run: | 
         cd ./DownloadableCodeProjects/LP1_classes-properties-methods
-        zip -r -q ../Downloads/LP1SampleApps.zip * .vscode/*
+        zip -r -q ../Downloads/LP1SampleApps.zip $(git ls-files)
     - name: Commit and push
       uses: Endbug/add-and-commit@v7
       with:

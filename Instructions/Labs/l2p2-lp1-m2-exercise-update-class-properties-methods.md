@@ -33,7 +33,7 @@ Suppose you're helping a non-profit company with a software project. You've deci
 
 This exercise includes the following tasks:
 
-1. Review the existing code
+1. Review the current version of your banking app
 1. Create properties for the BankCustomer class
 1. Create automatically implemented properties for the BankAccount class
 1. Create read-only properties for the BankAccount class
@@ -41,26 +41,26 @@ This exercise includes the following tasks:
 1. Create extension methods for the BankCustomer and BankAccount classes
 1. Update the Program.cs file to demonstrate the updated classes, properties, and methods
 
-## Review the existing code
+## Review the current version of your banking app
 
-In this task, you open an existing project and review the code.
+In this task, you download the existing version of your banking app and review the code.
 
 Use the following steps to complete this section of the exercise:
 
 1. Download the starter code from the following URL: [Implement classes, properties, and methods - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/raw/refs/heads/main/DownloadableCodeProjects/Downloads/LP1SampleApps.zip)
 
-1. Extract the contents of the LP1SampleApps.zip file to a folder on your computer, and then navigate to the Classes_M2 folder.
+1. Extract the contents of the LP1SampleApps.zip file to a folder location on your computer.
 
-1. Expand the Classes_M2 folder.
+1. Expand the LP1SampleApps folder, and then open the `Classes_M2` folder.
 
-    You should see the following code folders:
+    The Classes_M2 folder contains the following code project folders:
 
     - Solution
     - Starter
 
-    The **Solution** folder contains the completed project files. The **Starter** folder contains the starter project files.
+    The **Starter** folder contains the starter project files for this exercise.
 
-1. Open the **Starter** folder in Visual Studio Code.
+1. Use Visual Studio Code to open the **Starter** folder.
 
     You should see the following project files:
 
