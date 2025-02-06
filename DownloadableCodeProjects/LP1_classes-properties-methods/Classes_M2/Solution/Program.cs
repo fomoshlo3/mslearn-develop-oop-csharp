@@ -1,100 +1,17 @@
 ﻿using Classes_M2;
 
-// Task 1
-
-/* 
-string firstName = "John";
-string lastName = "Doe";
-
-BankCustomer customer1 = new BankCustomer(firstName, lastName);
-
-firstName = "Jane";
-BankCustomer customer2 = new BankCustomer(firstName, lastName);
-
-firstName = "Leonardo";
-lastName = "Rossi";
-BankCustomer customer3 = new BankCustomer(firstName, lastName);
-
-Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.customerId}");
-Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.customerId}");
-Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.customerId}");
-
-// Create accounts for customers
-BankAccount account1 = new BankAccount(customer1.customerId);
-BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
-
-Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
-
-*/
-
-
-// Task 2
-
-
-/* 
-string firstName = "John";
-string lastName = "Doe";
-
-BankCustomer customer1 = new BankCustomer(firstName, lastName);
-
-firstName = "Jane";
-BankCustomer customer2 = new BankCustomer(firstName, lastName);
-
-firstName = "Leonardo";
-lastName = "Rossi";
-BankCustomer customer3 = new BankCustomer(firstName, lastName);
-
-Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
-
-// Create accounts for customers
-BankAccount account1 = new BankAccount(customer1.customerId);
-BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
-
-// Demonstrate the use of BankCustomer properties
-customer1.FirstName = "Johnny";
-customer1.LastName = "Doe-Smith";
-// customer1.customerId = "1234567890"; // This line will not compile
-
-Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-
-
-Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
-
- */
-
-
-// Task 3
-
-
-// Task 4
-
-
-// Task 5
-
-
-// Task 6
-
-
 // Step 1: Create BankCustomer objects
 Console.WriteLine("Creating BankCustomer objects...");
-string firstName = "John";
-string lastName = "Doe";
+string firstName = "Tim";
+string lastName = "Shao";
 
 BankCustomer customer1 = new BankCustomer(firstName, lastName);
 
-firstName = "Jane";
+firstName = "Lisa";
 BankCustomer customer2 = new BankCustomer(firstName, lastName);
 
-firstName = "Leonardo";
-lastName = "Rossi";
+firstName = "Sandy";
+lastName = "Zoeng";
 BankCustomer customer3 = new BankCustomer(firstName, lastName);
 
 Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
@@ -113,8 +30,8 @@ Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account
 
 // Step 3: Demonstrate the use of BankCustomer properties
 Console.WriteLine("\nUpdating BankCustomer 1's name...");
-customer1.FirstName = "Johnny";
-customer1.LastName = "Doe-Smith";
+customer1.FirstName = "Thomas";
+customer1.LastName = "Margand";
 Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
 
 // Step 4: Demonstrate the use of BankAccount methods

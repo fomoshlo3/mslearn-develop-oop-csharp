@@ -1,12 +1,12 @@
 using System;
 
-namespace Classes_M2;
+namespace Classes_M3;
 
 public class BankCustomer
 {
     private static int nextCustomerId;
-    private string fName = "John";
-    private string lName = "Doe";
+    private string fName = "Tim";
+    private string lName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()
@@ -35,7 +35,7 @@ public class BankCustomer
     }
 
     // Method to return the full name of the customer
-    public string FullName()
+    public string ReturnFullName()
     {
         return $"{FirstName} {LastName}";
     }
@@ -50,23 +50,7 @@ public class BankCustomer
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {customerId}, Name: {FullName()}";
+        return $"Customer ID: {customerId}, Name: {ReturnFullName()}";
     }
 
-    // Override Equals method to compare customers by customerId
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        BankCustomer other = (BankCustomer)obj;
-        return customerId == other.customerId;
-    }
-
-    // Override GetHashCode method
-    public override int GetHashCode()
-    {
-        return customerId.GetHashCode();
-    }
 }
-

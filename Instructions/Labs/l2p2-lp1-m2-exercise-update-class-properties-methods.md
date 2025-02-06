@@ -853,6 +853,19 @@ Use the following steps to complete this section of the exercise:
 
     The `Transfer` method takes a `BankAccount` object and an amount as parameters. It withdraws the amount from the current account and deposits it into the target account. The method returns `true` if the transfer is successful and `false` otherwise.
 
+1. To create a mthod that applies interest to the account balance, add the following code:
+
+    ```csharp
+
+    public void ApplyInterest()
+    {
+        Balance += Balance * interestRate;
+    }
+
+    ```
+
+    The `ApplyInterest` method calculates the interest on the account balance using the `interestRate` field and adds the interest to the `Balance` property. At this point, the `interestRate` field is a static field that is shared among all instances of the `BankAccount` class. Since interest rate is initialized to 0, the `ApplyInterest` method doesn't actually apply any interest. You can update the `interestRate` field to a non-zero value to see the effect of the `ApplyInterest` method.
+
 1. To create a method that displays account information, add the following code:
 
     ```csharp
@@ -905,7 +918,7 @@ Use the following steps to complete this section of the exercise:
         }
     
         // Method to return the full name of the customer
-        public string FullName()
+        public string ReturnFullName()
         {
             return $"{FirstName} {LastName}";
         }
@@ -1047,7 +1060,7 @@ Use the following steps to complete this section of the exercise:
         // Extension method to greet the customer
         public static string GreetCustomer(this BankCustomer customer)
         {
-            return $"Hello, {customer.ReturnFullName}!";
+            return $"Hello, {customer.ReturnFullName()}!";
         }
     }
 
@@ -1056,7 +1069,7 @@ Use the following steps to complete this section of the exercise:
     The `BankCustomerExtensions` class contains two extension methods for the `BankCustomer` class:
 
     - `IsValidCustomerId`: This method checks if the customer ID is valid by verifying that the length of the customer ID is 10.
-    - `GreetCustomer`: This method greets the customer by returning a string that says "Hello" followed by the customer's first and last names.
+    - `GreetCustomer`: This method greets the customer by returning a string that says "Hello" followed by the customer's full name. The extension method uses the `ReturnFullName` method of the `BankCustomer` class to get the full name.
 
 1. To create extension methods for the `BankAccount` class, add the following code:
 
@@ -1147,8 +1160,8 @@ Use the following steps to complete this section of the exercise:
 
     using Classes_M2;
     
-    // Task 1
-    
+    // Step 1: Create BankCustomer objects
+    Console.WriteLine("Creating BankCustomer objects...");
     string firstName = "Tim";
     string lastName = "Shao";
     
@@ -1165,43 +1178,55 @@ Use the following steps to complete this section of the exercise:
     Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
     Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
     
-    // Create accounts for customers
+    // Step 2: Create BankAccount objects for customers
+    Console.WriteLine("\nCreating BankAccount objects for customers...");
     BankAccount account1 = new BankAccount(customer1.customerId);
     BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
     BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
-    
-    // Demonstrate the use of BankCustomer properties
-    customer1.FirstName = "Thomas";
-    customer1.LastName = "Margand";
-    // customer1.customerId = "1234567890"; // This line will not compile
-    
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
     
     Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.CustomerId}");
     Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.CustomerId}");
     Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.CustomerId}");
     
-    // Demonstrate the use of BankAccount methods
+    // Step 3: Demonstrate the use of BankCustomer properties
+    Console.WriteLine("\nUpdating BankCustomer 1's name...");
+    customer1.FirstName = "Thomas";
+    customer1.LastName = "Margand";
+    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
+    
+    // Step 4: Demonstrate the use of BankAccount methods
+    Console.WriteLine("\nDemonstrating BankAccount methods...");
+    
+    // Deposit
+    Console.WriteLine("Depositing 500 into Account 1...");
     account1.Deposit(500);
     Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
     
+    // Withdraw
+    Console.WriteLine("Withdrawing 200 from Account 2...");
     bool withdrawSuccess = account2.Withdraw(200);
     Console.WriteLine($"Account 2 after withdrawal: Balance = {account2.Balance}, Withdrawal successful: {withdrawSuccess}");
     
+    // Transfer
+    Console.WriteLine("Transferring 300 from Account 3 to Account 1...");
     bool transferSuccess = account3.Transfer(account1, 300);
     Console.WriteLine($"Account 3 after transfer: Balance = {account3.Balance}, Transfer successful: {transferSuccess}");
     Console.WriteLine($"Account 1 after receiving transfer: Balance = {account1.Balance}");
     
+    // Apply interest
+    Console.WriteLine("Applying interest to Account 1...");
     account1.ApplyInterest();
     Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
     
-    // Demonstrate the use of extension methods
+    // Step 5: Demonstrate the use of extension methods
+    Console.WriteLine("\nDemonstrating extension methods...");
     Console.WriteLine(customer1.GreetCustomer());
     Console.WriteLine($"Is customer1 ID valid? {customer1.IsValidCustomerId()}");
     Console.WriteLine($"Can account2 withdraw 2000? {account2.CanWithdraw(2000)}");
     Console.WriteLine($"Is account3 overdrawn? {account3.IsOverdrawn()}");
     
-    // Display customer and account information
+    // Step 6: Display customer and account information
+    Console.WriteLine("\nDisplaying customer and account information...");
     Console.WriteLine(customer1.DisplayCustomerInfo());
     Console.WriteLine(account1.DisplayAccountInfo());
 

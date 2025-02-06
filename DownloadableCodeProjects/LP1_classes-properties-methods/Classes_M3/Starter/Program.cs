@@ -1,17 +1,17 @@
-﻿using Classes_M2;
+﻿using Classes_M3;
 
 // Step 1: Create BankCustomer objects
 Console.WriteLine("Creating BankCustomer objects...");
-string firstName = "John";
-string lastName = "Doe";
+string firstName = "Tim";
+string lastName = "Shao";
 
 BankCustomer customer1 = new BankCustomer(firstName, lastName);
 
-firstName = "Jane";
+firstName = "Lisa";
 BankCustomer customer2 = new BankCustomer(firstName, lastName);
 
-firstName = "Leonardo";
-lastName = "Rossi";
+firstName = "Sandy";
+lastName = "Zoeng";
 BankCustomer customer3 = new BankCustomer(firstName, lastName);
 
 Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
@@ -30,8 +30,8 @@ Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account
 
 // Step 3: Demonstrate the use of BankCustomer properties
 Console.WriteLine("\nUpdating BankCustomer 1's name...");
-customer1.FirstName = "Johnny";
-customer1.LastName = "Doe-Smith";
+customer1.FirstName = "Thomas";
+customer1.LastName = "Margand";
 Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
 
 // Step 4: Demonstrate the use of BankAccount methods

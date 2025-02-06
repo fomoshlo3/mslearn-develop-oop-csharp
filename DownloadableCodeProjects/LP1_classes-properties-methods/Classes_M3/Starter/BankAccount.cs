@@ -1,6 +1,6 @@
 using System;
 
-namespace Classes_M2;
+namespace Classes_M3;
 
 public class BankAccount
 {
@@ -31,6 +31,8 @@ public class BankAccount
         this.Balance = balance;
         this.AccountType = accountType;
     }
+
+
 
     // Method to deposit money into the account
     public void Deposit(double amount)
@@ -63,15 +65,16 @@ public class BankAccount
         return false;
     }
 
+    // Method to apply interest to the account
+    public void ApplyInterest()
+    {
+        Balance += Balance * interestRate;
+    }
+
     // Method to display account information
     public string DisplayAccountInfo()
     {
         return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
     }
 
-    // Method to apply interest to the account balance
-    public void ApplyInterest()
-    {
-        Balance += Balance * interestRate;
-    }
 }
