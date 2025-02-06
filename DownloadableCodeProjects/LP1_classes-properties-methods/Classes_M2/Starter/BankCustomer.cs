@@ -1,12 +1,12 @@
 using System;
 
-namespace Classes_M1;
+namespace Classes_M2;
 
 public class BankCustomer
 {
     private static int nextCustomerId;
-    public string fName = "John";
-    public string lName = "Doe";
+    public string fName = "Tim";
+    public string lName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()

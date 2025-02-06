@@ -50,8 +50,8 @@ Use the following steps to complete this section of the exercise:
     public class BankCustomer
     {
         private static int nextCustomerId;
-        private string fName = "John";
-        private string lName = "Doe";
+        private string fName = "Tim";
+        private string lName = "Shao";
         public readonly string customerId;
     
         static BankCustomer()
@@ -263,16 +263,16 @@ Use the following steps to complete this section of the exercise:
 
     // Step 1: Create BankCustomer objects
     Console.WriteLine("Creating BankCustomer objects...");
-    string firstName = "John";
-    string lastName = "Doe";
+    string firstName = "Tim";
+    string lastName = "Shao";
     
     BankCustomer customer1 = new BankCustomer(firstName, lastName);
     
-    firstName = "Jane";
+    firstName = "Lisa";
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     
-    firstName = "Leonardo";
-    lastName = "Rossi";
+    firstName = "Sandy";
+    lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
     Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
@@ -291,8 +291,8 @@ Use the following steps to complete this section of the exercise:
     
     // Step 3: Demonstrate the use of BankCustomer properties
     Console.WriteLine("\nUpdating BankCustomer 1's name...");
-    customer1.FirstName = "Johnny";
-    customer1.LastName = "Doe-Smith";
+    customer1.FirstName = "Thomas";
+    customer1.LastName = "Margand";
     Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
     
     // Step 4: Demonstrate the use of BankAccount methods
@@ -342,9 +342,9 @@ Use the following steps to complete this section of the exercise:
     ```plaintext
 
     Creating BankCustomer objects...
-    BankCustomer 1: John Doe 0012396421
-    BankCustomer 2: Jane Doe 0012396422
-    BankCustomer 3: Leonardo Rossi 0012396423
+    BankCustomer 1: Tim Shao 0012396421
+    BankCustomer 2: Lisa Shao 0012396422
+    BankCustomer 3: Sandy Zoeng 0012396423
     
     Creating BankAccount objects for customers...
     Account 1: Account # 11657161, type Checking, balance 0, rate 0, customer ID 0012396421
@@ -352,7 +352,7 @@ Use the following steps to complete this section of the exercise:
     Account 3: Account # 11657163, type Checking, balance 2500, rate 0, customer ID 0012396423
     
     Updating BankCustomer 1's name...
-    Updated BankCustomer 1: Johnny Doe-Smith 0012396421
+    Updated BankCustomer 1: Thomas Margand 0012396421
     
     Demonstrating BankAccount methods...
     Depositing 500 into Account 1...
@@ -366,13 +366,13 @@ Use the following steps to complete this section of the exercise:
     Account 1 after applying interest: Balance = 800
     
     Demonstrating extension methods...
-    Hello, Johnny Doe-Smith!
+    Hello, Thomas Margand!
     Is customer1 ID valid? True
     Can account2 withdraw 2000? False
     Is account3 overdrawn? False
     
     Displaying customer and account information...
-    Customer ID: 0012396421, Name: Johnny Doe-Smith
+    Customer ID: 0012396421, Name: Thomas Margand
     Account Number: 11657161, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0012396421
 
     ```
@@ -552,16 +552,16 @@ Create a new class named AccountTypes that holds the account types for the BankA
     
     // Step 1: Create BankCustomer objects
     Console.WriteLine("Creating BankCustomer objects...");
-    string firstName = "John";
-    string lastName = "Doe";
+    string firstName = "Tim";
+    string lastName = "Shao";
     
     BankCustomer customer1 = new BankCustomer(firstName, lastName);
     
-    firstName = "Jane";
+    firstName = "Lisa";
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     
-    firstName = "Leonardo";
-    lastName = "Rossi";
+    firstName = "Sandy";
+    lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
     Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
@@ -580,8 +580,8 @@ Create a new class named AccountTypes that holds the account types for the BankA
     
     // Step 3: Demonstrate the use of BankCustomer properties
     Console.WriteLine("\nUpdating BankCustomer 1's name...");
-    customer1.FirstName = "Johnny";
-    customer1.LastName = "Doe-Smith";
+    customer1.FirstName = "Thomas";
+    customer1.LastName = "Margand";
     Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
     
     // Step 4: Demonstrate the use of BankAccount methods
@@ -803,10 +803,10 @@ BankAccount account1 = new BankAccount("1234567890")
     AccountType = "Savings"
 };
 
-BankCustomer customer1 = new BankCustomer("John", "Doe")
+BankCustomer customer1 = new BankCustomer("Tim", "Shao")
 {
-    FirstName = "Johnny",
-    LastName = "Doe-Smith"
+    FirstName = "Thomas",
+    LastName = "Margand"
 };
 
 ```
@@ -892,8 +892,8 @@ CUSTOMER.CS
 public partial class BankCustomer
 {
     private static int nextCustomerId;
-    private string fName = "John";
-    private string lName = "Doe";
+    private string fName = "Tim";
+    private string lName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()
@@ -1009,9 +1009,9 @@ Use the following steps to complete this section of the exercise:
     ```plaintext
 
     Creating BankCustomer objects...
-    BankCustomer 1: John Doe 0019904379
-    BankCustomer 2: Jane Doe 0019904380
-    BankCustomer 3: Leonardo Rossi 0019904381
+    BankCustomer 1: Tim Shao 0019904379
+    BankCustomer 2: Lisa Shao 0019904380
+    BankCustomer 3: Sandy Zoeng 0019904381
     
     Creating BankAccount objects for customers...
     Account 1: Account # 13535677, type Checking, balance 0, rate 0, customer ID 0019904379
@@ -1019,7 +1019,7 @@ Use the following steps to complete this section of the exercise:
     Account 3: Account # 13535679, type Checking, balance 2500, rate 0, customer ID 0019904381
     
     Updating BankCustomer 1's name...
-    Updated BankCustomer 1: Johnny Doe-Smith 0019904379
+    Updated BankCustomer 1: Thomas Margand 0019904379
     
     Demonstrating BankAccount methods...
     Depositing 500 into Account 1...
@@ -1033,13 +1033,13 @@ Use the following steps to complete this section of the exercise:
     Account 1 after applying interest: Balance = 800
     
     Demonstrating extension methods...
-    Hello, Johnny Doe-Smith!
+    Hello, Thomas Margand!
     Is customer1 ID valid? True
     Can account2 withdraw 2000? False
     Is account3 overdrawn? False
     
     Displaying customer and account information...
-    Customer ID: 0019904379, Name: Johnny Doe-Smith
+    Customer ID: 0019904379, Name: Thomas Margand
     Account Number: 13535677, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0019904379
     
     Demonstrating object initializers and copy constructors...

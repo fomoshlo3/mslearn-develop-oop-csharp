@@ -1,6 +1,6 @@
 using System;
 
-namespace Classes_M1;
+namespace Classes_M2;
 
 public class BankAccount
 {
@@ -22,7 +22,6 @@ public class BankAccount
     {
         this.accountNumber = nextAccountNumber++;
         this.customerId = customerIdNumber;
-        //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
     }
 
     public BankAccount(string customerIdNumber, double balance, string accountType)
@@ -31,6 +30,5 @@ public class BankAccount
         this.customerId = customerIdNumber;
         this.balance = balance;
         this.accountType = accountType;
-        //Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}, customer ID {customerId}");
     }
 }

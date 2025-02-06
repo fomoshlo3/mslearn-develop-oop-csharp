@@ -1,15 +1,15 @@
 ﻿using Classes_M1;
 
-string firstName = "John";
-string lastName = "Doe";
+string firstName = "Tim";
+string lastName = "Shao";
 
 BankCustomer customer1 = new BankCustomer(firstName, lastName);
 
-firstName = "Jane";
+firstName = "Lisa";
 BankCustomer customer2 = new BankCustomer(firstName, lastName);
 
-firstName = "Leonardo";
-lastName = "Rossi";
+firstName = "Sandy";
+lastName = "Zoeng";
 BankCustomer customer3 = new BankCustomer(firstName, lastName);
 
 Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.customerId}");

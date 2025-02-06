@@ -215,7 +215,7 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    BankCustomer bankCustomer2 = new BankCustomer("John", "Doe");
+    BankCustomer bankCustomer2 = new BankCustomer("Tim", "Shao");
 
     ```
 
@@ -231,7 +231,7 @@ Use the following steps to complete this task:
     
     BankCustomer customer1 = new BankCustomer();
 
-    BankCustomer customer2 = new BankCustomer("John", "Doe");
+    BankCustomer customer2 = new BankCustomer("Tim", "Shao");
     
     ```
 
@@ -288,7 +288,7 @@ Use the following steps to complete this task:
     ```plaintext
 
     BankCustomer created
-    BankCustomer created: John Doe
+    BankCustomer created: Tim Shao
 
     ```
 
@@ -304,8 +304,8 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    public string fName = "John";
-    public string lName = "Doe";
+    public string fName = "Tim";
+    public string lName = "Shao";
     public string accountId = "1010101010";
 
     ```
@@ -352,8 +352,8 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    string firstName = "John";
-    string lastName = "Doe";
+    string firstName = "Tim";
+    string lastName = "Shao";
     string customerIdNumber = "1010101010";
 
     ```
@@ -362,7 +362,7 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    firstName = "Jane";
+    firstName = "Lisa";
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     ```
 
@@ -370,8 +370,8 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    firstName = "Leonardo";
-    lastName = "Rossi";
+    firstName = "Sandy";
+    lastName = "Zoeng";
     accountId = "2020202020";
     BankCustomer customer3 = new BankCustomer(firstName, lastName, customerIdNumber);
 
@@ -397,17 +397,17 @@ Use the following steps to complete this task:
 
     namespace Classes_M1;
 
-    string firstName = "John";
-    string lastName = "Doe";
+    string firstName = "Tim";
+    string lastName = "Shao";
     string customerIdNumber = "1010101010";
     
     BankCustomer customer1 = new BankCustomer();
     
-    firstName = "Jane";
+    firstName = "Lisa";
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     
-    firstName = "Leonardo";
-    lastName = "Rossi";
+    firstName = "Sandy";
+    lastName = "Zoeng";
     customerIdNumber = "2020202020";
     BankCustomer customer3 = new BankCustomer(firstName, lastName, customerIdNumber);
     
@@ -429,8 +429,8 @@ Use the following steps to complete this task:
     public class BankCustomer
     {
         // add public fields for fName, lName, and accountID
-        public string fName = "John";
-        public string lName = "Doe";
+        public string fName = "Tim";
+        public string lName = "Shao";
         public string customerId = "1010101010";
     
         public BankCustomer()
@@ -459,9 +459,9 @@ Use the following steps to complete this task:
 
     ```plaintext
 
-    BankCustomer 1: John Doe 1010101010
-    BankCustomer 2: Jane Doe 1010101010
-    BankCustomer 3: Leonardo Rossi 2020202020
+    BankCustomer 1: Tim Shao 1010101010
+    BankCustomer 2: Lisa Doe 1010101010
+    BankCustomer 3: Sandy Zoeng 2020202020
 
     ```
 
@@ -482,8 +482,8 @@ Use the following steps to complete this task:
     public class BankCustomer
     {
         // add public fields for fName, lName, and accountID
-        public string fName = "John";
-        public string lName = "Doe";
+        public string fName = "Tim";
+        public string lName = "Shao";
         public string customerId = "1010101010";
     
         public BankCustomer()
@@ -575,17 +575,17 @@ Use the following steps to complete this task:
 
     using Classes_M1;
 
-    string firstName = "John";
-    string lastName = "Doe";
+    string firstName = "Tim";
+    string lastName = "Shao";
     int accountNumber = 0;
     
     BankCustomer customer1 = new BankCustomer();
     
-    firstName = "Jane";
+    firstName = "Lisa";
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     
-    firstName = "Leonardo";
-    lastName = "Rossi";
+    firstName = "Sandy";
+    lastName = "Zoeng";
     accountNumber = 12345;
     BankCustomer customer3 = new BankCustomer(firstName, lastName, accountNumber);
     
@@ -602,8 +602,8 @@ Use the following steps to complete this task:
     public class BankCustomer
     {
         private static int nextCustomerId;
-        public string fName = "John";
-        public string lName = "Doe";
+        public string fName = "Tim";
+        public string lName = "Shao";
         public readonly string customerId;
     
         static BankCustomer()
@@ -761,16 +761,16 @@ Use the following steps to complete this task:
 
     using Classes_M1;
     
-    string firstName = "John";
-    string lastName = "Doe";
+    string firstName = "Tim";
+    string lastName = "Shao";
     
     BankCustomer customer1 = new BankCustomer(firstName, lastName);
     
-    firstName = "Jane";
+    firstName = "Lisa";
     BankCustomer customer2 = new BankCustomer(firstName, lastName);
     
-    firstName = "Leonardo";
-    lastName = "Rossi";
+    firstName = "Sandy";
+    lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
     Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.customerId}");
@@ -796,8 +796,8 @@ Use the following steps to complete this task:
     public class BankCustomer
     {
         private static int nextCustomerId;
-        public string fName = "John";
-        public string lName = "Doe";
+        public string fName = "Tim";
+        public string lName = "Shao";
         public readonly string customerId;
     
         static BankCustomer()
@@ -860,9 +860,9 @@ Use the following steps to complete this task:
 
     ```plaintext
 
-    BankCustomer 1: John Doe 0014653176
-    BankCustomer 2: Jane Doe 0014653177
-    BankCustomer 3: Leonardo Rossi 0014653178
+    BankCustomer 1: Tim Shao 0014653176
+    BankCustomer 2: Lisa Shao 0014653177
+    BankCustomer 3: Sandy Zoeng 0014653178
     Account 1: Account # 12885967, type Checking, balance 0, rate 0, customer ID 0014653176
     Account 2: Account # 12885968, type Checking, balance 1500, rate 0, customer ID 0014653177
     Account 3: Account # 12885969, type Checking, balance 2500, rate 0, customer ID 0014653178
