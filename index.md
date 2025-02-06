@@ -1,10 +1,10 @@
 ---
-title: Lab Files for Learn to Develop C# OOP 
+title: Lab files for "Learn To Program" training 
 permalink: index.html
 layout: home
 ---
 
-# Develop C# OOP Exercises
+# Exercises - develop object-oriented code
 
 The following exercises are designed to support the modules on Microsoft Learn.
 
