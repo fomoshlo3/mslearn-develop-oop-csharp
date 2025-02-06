@@ -190,9 +190,5 @@ public class BankAccount
         return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
     }
 
-    // Method to apply interest to the account balance
-    public void ApplyInterest()
-    {
-        Balance += Balance * interestRate;
-    }
+
 }
