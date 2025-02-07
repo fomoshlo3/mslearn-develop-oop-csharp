@@ -4,9 +4,9 @@ permalink: index.html
 layout: home
 ---
 
-# Exercises - develop object-oriented code
+# Develop object-oriented programs
 
-The following exercises are designed to support the modules on Microsoft Learn.
+The following quickstart exercises are designed to provide you with a hands-on learnign experience in which you'll explore common tasks that developers do when developing object-oriented applications.
 
 
 {% assign labs = site.pages | where_exp:"page", "page.url contains '/Instructions/Labs'" %}
