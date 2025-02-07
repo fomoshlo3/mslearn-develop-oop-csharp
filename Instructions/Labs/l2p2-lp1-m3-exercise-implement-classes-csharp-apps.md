@@ -642,17 +642,17 @@ Use the following steps to complete this section of the exercise:
     ```plaintext
 
     Creating BankCustomer objects...
-    BankCustomer 1: Tim Shao 0012396421
-    BankCustomer 2: Lisa Shao 0012396422
-    BankCustomer 3: Sandy Zoeng 0012396423
+    BankCustomer 1: Tim Shao 0016320839
+    BankCustomer 2: Lisa Shao 0016320840
+    BankCustomer 3: Sandy Zoeng 0016320841
     
     Creating BankAccount objects for customers...
-    Account 1: Account # 11657161, type Checking, balance 0, rate 0, customer ID 0012396421
-    Account 2: Account # 11657162, type Checking, balance 1500, rate 0, customer ID 0012396422
-    Account 3: Account # 11657163, type Checking, balance 2500, rate 0, customer ID 0012396423
+    Account 1: Account # 12848501, type Checking, balance 0, rate 0, customer ID 0016320839
+    Account 2: Account # 12848502, type Checking, balance 1500, rate 0, customer ID 0016320840
+    Account 3: Account # 12848503, type Checking, balance 2500, rate 0, customer ID 0016320841
     
     Updating BankCustomer 1's name...
-    Updated BankCustomer 1: Thomas Margand 0012396421
+    Updated BankCustomer 1: Thomas Margand 0016320839
     
     Demonstrating BankAccount methods...
     Depositing 500 into Account 1...
@@ -672,8 +672,8 @@ Use the following steps to complete this section of the exercise:
     Is account3 overdrawn? False
     
     Displaying customer and account information...
-    Customer ID: 0012396421, Name: Thomas Margand
-    Account Number: 11657161, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0012396421
+    Customer ID: 0016320839, Name: Thomas Margand
+    Account Number: 12848501, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0016320839
 
     ```
 
@@ -726,11 +726,9 @@ In this task, you update a constructor in the BankAccount class using optional p
     
     ```
 
-    By using optional parameters in the BankAccount constructor, you can create instances of BankAccount with varying levels of detail, making the code more flexible and reducing the need for multiple constructor overloads.
+    By using optional parameters in the BankAccount constructor, you can create instances of `BankAccount` with varying levels of parameter detail, making class instantiation more flexible and reducing the need for multiple constructor overloads. For example, you can create a `BankAccount` object with only a `customerIdNumber`, or you can specify combinations of `balance` and `accountType` as well:
 
     ```csharp
-    
-    // Using the constructor with optional parameters
 
     BankAccount account1 = new BankAccount("1234567890");
     BankAccount account2 = new BankAccount("2345678901", 1500);
@@ -743,12 +741,52 @@ In this task, you update a constructor in the BankAccount class using optional p
     > [!NOTE]
     > Optional parameters can make your code more flexible and easier to read. In this case, there are no changes required to the code in your Program.cs. In fact, new constructor enables you to create BankAccount objects with parameter combinations that were not possible before.
 
-1. Take a minute to review your code.
+1. Take a minute to review your BankAccount.cs code.
 
     ```csharp
 
-
+    using System;
     
+    namespace Classes_M3;
+    
+    public class BankAccount
+    {
+        private static int nextAccountNumber;
+        public static double interestRate;
+        public int AccountNumber { get; }
+        public string CustomerId { get; }
+        public double Balance { get; set; } = 0;
+        public string AccountType { get; set; } = "Checking";
+    
+        static BankAccount()
+        {
+            Random random = new Random();
+            nextAccountNumber = random.Next(10000000, 20000000);
+            interestRate = 0;
+        }
+    
+        public BankAccount(string customerIdNumber)
+        {
+            this.AccountNumber = nextAccountNumber++;
+            this.CustomerId = customerIdNumber;
+        }
+    
+        public BankAccount(string customerIdNumber, double balance, string accountType)
+        {
+            this.AccountNumber = nextAccountNumber++;
+            this.CustomerId = customerIdNumber;
+            this.Balance = balance;
+            this.AccountType = accountType;
+        }
+    
+        // Method to display account information
+        public string DisplayAccountInfo()
+        {
+            return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
+        }
+    
+    }
+
     ```
 
 1. Run the app to ensure that your optional parameter updates didn't introduce any bugs.
@@ -757,294 +795,18 @@ In this task, you update a constructor in the BankAccount class using optional p
 
     ```plaintext
 
-    ```
-
-## Implement object initializers and copy constructors
-
-You can use object initializers and copy constructors to improve the existing code. Both techniques can enhance code readability and maintainability.
-
-### Object Initializers
-
-Object initializers allow you to initialize an object and set its properties in a single statement. This can make the code more concise and readable.
-
-Example:
-
-Instead of:
-
-```csharp
-
-BankAccount account1 = new BankAccount("1234567890");
-account1.Balance = 1000;
-account1.AccountType = "Savings";
-
-```
-
-You can use:
-
-```csharp
-
-BankAccount account1 = new BankAccount("1234567890")
-{
-    Balance = 1000,
-    AccountType = "Savings"
-};
-
-```
-
-
-
-### Copy Constructors
-
-Copy constructors allow you to create a new object that is a copy of an existing object. This is useful when you need to duplicate objects with the same state.
-
-Example:
-
-```csharp
-
-public BankAccount(BankAccount existingAccount)
-{
-    this.AccountNumber = existingAccount.AccountNumber;
-    this.CustomerId = existingAccount.CustomerId;
-    this.Balance = existingAccount.Balance;
-    this.AccountType = existingAccount.AccountType;
-}
-
-```
-
-
-### Where to Use Object Initializers and Copy Constructors
-
-#### Object Initializers
-
-You can use object initializers in the Program.cs file where you are creating instances of BankAccount and BankCustomer.
-
-Example:
-
-```csharp
-
-BankAccount account1 = new BankAccount("1234567890")
-{
-    Balance = 1000,
-    AccountType = "Savings"
-};
-
-BankCustomer customer1 = new BankCustomer("Tim", "Shao")
-{
-    FirstName = "Thomas",
-    LastName = "Margand"
-};
-
-```
-
-#### opy Constructors
-
-You can add copy constructors to the BankAccount and BankCustomer classes to facilitate copying objects.
-
-Example:
-
-```csharp
-
-public BankAccount(BankAccount existingAccount)
-{
-    this.AccountNumber = existingAccount.AccountNumber;
-    this.CustomerId = existingAccount.CustomerId;
-    this.Balance = existingAccount.Balance;
-    this.AccountType = existingAccount.AccountType;
-}
-
-// filepath: /path/to/CUSTOMER.CS
-public BankCustomer(BankCustomer existingCustomer)
-{
-    this.customerId = existingCustomer.customerId;
-    this.FirstName = existingCustomer.FirstName;
-    this.LastName = existingCustomer.LastName;
-}
-
-```
-
-### Updated Code with Object Initializers and Copy Constructors
-
-ACCOUNT.CS
-
-```csharp
-
-public class BankAccount
-{
-    private static int nextAccountNumber;
-    public static double interestRate;
-    public int AccountNumber { get; }
-    public string CustomerId { get; }
-    public double Balance { get; set; } = 0;
-    public string AccountType { get; set; } = "Checking";
-
-    static BankAccount()
-    {
-        Random random = new Random();
-        nextAccountNumber = random.Next(10000000, 20000000);
-        interestRate = 0;
-    }
-
-    public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
-    {
-        this.AccountNumber = nextAccountNumber++;
-        this.CustomerId = customerIdNumber;
-        this.Balance = balance;
-        this.AccountType = accountType;
-    }
-
-    // Add a copy constructor here
-    public BankAccount(BankAccount existingAccount)
-    {
-        this.AccountNumber = existingAccount.AccountNumber;
-        this.CustomerId = existingAccount.CustomerId;
-        this.Balance = existingAccount.Balance;
-        this.AccountType = existingAccount.AccountType;
-    }
-
-    // Method to display account information
-    public string DisplayAccountInfo()
-    {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
-    }
-}
-
-```
-
-CUSTOMER.CS
-
-```csharp
-
-public partial class BankCustomer
-{
-    private static int nextCustomerId;
-    private string fName = "Tim";
-    private string lName = "Shao";
-    public readonly string customerId;
-
-    static BankCustomer()
-    {
-        Random random = new Random();
-        nextCustomerId = random.Next(10000000, 20000000);
-    }
-
-    public BankCustomer(string firstName, string lastName)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        this.customerId = (nextCustomerId++).ToString("D10");
-    }
-
-    // Add a copy constructor here
-    public BankCustomer(BankCustomer existingCustomer)
-    {
-        this.customerId = existingCustomer.customerId;
-        this.FirstName = existingCustomer.FirstName;
-        this.LastName = existingCustomer.LastName;
-    }
-
-    public string FirstName
-    {
-        get { return fName; }
-        set { fName = value; }
-    }
-
-    public string LastName
-    {
-        get { return lName; }
-        set { lName = value; }
-    }
-}
-
-```
-
-By using object initializers and copy constructors, you can make your code more concise, readable, and easier to maintain.
-
-
-
-
-In this task, you update the `Main` method using object initializers and copy constructors.
-
-Use the following steps to complete this section of the exercise:
-
-1. Open the BankCustomer.cs file.
-
-1. Add the copy constructor to the BankCustomer class.
-
-    ```csharp
-
-    public BankCustomer(BankCustomer existingCustomer)
-    {
-        this.customerId = existingCustomer.customerId;
-        this.FirstName = existingCustomer.FirstName;
-        this.LastName = existingCustomer.LastName;
-    }
-
-    ```
-
-1. Open the BankAccount.cs file.
-
-1. Add the copy constructor to the BankAccount class.
-
-    ```csharp
-
-    public BankAccount(BankAccount existingAccount)
-    {
-        this.AccountNumber = nextAccountNumber++;
-        this.CustomerId = existingAccount.CustomerId;
-        this.Balance = existingAccount.Balance;
-        this.AccountType = existingAccount.AccountType;
-    }
-    ```
-
-1. Open the Program.cs file.
-
-1. Add the following Step 7 code to the end of the Program.cs file
-
-    ```csharp
-
-    // Step 7: Demonstrate using object initializers and copy constructors
-    Console.WriteLine("\nDemonstrating object initializers and copy constructors...");
-    
-    // Using object initializer
-    BankCustomer customer4 = new BankCustomer("Alice", "Smith") { FirstName = "Alicia", LastName = "Smith-Jones" };
-    Console.WriteLine($"BankCustomer 4: {customer4.FirstName} {customer4.LastName} {customer4.customerId}");
-    
-    // Using copy constructor
-    BankCustomer customer5 = new BankCustomer(customer4);
-    Console.WriteLine($"BankCustomer 5 (copy of customer4): {customer5.FirstName} {customer5.LastName} {customer5.customerId}");
-    
-    BankAccount account4 = new BankAccount(customer4.customerId, 3000, "Savings");
-    BankAccount account5 = new BankAccount(account4);
-    Console.WriteLine($"Account 4: Account # {account4.AccountNumber}, type {account4.AccountType}, balance {account4.Balance}, rate {BankAccount.interestRate}, customer ID {account4.CustomerId}");
-    Console.WriteLine($"Account 5 (copy of account4): Account # {account5.AccountNumber}, type {account5.AccountType}, balance {account5.Balance}, rate {BankAccount.interestRate}, customer ID {account5.CustomerId}");
-
-    ```
-
-1. Take a minute to review your code.
-
-    ```csharp
-
-    
-    ```
-
-1. Run the app and review the output in the terminal window.
-
-    You should see the following output:
-
-    ```plaintext
-
     Creating BankCustomer objects...
-    BankCustomer 1: Tim Shao 0019904379
-    BankCustomer 2: Lisa Shao 0019904380
-    BankCustomer 3: Sandy Zoeng 0019904381
+    BankCustomer 1: Tim Shao 0016320839
+    BankCustomer 2: Lisa Shao 0016320840
+    BankCustomer 3: Sandy Zoeng 0016320841
     
     Creating BankAccount objects for customers...
-    Account 1: Account # 13535677, type Checking, balance 0, rate 0, customer ID 0019904379
-    Account 2: Account # 13535678, type Checking, balance 1500, rate 0, customer ID 0019904380
-    Account 3: Account # 13535679, type Checking, balance 2500, rate 0, customer ID 0019904381
+    Account 1: Account # 12848501, type Checking, balance 0, rate 0, customer ID 0016320839
+    Account 2: Account # 12848502, type Checking, balance 1500, rate 0, customer ID 0016320840
+    Account 3: Account # 12848503, type Checking, balance 2500, rate 0, customer ID 0016320841
     
     Updating BankCustomer 1's name...
-    Updated BankCustomer 1: Thomas Margand 0019904379
+    Updated BankCustomer 1: Thomas Margand 0016320839
     
     Demonstrating BankAccount methods...
     Depositing 500 into Account 1...
@@ -1064,94 +826,140 @@ Use the following steps to complete this section of the exercise:
     Is account3 overdrawn? False
     
     Displaying customer and account information...
-    Customer ID: 0019904379, Name: Thomas Margand
-    Account Number: 13535677, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0019904379
+    Customer ID: 0016320839, Name: Thomas Margand
+    Account Number: 12848501, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0016320839
+
+    ```
+
+## Implement copy constructors and object initializers
+
+Object initializers and copy constructors are useful techniques for creating and copying objects in C#. Both techniques can enhance code readability and maintainability.
+
+- Copy constructors allow you to create a new object that's a copy of an existing object. This is useful when you need to duplicate objects with the same state.
+- Object initializers allow you to initialize an object and set its properties in a single statement. This can make the code more concise and readable.
+
+In this task, you implement copy constructors and object initializers by updating `BankCustomer`, `BankAccount`, and the demonstration code in Program.cs.
+
+Use the following steps to complete this section of the exercise:
+
+1. Open the BankCustomer.cs file.
+
+1. To create a copy constructor for the BankCustomer class, add the following code:
+
+    ```csharp
+
+    // Copy constructor for BankCustomer
+    public BankCustomer(BankCustomer existingCustomer)
+    {
+
+        this.FirstName = existingCustomer.FirstName;
+        this.LastName = existingCustomer.LastName;
+        //this.customerId = existingCustomer.customerId;
+        this.customerId = (nextCustomerId++).ToString("D10");
+
+    }
+
+    ```
+
+    Notice that the `customerId` field from the existing customer isn't used. Instead, a new `customerId` is generated for the new customer. This supports the logic already implemented by the BankCustomer class.
+
+1. Open the BankAccount.cs file.
+
+1. To create a copy constructor for the BankAccount class, add the following code:
+
+    ```csharp
+
+    // Copy constructor for BankAccount
+    public BankAccount(BankAccount existingAccount)
+    {
+        this.AccountNumber = nextAccountNumber++;
+        this.CustomerId = existingAccount.CustomerId;
+        this.Balance = existingAccount.Balance;
+        this.AccountType = existingAccount.AccountType;
+    }
+    ```
+
+    Notice that a new `AccountNumber` field is generated for the new account. The `CustomerId`, `Balance`, and `AccountType` fields are copied from the existing account. The `interestRate` field is not copied because it's a static field that's shared across all instances of the BankAccount class. The `customerId` field is copied because the intension is to create a new account for the same customer.
+
+1. Open the Program.cs file.
+
+1. Add the following Step 7 code to the end of the Program.cs file
+
+    ```csharp
+
+    // Step 7: Demonstrate using object initializers and copy constructors
+    Console.WriteLine("\nDemonstrating object initializers and copy constructors...");
+    
+    // Using object initializer
+    BankCustomer customer4 = new BankCustomer("Mikaela", "Lee") { FirstName = "Mikaela", LastName = "Lee" };
+    Console.WriteLine($"BankCustomer 4: {customer4.FirstName} {customer4.LastName} {customer4.customerId}");
+    
+    // Using copy constructor
+    BankCustomer customer5 = new BankCustomer(customer4);
+    Console.WriteLine($"BankCustomer 5 (copy of customer4): {customer5.FirstName} {customer5.LastName} {customer5.customerId}");
+    
+    BankAccount account4 = new BankAccount(customer4.customerId, 3000, "Savings");
+    BankAccount account5 = new BankAccount(account4);
+    Console.WriteLine($"Account 4: Account # {account4.AccountNumber}, type {account4.AccountType}, balance {account4.Balance}, rate {BankAccount.interestRate}, customer ID {account4.CustomerId}");
+    Console.WriteLine($"Account 5 (copy of account4): Account # {account5.AccountNumber}, type {account5.AccountType}, balance {account5.Balance}, rate {BankAccount.interestRate}, customer ID {account5.CustomerId}");
+
+    ```
+
+    Notice the following:
+
+    - The `customer4` object is created using an object initializer. The `FirstName` and `LastName` properties are set using the object initializer syntax.
+    - The `customer5` object is created using a copy constructor. The `customer5` object is a copy of the `customer4` object.
+    - The `account4` object is created using an object initializer. The `Balance` and `AccountType` properties are set using the object initializer syntax.
+    - The `account5` object is created using a copy constructor. The `account5` object is a copy of the `account4` object.
+
+1. Run the app and review the output in the terminal window.
+
+    You should see the following output:
+
+    ```plaintext
+
+    Creating BankCustomer objects...
+    BankCustomer 1: Tim Shao 0011223008
+    BankCustomer 2: Lisa Shao 0011223009
+    BankCustomer 3: Sandy Zoeng 0011223010
+    
+    Creating BankAccount objects for customers...
+    Account 1: Account # 12475143, type Checking, balance 0, rate 0, customer ID 0011223008
+    Account 2: Account # 12475144, type Checking, balance 1500, rate 0, customer ID 0011223009
+    Account 3: Account # 12475145, type Checking, balance 2500, rate 0, customer ID 0011223010
+    
+    Updating BankCustomer 1's name...
+    Updated BankCustomer 1: Thomas Margand 0011223008
+    
+    Demonstrating BankAccount methods...
+    Depositing 500 into Account 1...
+    Account 1 after deposit: Balance = 500
+    Withdrawing 200 from Account 2...
+    Account 2 after withdrawal: Balance = 1300, Withdrawal successful: True
+    Transferring 300 from Account 3 to Account 1...
+    Account 3 after transfer: Balance = 2200, Transfer successful: True
+    Account 1 after receiving transfer: Balance = 800
+    Applying interest to Account 1...
+    Account 1 after applying interest: Balance = 800
+    
+    Demonstrating extension methods...
+    Hello, Thomas Margand!
+    Is customer1 ID valid? True
+    Can account2 withdraw 2000? False
+    Is account3 overdrawn? False
+    
+    Displaying customer and account information...
+    Customer ID: 0011223008, Name: Thomas Margand
+    Account Number: 12475143, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0011223008
     
     Demonstrating object initializers and copy constructors...
-    BankCustomer 4: Alicia Smith-Jones 0019904382
-    BankCustomer 5 (copy of customer4): Alicia Smith-Jones 0019904382
-    Account 4: Account # 13535680, type Savings, balance 3000, rate 0, customer ID 0019904382
-    Account 5 (copy of account4): Account # 13535680, type Savings, balance 3000, rate 0, customer ID 0019904382
+    BankCustomer 4: Mikaela Lee 0011223011
+    BankCustomer 5 (copy of customer4): Mikaela Lee 0011223012
+    Account 4: Account # 12475146, type Savings, balance 3000, rate 0, customer ID 0011223011
+    Account 5 (copy of account4): Account # 12475147, type Savings, balance 3000, rate 0, customer ID 0011223011
 
     ```
 
 ## Clean up
 
 Now that you've finished the exercise, consider archiving your project files for review at a later time. Having your own projects available for review can be a valuable resource when you're learning to code. Also, building up a portfolio of projects can be a great way to demonstrate your skills to potential employers.
-
-
-
-
-
-
-**The following code uses a static class for account types**
-
-Static class for account types
-
-```csharp
-
-public static class AccountTypes
-{
-    public static readonly string[] Types = { "Checking", "Savings", "MoneyMarket" };
-}
-
-```
-
-CheckingAccount.cs
-
-```csharp
-
-public class CheckingAccount
-{
-    private static int nextAccountNumber;
-    public readonly int accountNumber;
-    public double balance = 0;
-    public static double interestRate;
-    public string accountType;
-
-    static CheckingAccount()
-    {
-        Random random = new Random();
-        nextAccountNumber = random.Next(10000000, 20000000);
-        interestRate = 0;
-    }
-
-    public CheckingAccount() : this(0, AccountTypes.Types[0]) { }
-
-    public CheckingAccount(double balance, string accountType)
-    {
-        if (!AccountTypes.Types.Contains(accountType))
-        {
-            throw new ArgumentException("Invalid account type");
-        }
-
-        this.accountNumber = nextAccountNumber++;
-        this.balance = balance;
-        this.accountType = accountType;
-        Console.WriteLine($"Account created: account# {accountNumber}, balance {balance}, rate {interestRate}, type {accountType}");
-    }
-}
-
-```
-
-Program.cs
-
-```csharp
-
-using Classes_M1;
-
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        CheckingAccount checkingAccount = new CheckingAccount(500, AccountTypes.Types[0]);
-        CheckingAccount savingsAccount = new CheckingAccount(1000, AccountTypes.Types[1]);
-        CheckingAccount moneyMarketAccount = new CheckingAccount(1500, AccountTypes.Types[2]);
-
-        Console.WriteLine($"Checking Account: Account # {checkingAccount.accountNumber}, type {checkingAccount.accountType}, balance {checkingAccount.balance}, rate {CheckingAccount.interestRate}");
-        Console.WriteLine($"Savings Account: Account # {savingsAccount.accountNumber}, type {savingsAccount.accountType}, balance {savingsAccount.balance}, rate {CheckingAccount.interestRate}");
-        Console.WriteLine($"Money Market Account: Account # {moneyMarketAccount.accountNumber}, type {moneyMarketAccount.accountType}, balance {moneyMarketAccount.balance}, rate {CheckingAccount.interestRate}");
-    }
-}
-
-```
