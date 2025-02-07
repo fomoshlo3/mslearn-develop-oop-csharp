@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Manage class implementations'
-    description: 'Learn how to implement classes using advanced techniques like static classes, partial classes, and object initializers that can improve the readability, maintainability, and organization of your code.'
+    description: 'Learn how to improve code quality by creating static and partial classes, using optional parameters in constructors, and by implementing copy constructors and object initializers in your applications.'
 ---
 
 
