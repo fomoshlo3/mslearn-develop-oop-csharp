@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Update a class with properties and methods'
-    description: 'Learn how to implement read-write and read-only class properties using property accessors and access modifiers, and how to implement methods and extension methods for a class.'
+    description: 'Learn how to implement class properties using property accessors and access modifiers, and how to implement methods by adding methods to a class and by developing extension methods for existing classes.'
 ---
 
 
