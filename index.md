@@ -4,7 +4,7 @@ permalink: index.html
 layout: home
 ---
 
-# Develop object-oriented programs
+# Develop object-oriented programming applications
 
 The following quickstart exercises are designed to provide you with a hands-on learning experience in which you'll explore common tasks that developers do when developing object-oriented applications.
 
@@ -16,7 +16,6 @@ The following quickstart exercises are designed to provide you with a hands-on l
 {% for activity in labs  %}
 
 ### [{{ activity.lab.title }}]({{ site.github.url }}{{ activity.url }})
-<br>
 {{ activity.lab.description }}
 <hr>
 {% endfor %}
