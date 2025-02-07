@@ -717,7 +717,7 @@ Use the following steps to complete this task:
 
     public int accountNumber;
     public double balance = 0;
-    public static double interestRate = 0;
+    public static double interestRate;
     public string accountType = "Checking";
     public readonly string customerId;
 
