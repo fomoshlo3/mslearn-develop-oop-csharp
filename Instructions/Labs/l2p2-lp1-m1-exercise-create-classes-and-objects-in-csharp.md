@@ -205,7 +205,7 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    BankCustomer bankCustomer1 = new BankCustomer();
+    BankCustomer customer1 = new BankCustomer();
 
     ```
 
@@ -215,13 +215,13 @@ Use the following steps to complete this task:
 
     ```csharp
 
-    BankCustomer bankCustomer2 = new BankCustomer("Tim", "Shao");
+    BankCustomer customer2 = new BankCustomer("Tim", "Shao");
 
     ```
 
     The `BankCustomer` class constructor that accepts parameters for the customer's first and last name is called when the new instance is created. The constructor writes a message to the console that includes the customer's first and last name.
 
-1. Take a minute to your Program.cs and BankCustomer.cs files.
+1. Take a minute to review your Program.cs and BankCustomer.cs files.
 
     Program.cs file:
 
@@ -306,7 +306,7 @@ Use the following steps to complete this task:
 
     public string fName = "Tim";
     public string lName = "Shao";
-    public string accountId = "1010101010";
+    public string customerId = "1010101010";
 
     ```
 
@@ -346,6 +346,21 @@ Use the following steps to complete this task:
 
     ```
 
+1. To create a third constructor that accepts `firstName`, `lastName`, and `customerIdNumber` parameters, add the following code to the `BankCustomer` class definition:
+
+    ```csharp
+
+    public BankCustomer(string firstName, string lastName, string customerIdNumber)
+    {
+        fName = firstName;
+        lName = lastName;
+        customerId = customerIdNumber;
+    }
+
+    ```
+
+    The constructor initializes the `fName`, `lName`, and `accountId` fields with the values of the `firstName`, `lastName`, and `customerIdNumber` parameters, respectively.
+
 1. Switch to the Program.cs file
 
 1. To create local variables for `firstName`, `lastName`, and `accountNumber` just below the `namespace` declaration, enter the following code:
@@ -372,7 +387,7 @@ Use the following steps to complete this task:
 
     firstName = "Sandy";
     lastName = "Zoeng";
-    accountId = "2020202020";
+    customerIdNumber = "2020202020";
     BankCustomer customer3 = new BankCustomer(firstName, lastName, customerIdNumber);
 
     ```
@@ -508,6 +523,16 @@ Use the following steps to complete this task:
 
     ```
 
+1. To make `customerId` a read-only field, update the `customerId` field definition to include the `readonly` keyword:
+
+    ```csharp
+
+    public readonly string customerId;
+
+    ```
+
+    Notice that `customerId` is no longer initialized when it's declared. The `readonly` keyword is used to declare a field that can be assigned a value only when it's declared or in a constructor. In this case, you'll assign a unique value to `customerId` in the constructors, so no value is assigned when the field is declared.
+
 1. To create a static field named `nextCustomerId`, add the following code to the `BankCustomer` class definition:
 
     ```csharp
@@ -516,7 +541,7 @@ Use the following steps to complete this task:
 
     ```
 
-    The `nextCustomerId` field is used to ensure that each new instance of the `BankCustomer` class is assigned a unique customer ID. The field is declared as a static field, which means that it's shared among all instances of the `BankCustomer` class.`
+    The `nextCustomerId` field is used to ensure that each new instance of the `BankCustomer` class is assigned a unique customer ID. The field is declared as a static field, which means that it's shared among all instances of the `BankCustomer` class.
 
 1. To create a static constructor that initializes the `nextCustomerId` field, add the following code to the `BankCustomer` class definition:
 
@@ -543,7 +568,7 @@ Use the following steps to complete this task:
 
     ```
 
-    The constructor initializes the `customerId` field using the `nextCustomerId` field. The `nextCustomerId` field is incremented by 1 after the `customerId` field is assigned a value.
+    The constructor initializes the `customerId` field using the `nextCustomerId` field. Notice that `nextCustomerId` is incremented by 1 before the `customerId` field is assigned a value.
 
     > [!NOTE]
     > The `this` keyword is used to refer to the current instance of the class. It's used to access fields, properties, and methods of the current instance.
@@ -561,11 +586,38 @@ Use the following steps to complete this task:
 
     ```
 
-    The constructor initializes the `customerId` field using the `nextCustomerId` field. The `nextCustomerId` field is incremented by 1 after the `customerId` field is assigned a value.
+    Once again, the constructor initializes the `customerId` field using the incremented `nextCustomerId` field value.
 
-1. Delete the constructor accepts the `customerIdNumber` as a parameter.
+1. Delete the constructor accepts the `firstName`, `lastName`, and `customerIdNumber` parameters.
 
-    The static constructor ensures that each new instance of the `BankCustomer` class is assigned a unique customer ID. As a result, the constructor that accepts the `customerIdNumber` parameter is no longer needed.
+    The static constructor ensures that each new instance of the `BankCustomer` class is assigned a unique customer ID. You already have a constructor that accepts the `firstName` and `lastName` parameters, so a constructor that accepts all three parameters is no longer needed.
+
+1. Switch to the Program.cs file.
+
+1. Locate the code line that's used to create `customer3`:
+
+    ```csharp
+
+    BankCustomer customer3 = new BankCustomer(firstName, lastName, customerIdNumber);
+
+    ```
+
+1. Replace the code line with the following code:
+
+    ```csharp
+
+    BankCustomer customer3 = new BankCustomer(firstName, lastName);
+
+    ```
+
+1. Since the `customerId` field is no longer accepted as a constructor parameter, you can delete the following references to the `customerIdNumber` variable in Program.cs.
+
+    ```csharp
+
+    string customerIdNumber = "1010101010"; // delete this line near the top of the file
+    customerIdNumber = "2020202020"; // delete this line just before creating customer3
+
+    ```
 
 1. Take a minute to review the updated Program.cs and BankCustomer.cs files.
 
@@ -577,7 +629,6 @@ Use the following steps to complete this task:
 
     string firstName = "Tim";
     string lastName = "Shao";
-    int accountNumber = 0;
     
     BankCustomer customer1 = new BankCustomer();
     
@@ -586,8 +637,7 @@ Use the following steps to complete this task:
     
     firstName = "Sandy";
     lastName = "Zoeng";
-    accountNumber = 12345;
-    BankCustomer customer3 = new BankCustomer(firstName, lastName, accountNumber);
+    BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
     Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.accNumber}");
     Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.accNumber}");
@@ -623,7 +673,6 @@ Use the following steps to complete this task:
             lName = lastName;
             this.customerId = (nextCustomerId++).ToString("D10");
         }
-    
     }
 
     ```
@@ -632,12 +681,13 @@ Use the following steps to complete this task:
 
 In this task, you create an `BankAccount` class that initializes a combination of public and static fields. You also create constructors that initialize the fields with default values and values passed as parameters.
 
-The `BankAccount` class includes the following fields:
+You need a `BankAccount` class that includes the following fields:
 
 - `accountNumber` - A public field that stores the account number.
 - `balance` - A public field that stores the account balance.
 - `interestRate` - A static field that stores the interest rate.
 - `accountType` - A public field that stores the account type.
+- `customerId` - A public field that stores the customer ID associated with the account. This field must be read-only.
 - `nextAccountNumber` - A static field that stores the next account number. This field is used to ensure that each object is assigned a unique account number.
 
 Use the following steps to complete this task:
@@ -661,7 +711,7 @@ Use the following steps to complete this task:
 
     ```
 
-1. To create public fields for the `accountNumber`, `balance`, `interestRate`, and `accountType` fields, add the following code to the `BankAccount` class definition:
+1. To create public fields for the `accountNumber`, `balance`, `interestRate`, `accountType`, and `customerId` fields, add the following code to the `BankAccount` class definition:
 
     ```csharp
 
@@ -669,10 +719,11 @@ Use the following steps to complete this task:
     public double balance = 0;
     public static double interestRate = 0;
     public string accountType = "Checking";
+    public readonly string customerId;
 
     ```
 
-    Notice that the `interestRate` field is declared as a static field. Static fields are shared among all instances of a class. The `interestRate` field is initialized with a default value of 0.
+    Notice that the `interestRate` field is declared as `static` and that `customerId` is declared as `readonly`. Static fields are accessed using the class name, not an instance of the class, and are shared among all instances of a class. The value of a static field is initialized before an instance of the class is created. Readonly fields can be assigned a value only when they're declared or in a constructor.
 
 1. To create a static field named `nextAccountNumber`, add the following code to the `BankAccount` class definition:
 
