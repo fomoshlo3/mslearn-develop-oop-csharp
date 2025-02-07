@@ -71,19 +71,29 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file and take a minute to review the BankAccount class.
 
-    Notice that ...
+    The `BankAccount` class represents a bank account with properties and methods to manage account operations.
+
+    Notice that the class includes static fields `nextAccountNumber` and `interestRate`, which track the next account number and the interest rate applied to accounts, respectively. Each `BankAccount` instance has properties such as `AccountNumber`, `CustomerId`, `Balance`, and `AccountType`, with default values for balance and account type. The class includes constructors for initializing accounts with or without an initial balance and account type. Methods provided by the class include `Deposit` for adding funds, `Withdraw` for removing funds, `Transfer` for transferring funds between accounts, `ApplyInterest` for applying interest to the balance, and `DisplayAccountInfo` for displaying account details. The class also features a static constructor to initialize static fields.
 
 1. Open the BankCustomer.cs file and take a minute to review the BankCustomer class.
 
-    Notice that ...
+    The BankCustomer class represents a bank customer with properties and methods to manage customer information.
+
+    Notice that the class includes a static field `nextCustomerId` to track the next customer ID, and instance fields `fName` and `lName` for storing the customer's first and last names, respectively. Each `BankCustomer` instance has a read-only `customerId` property, which is initialized using a static constructor that generates a random starting ID. The class provides properties `FirstName` and `LastName` for accessing and modifying the customer's name. Methods in the class include `ReturnFullName` to return the customer's full name, `UpdateName` to update the customer's name, and `DisplayCustomerInfo` to display customer details. The class also features a constructor for initializing a new customer with a first and last name.
 
 1. Open the Extensions.cs file and take a minute to review the BankCustomerExtensions and BankAccountExtensions classes.
 
-    Notice that ...
+    The Extensions.cs file contains extension methods for the `BankCustomer` and `BankAccount` classes within the `Classes_M3` namespace. These extension methods enhance the functionality of the `BankCustomer` and `BankAccount` classes by adding useful operations without modifying the original class definitions.
+
+    The `BankCustomerExtensions` static class provides a `IsValidCustomerId` method that validates a customer's ID (ensuring that it's 10 characters long) and a `GreetCustomer` method that returns a personalized greeting using the customer's full name.
+
+    The `BankAccountExtensions` static class includes an `IsOverdrawn` methods that checks if an account is overdrawn (returning `true` if the balance is negative) and a `CanWithdraw` method that's used to verify whether a specified amount can be withdrawn from the account (ensuring the balance is sufficient for the withdrawal).
 
 1. Open the Program.cs file and take a minute to review the demonstration code.
 
-    Notice that ...
+    The Program.cs file demonstrate the creation and manipulation of `BankCustomer` and `BankAccount` objects within the `Classes_M3` namespace.
+
+    Top level code instantiates `BankCustomer` objects with different names, followed by the creation of corresponding `BankAccount` objects with varying initial balances. The program showcases the use of properties and methods of these classes, such as updating customer names, depositing and withdrawing funds, transferring money between accounts, and applying interest. Additionally, it demonstrates the use of extension methods to greet customers, validate customer IDs, check if accounts are overdrawn, and verify if withdrawals can be made. Finally, the program displays customer and account information to the console.
 
 1. Run the app and review the output in the terminal window.
 
@@ -126,6 +136,8 @@ Use the following steps to complete this section of the exercise:
     Account Number: 11657161, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0012396421
 
     ```
+
+    You should now be familiar with the existing code for the banking app. In the remaining tasks, you'll restructure the class implementations to improve code readability and maintainability.
 
 ## Split the BankCustomer class into two partial class files
 
@@ -274,7 +286,39 @@ Use the following steps to complete this section of the exercise:
 
     ```plaintext
 
-
+    Creating BankCustomer objects...
+    BankCustomer 1: Tim Shao 0012396421
+    BankCustomer 2: Lisa Shao 0012396422
+    BankCustomer 3: Sandy Zoeng 0012396423
+    
+    Creating BankAccount objects for customers...
+    Account 1: Account # 11657161, type Checking, balance 0, rate 0, customer ID 0012396421
+    Account 2: Account # 11657162, type Checking, balance 1500, rate 0, customer ID 0012396422
+    Account 3: Account # 11657163, type Checking, balance 2500, rate 0, customer ID 0012396423
+    
+    Updating BankCustomer 1's name...
+    Updated BankCustomer 1: Thomas Margand 0012396421
+    
+    Demonstrating BankAccount methods...
+    Depositing 500 into Account 1...
+    Account 1 after deposit: Balance = 500
+    Withdrawing 200 from Account 2...
+    Account 2 after withdrawal: Balance = 1300, Withdrawal successful: True
+    Transferring 300 from Account 3 to Account 1...
+    Account 3 after transfer: Balance = 2200, Transfer successful: True
+    Account 1 after receiving transfer: Balance = 800
+    Applying interest to Account 1...
+    Account 1 after applying interest: Balance = 800
+    
+    Demonstrating extension methods...
+    Hello, Thomas Margand!
+    Is customer1 ID valid? True
+    Can account2 withdraw 2000? False
+    Is account3 overdrawn? False
+    
+    Displaying customer and account information...
+    Customer ID: 0012396421, Name: Thomas Margand
+    Account Number: 11657161, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0012396421
 
     ```
 
@@ -284,9 +328,24 @@ Static classes are used to organize methods that don't require an instance of a 
 
 Use the following steps to complete this section of the exercise:
 
-1. Create a new class file for a class named **Transactions**.
+1. Create a new file in the `Classes_M3` project for a class named **Transactions**.
 
-    Transactions.cs
+    Your Transactions.cs file should look similar to the following code:
+
+    ```csharp
+
+    using System;
+    
+    namespace Classes_M3;
+    
+    public class Transactions
+    {
+
+    }
+
+    ```
+
+1. Add the `static` keyword to the class definition to make it a static class.
 
     ```csharp
 
@@ -304,6 +363,8 @@ Use the following steps to complete this section of the exercise:
 1. Open the BankAccount.cs file.
 
 1. Move the `Deposit`, `Withdraw`, `Transfer`, and `ApplyInterest` methods from the `BankAccount` class to the `Transactions` class.
+
+    Your updated Transactions.cs file should look like this:
 
     ```csharp
 
@@ -350,12 +411,50 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. Update the methods in the Transactions class to use the `BankAccount` class as a parameter.
+1. Take a moment to consider the `Deposit` method.
 
     ```csharp
 
+    // Method to deposit money into the account
+    public void Deposit(double amount)
+    {
+        if (amount > 0)
+        {
+            Balance += amount;
+        }
+    }
+
+    ```
+
+    The `Deposit` method came from the `BankAccount` class, where it could access the `Balance` property directly. However, the `Balance` property is no longer available in the `Transactions` class. To update the `Deposit` method, you need to update the method signature to accept a `BankAccount` parameter, and then use the `BankAccount` instance to access the `Balance` property.
+
+1. To add a `BankAccount` parameter and reference the the account object, update the method similar to the following code snippet:
+
+    ```csharp
+
+    // Method to deposit money into the account
+    public static void Deposit(BankAccount account, double amount)
+    {
+        if (amount > 0)
+        {
+            account.Balance += amount;
+        }
+    }
+    
+    ```
+
+    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`. The method uses the `account` parameter to access the `Balance` property and update the account balance.
+
+1. Repeat the same process to update the remaining methods in the BankAccount class.
+
+1. Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the `Balance` property.
+
+    Your updated Transactions class should look similar to the following code snippet:
+
+    ```csharp
     public static class Transactions
     {
+
         // Method to deposit money into the account
         public static void Deposit(BankAccount account, double amount)
         {
@@ -428,9 +527,39 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. Update the code to use the `Transactions` class for depositing, withdrawing, transferring funds, and applying interest to bank accounts.
+1. Notice that the code in the Program.cs file uses `BankAccount` objects to access the `Deposit`, `Withdraw`, `Transfer`, and `ApplyInterest` methods.
+
+    For example:
 
     ```csharp
+
+    // Deposit
+    Console.WriteLine("Depositing 500 into Account 1...");
+    account1.Deposit(500);
+    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
+
+    ```
+
+1. To use the `Transactions.Deposit()` for the deposit into `account1`, update your code to match the following code snippet:
+
+    ```csharp
+
+    // Deposit
+    Console.WriteLine("Depositing 500 into Account 1...");
+    Transactions.Deposit(account1, 500);
+    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
+
+    ```
+
+1. Use the same approach to implement the `Withdraw`, `Transfer`, and `ApplyInterest` methods.
+
+1. Ensure that your code uses the `Transactions` class for all transactional methods in the Program.cs file.
+
+    Your updated Program.cs file should look similar to the following code snippet:
+
+    ```csharp
+
+    // code removed for brevity
 
     // Step 4: Demonstrate the use of BankAccount methods
     Console.WriteLine("\nDemonstrating BankAccount methods...");
@@ -455,181 +584,6 @@ Use the following steps to complete this section of the exercise:
     Console.WriteLine("Applying interest to Account 1...");
     Transactions.ApplyInterest(account1);
     Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
-
-    ```
-
-1. Take a minute to review your updated code files.
-
-    Transactions.cs
-
-    ```csharp
-    
-    using System;
-    
-    namespace Classes_M3;
-    
-    public static class Transactions
-    {
-        // Method to deposit money into the account
-        public static void Deposit(BankAccount account, double amount)
-        {
-            if (amount > 0)
-            {
-                account.Balance += amount;
-            }
-        }
-    
-        // Method to withdraw money from the account
-        public static bool Withdraw(BankAccount account, double amount)
-        {
-            if (amount > 0 && account.Balance >= amount)
-            {
-                account.Balance -= amount;
-                return true;
-            }
-            return false;
-        }
-    
-        // Method to transfer money to another account
-        public static bool Transfer(BankAccount sourceAccount, BankAccount targetAccount, double amount)
-        {
-            if (Withdraw(sourceAccount, amount))
-            {
-                Deposit(targetAccount, amount);
-                return true;
-            }
-            return false;
-        }
-    
-        // Method to apply interest to the account balance
-        public static void ApplyInterest(BankAccount account)
-        {
-            account.Balance += account.Balance * BankAccount.interestRate;
-        }
-    }
-    
-    ```
-
-    BankAccount.cs
-
-    ```csharp
-    
-    using System;
-    
-    namespace Classes_M3;
-    
-    public class BankAccount
-    {
-        private static int nextAccountNumber;
-        public static double interestRate;
-        public int AccountNumber { get; }
-        public string CustomerId { get; }
-        public double Balance { get; set; } = 0;
-        public string AccountType { get; set; } = "Checking";
-    
-        static BankAccount()
-        {
-            Random random = new Random();
-            nextAccountNumber = random.Next(10000000, 20000000);
-            interestRate = 0;
-        }
-    
-        public BankAccount(string customerIdNumber)
-        {
-            this.AccountNumber = nextAccountNumber++;
-            this.CustomerId = customerIdNumber;
-        }
-    
-        public BankAccount(string customerIdNumber, double balance, string accountType)
-        {
-            this.AccountNumber = nextAccountNumber++;
-            this.CustomerId = customerIdNumber;
-            this.Balance = balance;
-            this.AccountType = accountType;
-        }
-    
-        // Method to display account information
-        public string DisplayAccountInfo()
-        {
-            return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
-        }
-    }
-    
-    ```
-
-    Program.cs
-
-    ```csharp
-    
-    // Step 1: Create BankCustomer objects
-    Console.WriteLine("Creating BankCustomer objects...");
-    string firstName = "Tim";
-    string lastName = "Shao";
-    
-    BankCustomer customer1 = new BankCustomer(firstName, lastName);
-    
-    firstName = "Lisa";
-    BankCustomer customer2 = new BankCustomer(firstName, lastName);
-    
-    firstName = "Sandy";
-    lastName = "Zoeng";
-    BankCustomer customer3 = new BankCustomer(firstName, lastName);
-    
-    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
-    
-    // Step 2: Create BankAccount objects for customers
-    Console.WriteLine("\nCreating BankAccount objects for customers...");
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
-    
-    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.CustomerId}");
-    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.CustomerId}");
-    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.CustomerId}");
-    
-    // Step 3: Demonstrate the use of BankCustomer properties
-    Console.WriteLine("\nUpdating BankCustomer 1's name...");
-    customer1.FirstName = "Thomas";
-    customer1.LastName = "Margand";
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    
-    // Step 4: Demonstrate the use of BankAccount methods
-    Console.WriteLine("\nDemonstrating BankAccount methods...");
-    
-    // Deposit
-    Console.WriteLine("Depositing 500 into Account 1...");
-    Transactions.Deposit(account1, 500);
-    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
-    
-    // Withdraw
-    Console.WriteLine("Withdrawing 200 from Account 2...");
-    bool withdrawSuccess = Transactions.Withdraw(account2, 200);
-    Console.WriteLine($"Account 2 after withdrawal: Balance = {account2.Balance}, Withdrawal successful: {withdrawSuccess}");
-    
-    // Transfer
-    Console.WriteLine("Transferring 300 from Account 3 to Account 1...");
-    bool transferSuccess = Transactions.Transfer(account3, account1, 300);
-    Console.WriteLine($"Account 3 after transfer: Balance = {account3.Balance}, Transfer successful: {transferSuccess}");
-    Console.WriteLine($"Account 1 after receiving transfer: Balance = {account1.Balance}");
-    
-    // Apply interest
-    Console.WriteLine("Applying interest to Account 1...");
-    Transactions.ApplyInterest(account1);
-    Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
-    
-    // Step 5: Demonstrate the use of extension methods
-    Console.WriteLine("\nDemonstrating extension methods...");
-    Console.WriteLine(customer1.GreetCustomer());
-    Console.WriteLine($"Is customer1 ID valid? {customer1.IsValidCustomerId()}");
-    Console.WriteLine($"Can account2 withdraw 2000? {account2.CanWithdraw(2000)}");
-    Console.WriteLine($"Is account3 overdrawn? {account3.IsOverdrawn()}");
-    
-    // Step 6: Display customer and account information
-    Console.WriteLine("\nDisplaying customer and account information...");
-    Console.WriteLine(customer1.DisplayCustomerInfo());
-    Console.WriteLine(account1.DisplayAccountInfo());
 
     ```
 
@@ -959,6 +913,9 @@ Use the following steps to complete this section of the exercise:
     Account 5 (copy of account4): Account # 12475147, type Savings, balance 3000, rate 0, customer ID 0011223011
 
     ```
+
+> [!TIP]
+> If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can the solution code In the samples that you downloaded at the beginning of this exercise. To view the solution navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
 
 ## Clean up
 
