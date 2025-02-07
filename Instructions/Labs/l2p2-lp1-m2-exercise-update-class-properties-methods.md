@@ -7,7 +7,7 @@ lab:
 
 # Update a class with properties and methods
 
-Classes use properties and methods to encapsulate data and behavior. Properties define the data that a class contains, and methods define the behavior that the class can perform
+Classes use properties and methods to encapsulate data and behavior. Properties define the data that a class contains, and methods define the behavior that the class can perform.
 
 In this exercise, you update an existing code project by developing properties and methods.
 
