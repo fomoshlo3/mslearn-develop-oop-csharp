@@ -5,17 +5,17 @@ lab:
 ---
 
 
-# Implement classes in C# applications
+# Manage class implementations
 
-Class implementation affects the readability, maintainability, and organization of your code. Implementation techniques such as static classes, partial classes, and object initializers can improve your code. In this exercise, you update an existing code project by developing properties and methods.
+The term code quality refers to the overall readability, maintainability, efficiency, reusability, reliability, and testability of your code. By improving code quality, you can make your code easier to understand, modify, and extend. Object-oriented programming (OOP) provides several features that can help you improve code quality, such as static and partial classes, nested classes, optional and named parameters, copy constructors, and object initializers. These features can help you organize your code more effectively, reduce redundancy, and make your code more flexible and concise.
 
-In this exercise, you update an existing code project by developing properties and methods.
+In this exercise, you improve an existing application's code quality by implementing static and partial classes, and by using optional parameters in class constructors. You also improve object management in your application code by implementing copy constructors and object initializers.
 
-This exercise takes approximately **35** minutes to complete.
+This exercise takes approximately **30** minutes to complete.
 
 ## Before you start
 
-Before you can start this exercise, you will need to...
+Before you can start this exercise, you need to:
 
 1. Ensure that you have the latest LTS version of the .NET SDK installed on your computer. You can download the latest version of the .NET SDK from the following URL: [https://dotnet.microsoft.com/download](https://dotnet.microsoft.com/download)
 1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code from the following URL: [https://code.visualstudio.com/](https://code.visualstudio.com/)
@@ -25,7 +25,7 @@ For additional help configuring the Visual Studio Code environment, see [https:/
 
 ## Exercise scenario
 
-Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You have an initial version of the app that includes the following files:
+Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You've developed an initial version of the app that includes the following files:
 
 - BankAccount.cs: The BankAccount class represents a bank account with properties for account number, customer ID, balance, and account type. It includes methods for depositing, withdrawing, transferring funds, applying interest, and displaying account information. It also maintains static properties for the next account number and interest rate.
 - BankCustomer.cs: The BankCustomer class represents a bank customer with properties for first name, last name, and a unique customer ID. It includes methods to return the full name, update the customer's name, and display customer information. It also maintains a static property for the next customer ID.
@@ -61,11 +61,12 @@ Use the following steps to complete this section of the exercise:
 
 1. Use Visual Studio Code to open the **Starter** folder.
 
+1. In the EXPLORER view, collapse the **STARTER** folder, select **SOLUTION EXPLORER**, and expand the **Classes_M3** project.
+
     You should see the following project files:
 
     - BankAccount.cs
     - BankCustomer.cs
-    - Classes_M3.csproj
     - Extensions.cs
     - Program.cs
 
@@ -74,6 +75,8 @@ Use the following steps to complete this section of the exercise:
     The `BankAccount` class represents a bank account with properties and methods to manage account operations.
 
     Notice that the class includes static fields `nextAccountNumber` and `interestRate`, which track the next account number and the interest rate applied to accounts, respectively. Each `BankAccount` instance has properties such as `AccountNumber`, `CustomerId`, `Balance`, and `AccountType`, with default values for balance and account type. The class includes constructors for initializing accounts with or without an initial balance and account type. Methods provided by the class include `Deposit` for adding funds, `Withdraw` for removing funds, `Transfer` for transferring funds between accounts, `ApplyInterest` for applying interest to the balance, and `DisplayAccountInfo` for displaying account details. The class also features a static constructor to initialize static fields.
+
+    The `this` keyword is used to access the properties of the current class instance. For example, `this.AccountNumber` refers to the `AccountNumber` property of the current `BankAccount` instance.
 
 1. Open the BankCustomer.cs file and take a minute to review the BankCustomer class.
 
@@ -97,7 +100,9 @@ Use the following steps to complete this section of the exercise:
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    To run your app, right-click the **Classes_M3** project in the Solution Explorer, select **Debug**, and then select **Start New Instance**.
+
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -137,7 +142,10 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    You should now be familiar with the existing code for the banking app. In the remaining tasks, you'll restructure the class implementations to improve code readability and maintainability.
+    The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
+
+    > [!TIP]
+    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can the solution code In the samples that you downloaded at the beginning of this exercise. To view the solution navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
 
 ## Split the BankCustomer class into two partial class files
 
@@ -149,7 +157,24 @@ Use the following steps to complete this section of the exercise:
 
 1. Create a new class file for a class named **BankCustomerMethods**.
 
-1. Update the BankCustomerMethods.cs file to include the following code:
+    Your code file should look similar to the following code snippet:
+
+    ```csharp
+
+    using System;
+    
+    namespace Classes_M3;
+    
+    public class BankCustomerMethods
+    {
+    
+    }
+
+    ```
+
+    You can use the `Classes_M3` project to create new class file named BankCustomerMethods. Right-click the **Classes_M3** project in the Solution Explorer, select **New File**, select **Class**, and then enter **BankCustomerMethods**.
+
+1. Update the BankCustomerMethods.cs file to match the following code:
 
     ```csharp
 
@@ -163,6 +188,8 @@ Use the following steps to complete this section of the exercise:
     }
 
     ```
+
+    The `partial` keyword indicates that the `BankCustomer` class is defined in multiple files.
 
 1. Open the BankCustomer.cs file.
 
@@ -183,7 +210,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. Move the `FullName`, `UpdateName`, `DisplayCustomerInfo`, `Equals`, and `GetHashCode` methods to the BankCustomerMethods.cs file.
+    The `BankCustomer` class is now split between the BankCustomer.cs and BankCustomerMethods.cs files.
+
+1. Move the `ReturnFullName`, `UpdateName`, and `DisplayCustomerInfo` methods to the BankCustomerMethods.cs file.
 
 1. Take a minute to review your updated code files.
 
@@ -214,22 +243,6 @@ Use the following steps to complete this section of the exercise:
         public string DisplayCustomerInfo()
         {
             return $"Customer ID: {customerId}, Name: {FullName()}";
-        }
-    
-        // Override Equals method to compare customers by customerId
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-    
-            BankCustomer other = (BankCustomer)obj;
-            return customerId == other.customerId;
-        }
-    
-        // Override GetHashCode method
-        public override int GetHashCode()
-        {
-            return customerId.GetHashCode();
         }
     }
     
@@ -282,7 +295,7 @@ Use the following steps to complete this section of the exercise:
 
     Splitting a class into two partial class files can improve code organization, but shouldn't affect the functionality of the app. The BankCustomer class should still work as expected, and you should see the same output in the terminal window.
 
-    Verify that you see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -411,6 +424,13 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
+1. Notice that the Visual Studio Code environment uses red squiggly lines to indicate errors in your code.
+
+    There are two issues that you need to address:
+
+    - The methods in a static class must be static, so you need to update the method signatures to include the `static` keyword.
+    - The properties and fields defined by the `BankAccount` class are not directly accessible in the `Transactions` class. You need to update the method signatures to accept a `BankAccount` parameter and use the `BankAccount` instance to access properties within the static methods.
+
 1. Take a moment to consider the `Deposit` method.
 
     ```csharp
@@ -428,7 +448,7 @@ Use the following steps to complete this section of the exercise:
 
     The `Deposit` method came from the `BankAccount` class, where it could access the `Balance` property directly. However, the `Balance` property is no longer available in the `Transactions` class. To update the `Deposit` method, you need to update the method signature to accept a `BankAccount` parameter, and then use the `BankAccount` instance to access the `Balance` property.
 
-1. To add a `BankAccount` parameter and reference the the account object, update the method similar to the following code snippet:
+1. To include a `BankAccount` parameter to the signature and then reference the account object within the method, update the `Deposit` method to match the following code snippet:
 
     ```csharp
 
@@ -443,11 +463,18 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
-    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`. The method uses the `account` parameter to access the `Balance` property and update the account balance.
+    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property. The `account.Balance` property is updated using `amount` parameter.
 
-1. Repeat the same process to update the remaining methods in the BankAccount class.
+1. Repeat this method update process to correct the issues in the remaining `Transactions` class methods.
 
-1. Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the `Balance` property.
+    Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the required properties and fields.
+
+    > [!IMPORTANT]
+    > Remember that static fields are accessed using the class name, not an instance of the class. For example, to access the `interestRate` field, you use `BankAccount.interestRate`.
+    >
+    > Also, keep in mind that the `Transfer` method uses the updates `Deposit` and `Withdraw` methods in the `Transactions` class, not the old methods from the `BankAccount` class. Ensure that you update the `Withdraw` and `Deposit` method signatures within the `Transfer` method to accept `BankAccount` and `amount` parameters. For example, the `Withdraw` method should be updated to `Withdraw(sourceAccount, amount)` and the `Deposit` method should be updated to `Deposit(targetAccount, amount)`.
+
+1. Take a minute to review your updated Transactions class.
 
     Your updated Transactions class should look similar to the following code snippet:
 
@@ -553,6 +580,8 @@ Use the following steps to complete this section of the exercise:
 
 1. Use the same approach to implement the `Withdraw`, `Transfer`, and `ApplyInterest` methods.
 
+    For the `Transfer` method, the account used to access the old method becomes the first parameter in the new method. The account that was passed as a parameter to the old method becomes the second parameter in the new method. The amount parameter remains as the final parameter.
+
 1. Ensure that your code uses the `Transactions` class for all transactional methods in the Program.cs file.
 
     Your updated Program.cs file should look similar to the following code snippet:
@@ -585,13 +614,15 @@ Use the following steps to complete this section of the exercise:
     Transactions.ApplyInterest(account1);
     Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
 
+    // code removed for brevity
+
     ```
 
 1. Run the app to ensure that your static class updates didn't introduce any bugs.
 
     By moving the transactional methods to a static class, you can organize your code more effectively and improve the readability and maintainability of your code. The BankAccount class should still work as expected, and you should see the same output in the terminal window.
 
-    Verify that you see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -719,13 +750,7 @@ In this task, you update a constructor in the BankAccount class using optional p
             interestRate = 0;
         }
     
-        public BankAccount(string customerIdNumber)
-        {
-            this.AccountNumber = nextAccountNumber++;
-            this.CustomerId = customerIdNumber;
-        }
-    
-        public BankAccount(string customerIdNumber, double balance, string accountType)
+        public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
         {
             this.AccountNumber = nextAccountNumber++;
             this.CustomerId = customerIdNumber;
@@ -745,7 +770,7 @@ In this task, you update a constructor in the BankAccount class using optional p
 
 1. Run the app to ensure that your optional parameter updates didn't introduce any bugs.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -792,7 +817,7 @@ Object initializers and copy constructors are useful techniques for creating and
 - Copy constructors allow you to create a new object that's a copy of an existing object. This is useful when you need to duplicate objects with the same state.
 - Object initializers allow you to initialize an object and set its properties in a single statement. This can make the code more concise and readable.
 
-In this task, you implement copy constructors and object initializers by updating `BankCustomer`, `BankAccount`, and the demonstration code in Program.cs.
+In this task, you implement copy constructors and object initializers by updating constructors in the `BankCustomer` and `BankAccount` classes, and the demonstration code in Program.cs.
 
 Use the following steps to complete this section of the exercise:
 
@@ -868,7 +893,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -913,9 +938,6 @@ Use the following steps to complete this section of the exercise:
     Account 5 (copy of account4): Account # 12475147, type Savings, balance 3000, rate 0, customer ID 0011223011
 
     ```
-
-> [!TIP]
-> If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can the solution code In the samples that you downloaded at the beginning of this exercise. To view the solution navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
 
 ## Clean up
 

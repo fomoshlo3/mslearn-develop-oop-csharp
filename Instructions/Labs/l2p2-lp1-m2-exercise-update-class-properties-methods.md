@@ -7,7 +7,7 @@ lab:
 
 # Update a class with properties and methods
 
-Classes use properties and methods to encapsulate data and behavior. Properties define the data that a class contains, and methods define the behavior that the class can perform.
+Classes use properties and methods to encapsulate data and behavior. Properties define the data that a class contains, and methods define the behavior that the class performs.
 
 In this exercise, you update an existing code project by developing properties and methods.
 
@@ -15,7 +15,7 @@ This exercise takes approximately **35** minutes to complete.
 
 ## Before you start
 
-Before you can start this exercise, you will need to:
+Before you can start this exercise, you need to:
 
 1. Ensure that you have the latest LTS version of the .NET SDK installed on your computer. You can download the latest version of the .NET SDK from the following URL: [https://dotnet.microsoft.com/download](https://dotnet.microsoft.com/download)
 1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code from the following URL: [https://code.visualstudio.com/](https://code.visualstudio.com/)
@@ -25,7 +25,7 @@ For additional help configuring the Visual Studio Code environment, see [https:/
 
 ## Exercise scenario
 
-Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You have an initial version of the app that includes the following files:
+Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You've developed an initial version of the app that includes the following files:
 
 - BankCustomer.cs: The BankCustomer class includes fields for first name, last name, and customer ID. The class also includes constructors that initialize the fields.
 - BankAccount.cs: The BankAccount class includes fields for account number, balance, interest rate, account type, and customer ID. The class also includes constructors that initialize the fields.
@@ -62,11 +62,12 @@ Use the following steps to complete this section of the exercise:
 
 1. Use Visual Studio Code to open the **Starter** folder.
 
+1. In the EXPLORER view, collapse the **STARTER** folder, select **SOLUTION EXPLORER**, and expand the **Classes_M2** project.
+
     You should see the following project files:
 
     - BankAccount.cs
     - BankCustomer.cs
-    - Classes_M2.csproj
     - Program.cs
 
 1. Open the BankCustomer.cs file.
@@ -106,6 +107,9 @@ Use the following steps to complete this section of the exercise:
     The `BankCustomer` class includes fields for `fname` (first name), `lName` (last name), `customerId` (customer ID), and a static field `nextCustomerId`. The `nextCustomerId` field is used to generate a unique customer ID for each customer.
 
     The `BankCustomer` class also includes two constructors. The first constructor is a static constructor that initializes the `nextCustomerId` field with a random number eight-digit integer. The second constructor takes two parameters, `firstName` and `lastName`, and initializes the `fname` and `lName` fields with the values of the parameters. The constructor also increments `nextCustomerId` and uses the value to assign a unique value to `customerId`.
+
+    > [!NOTE]
+    > The `this` keyword refers to the current instance of the class. It's used to access fields, properties, and methods of the current instance. In the `BankCustomer` class, the `this` keyword is used to access the read-only `customerId` field. The `this` keyword is not required in this context, but it's used for clarity. The `this` keyword is not available in a static constructor.
 
 1. Open the BankAccount.cs file.
 
@@ -208,15 +212,20 @@ Use the following steps to complete this section of the exercise:
 
     The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
+    > [!TIP]
+    > To run your app, right-click the **Classes_M2** project in the Solution Explorer, select **Debug**, and then select **Start New Instance**. If you don't see the **Debug** option listed, ensure that you've selected the **Classes_M2** project in the Solution Explorer. The **Debug** option isn't available when the **Classes_M2** solution is selected.
+
 ## Implement properties for the BankCustomer class
 
-In this task, you create properties for the `BankCustomer` class using `get` and `set` property accessors. Properties are used to encapsulate data and provide controlled access to the fields of a class. You create properties for the `FirstName` and `LastName` fields of the `BankCustomer` class. You also update the `Program.cs` file to use the new properties.
+Properties are used to encapsulate data and provide controlled access to the fields of a class. Properties use property accessors to read (get) and write (set) the values of fields. In C#, properties are defined using the `get` and `set` accessors.
+
+In this task, you create `FirstName` and `LastName` properties for the `BankCustomer` class using `get` and `set` property accessors. The `get` and `set` accessors provide controlled access to the private fields `fName` and `lName`. You also update the `Program.cs` file to use the new properties.
 
 Use the following steps to complete this section of the exercise:
 
 1. Open the BankCustomer.cs file.
 
-1. To create a property for the `FirstName` field, add the following code to the bottom of `BankCustomer` class:
+1. To create a `FirstName` property that accesses the `fName` field, add the following code to the bottom of `BankCustomer` class:
 
     ```csharp
 
@@ -236,7 +245,7 @@ Use the following steps to complete this section of the exercise:
 
     The `set` accessor is used to assign a new value to the private field `fName`. The keyword `value` represents the value being assigned to the property. When a new value is assigned to `FirstName`, the `set` accessor sets `fName` to this new value.
 
-1. To create a property for the `LastName` field, add the following code to the bottom of the `BankCustomer` class:
+1. To create a `LastName` property that accesses the `lName` field, add the following code to the bottom of the `BankCustomer` class:
 
     ```csharp
 
@@ -267,7 +276,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To implement the new `BankCustomer` properties, replace the code identified in the previous step with the following code snippet:
+1. To implement the new `BankCustomer` properties, replace the code statements identified in the previous step with the following code snippet:
 
     ```csharp
 
@@ -289,9 +298,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code also demonstrates setting the `FirstName` and `LastName` properties top change the name of `customer1`.
+    Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code also demonstrates setting the `FirstName` and `LastName` properties to change the name of `customer1`.
 
-    You may also notice commented code line that assigns a value to the `customerId` field directly. The `customerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, the code will not compile.
+    You may also notice the commented code line that assigns a value to the `customerId` field directly. The `customerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, the code will not compile.
 
 1. Take a minute to review your code.
 
@@ -366,7 +375,6 @@ Use the following steps to complete this section of the exercise:
     
     Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
     
-    
     Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
     Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
     Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
@@ -375,7 +383,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -390,6 +398,8 @@ Use the following steps to complete this section of the exercise:
     ```
 
 ## Create automatically implemented properties for the BankAccount class
+
+Automatically implemented properties provide a simplified syntax for defining properties in C#. They automatically create a private, anonymous backing field that stores the property value. This allows you to define properties without explicitly defining the private fields that store the property values.
 
 In this task, you create automatically implemented properties for the BankAccount class.
 
@@ -417,15 +427,16 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Balance` and `AccountType` properties are automatically implemented properties. They encapsulates the private fields `balance` and `accountType` and provides controlled access to them.
+    The `Balance` and `AccountType` properties are automatically implemented properties that encapsulate anonymous backing fields that store the property values. The anonymous backing fields (`balance` and `accountType`) are created automatically by the C# compiler, so they're not explicitly defined in the code.
 
-    The `public` keyword indicates that the properties are accessible from outside the class, meaning other classes and code can read and modify the properties.
+    The `public` keyword indicates that the properties are accessible from outside the class, meaning other classes and code can read and write property values.
 
     The properties have two accessors: `get` and `set`. The `get` accessor is used to retrieve the value of the private field. When the property is accessed, the `get` accessor returns the current value of the private field.
 
-    The `set` accessor is used to assign a new value to the private field. The keyword `value` represents the value being assigned to the property. When a new value is assigned to the property, the `set` accessor sets the private field to this new value.
+    The `set` accessor is used to assign a new value to the private field. The `value` keyword represents the value being assigned to the property. When a new value is assigned to the property, the `set` accessor assigns `value` to the private field.
 
-    The code doesn't need to define private fields for `balance` and `accountType` because it uses auto-implemented properties for these fields. Auto-implemented properties in C# automatically create a private, anonymous backing field that stores the property value.
+    > [!NOTE]
+    > Your code doesn't explicitly define the anonymous backing fields (`balance` and `accountType`) for auto-implemented properties. The C# compiler automatically creates these fields for auto-implemented properties.
 
 1. Notice that the final constructor is still assigning values to the `balance` and `accountType` fields.
 
@@ -445,7 +456,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    This updated constructor uses the `Balance` and `AccountType` properties to set the values of the private fields `balance` and `accountType`.
+    Your updated constructor uses the `balance` and `accountType` parameters to assign values to the `Balance` and `AccountType` properties.
 
 1. Open the Program.cs file.
 
@@ -459,13 +470,13 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To implement the new `BankAccount` properties, replace the code identified in the previous step with the following code snippet:
+1. To implement the new `BankAccount` properties, replace the code statements identified in the previous step with the following code snippet:
 
     ```csharp
 
-    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.CustomerId}");
-    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.CustomerId}");
-    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.CustomerId}");
+    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
+    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
+    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
 
     ```
 
@@ -546,7 +557,6 @@ Use the following steps to complete this section of the exercise:
     
     Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
     
-    
     Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
     Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
     Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
@@ -555,7 +565,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -571,15 +581,15 @@ Use the following steps to complete this section of the exercise:
 
 ## Create read-only properties for the BankAccount class
 
-In this task, you create read-only properties in the BankAccount classes.
+Read-only properties provide controlled access to the fields of a class by allowing the values of the properties to be read but not modified. Read-only properties are useful for ensuring that the state of an object remains consistent and can't be changed after the object is constructed.
+
+In this task, you create read-only properties in the BankAccount class.
 
 Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-1. Locate the two read-only fields in the `BankAccount` class: `accountNumber` and `customerId`.
-
-    The `accountNumber` field is read-only and is set in the constructor. The `customerId` field is read-only and is set in the constructor.
+1. Locate the two read-only fields: `accountNumber` and `customerId`.
 
     ```csharp
 
@@ -587,6 +597,8 @@ Use the following steps to complete this section of the exercise:
     public readonly string customerId;
 
     ```
+
+    The read-only fields `accountNumber` and `customerId` are both initialized in the constructors. The `accountNumber` field is initialized with a unique value, and the `customerId` field is initialized with the value of the `customerIdNumber` parameter.
 
 1. To convert the `accountNumber` and `customerId` fields to read-only properties, replace the `accountNumber` and `customerId` field declarations with the following code:
 
@@ -597,11 +609,11 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `{ get; }` syntax indicates that these properties are read-only, meaning they can be accessed (read) but not modified (written) after the object is constructed. This is useful for ensuring that the account number and customer ID remain constant once they are set.
+    The `{ get; }` syntax indicates that these properties are read-only, meaning they can be accessed (read) but not updated (written) after the object is constructed. This is useful for ensuring that the account number and customer ID remain constant once they are set.
 
     Read-only properties provide a level of immutability (the object's state can't be modified after it's created) and help to protect the integrity of the account data.
 
-1. To update the two `BankAccount` constructors, replace the existing constructors with the following code:
+1. To implement the new properties in the two `BankAccount` instance constructors, replace the existing constructors with the following code:
 
     ```csharp
 
@@ -621,7 +633,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The updated constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `accountNumber` and `customerId`.
+    The updated instance constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `accountNumber` and `customerId`.
 
 1. Open the Program.cs file.
 
@@ -645,91 +657,11 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that your code now uses the `AccountNumber` and `CustomerId` properties of the `BankAccount` class to access the account number and customer ID of each account.
-
-1. Take a minute to review your code.
-
-    BankAccount.cs
-
-    ```csharp
-
-    public class BankAccount
-    {
-        private static int nextAccountNumber;
-        public static double interestRate;
-        public int AccountNumber { get; }
-        public string CustomerId { get; }
-        public double Balance { get; set; } = 0;
-        public string AccountType { get; set; } = "Checking";
-    
-    
-        static BankAccount()
-        {
-            Random random = new Random();
-            nextAccountNumber = random.Next(10000000, 20000000);
-            interestRate = 0;
-        }
-    
-        public BankAccount(string customerIdNumber)
-        {
-            this.AccountNumber = nextAccountNumber++;
-            this.CustomerId = customerIdNumber;
-        }
-    
-        public BankAccount(string customerIdNumber, double balance, string accountType)
-        {
-            this.AccountNumber = nextAccountNumber++;
-            this.CustomerId = customerIdNumber;
-            this.Balance = balance;
-            this.AccountType = accountType;
-        }
-    }
-
-    ```
-
-    Program.cs
-
-    ```csharp
-
-    using Classes_M1;
-    
-    string firstName = "Tim";
-    string lastName = "Shao";
-    
-    BankCustomer customer1 = new BankCustomer(firstName, lastName);
-    
-    firstName = "Lisa";
-    BankCustomer customer2 = new BankCustomer(firstName, lastName);
-    
-    firstName = "Sandy";
-    lastName = "Zoeng";
-    BankCustomer customer3 = new BankCustomer(firstName, lastName);
-    
-    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
-    
-    // Create accounts for customers
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
-    
-    // Demonstrate the use of BankCustomer properties
-    customer1.FirstName = "Thomas";
-    customer1.LastName = "Margand";
-    // customer1.customerId = "1234567890"; // This line will not compile
-    
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
-
-    ```
+    Your code now uses the `AccountNumber` and `CustomerId` properties of the `BankAccount` class to access the account number and customer ID of each account.
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -761,6 +693,7 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
+    // Method to return the full name of the customer
     public string ReturnFullName()
     {
         return $"{FirstName} {LastName}";
@@ -774,6 +707,7 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
+    // Method to update the customer's name
     public void UpdateName(string firstName, string lastName)
     {
         FirstName = firstName;
@@ -788,6 +722,7 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
+    // Method to display customer information
     public string DisplayCustomerInfo()
     {
         return $"Customer ID: {customerId}, Name: {ReturnFullName()}";
@@ -801,12 +736,13 @@ Use the following steps to complete this section of the exercise:
 
     The `BankAccount` class has a `Balance` property and `interestRate` field. These two class members can be used to create methods to deposit and withdraw money from the account, transfer money to another account, display account information, and apply interest to the account balance.
 
-1. Create a blank code line below the constructors.
+1. Create a blank code line below the last constructor.
 
 1. To create a method that deposits money into the account, add the following code:
 
     ```csharp
 
+    // Method to deposit money into the account
     public void Deposit(double amount)
     {
         if (amount > 0)
@@ -823,6 +759,7 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
+    // Method to withdraw money from the account
     public bool Withdraw(double amount)
     {
         if (amount > 0 && Balance >= amount)
@@ -841,6 +778,7 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
+    // Method to transfer money to another account
     public bool Transfer(BankAccount targetAccount, double amount)
     {
         if (Withdraw(amount))
@@ -855,10 +793,11 @@ Use the following steps to complete this section of the exercise:
 
     The `Transfer` method takes a `BankAccount` object and an amount as parameters. It withdraws the amount from the current account and deposits it into the target account. The method returns `true` if the transfer is successful and `false` otherwise.
 
-1. To create a mthod that applies interest to the account balance, add the following code:
+1. To create a method that applies interest to the account balance, add the following code:
 
     ```csharp
 
+    // Method to apply interest to the account
     public void ApplyInterest()
     {
         Balance += Balance * interestRate;
@@ -866,12 +805,13 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `ApplyInterest` method calculates the interest on the account balance using the `interestRate` field and adds the interest to the `Balance` property. At this point, the `interestRate` field is a static field that is shared among all instances of the `BankAccount` class. Since interest rate is initialized to 0, the `ApplyInterest` method doesn't actually apply any interest. You can update the `interestRate` field to a non-zero value to see the effect of the `ApplyInterest` method.
+    The `ApplyInterest` method calculates the interest on the account balance using the `interestRate` field and adds the interest to the `Balance` property. At this point, the `interestRate` field is a static field that's shared among all instances of the `BankAccount` class. Since interest rate is initialized to 0, the `ApplyInterest` method doesn't actually apply any interest. You can update the `interestRate` field to a non-zero value in the static constructor to see the effect of the `ApplyInterest` method.
 
 1. To create a method that displays account information, add the following code:
 
     ```csharp
 
+    // Method to display account information
     public string DisplayAccountInfo()
     {
         return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
@@ -881,7 +821,7 @@ Use the following steps to complete this section of the exercise:
 
     The `DisplayAccountInfo` method returns a string that includes the account number, account type, balance, interest rate, and customer ID.
 
-1. Take a minute to review your updated `BankCustomer` and `BankAccount` classes.
+1. Take a minute to verify your updated `BankCustomer` and `BankAccount` classes.
 
     BankCustomer.cs
 
@@ -1005,6 +945,12 @@ Use the following steps to complete this section of the exercise:
             }
             return false;
         }
+
+        // Method to apply interest to the account
+        public void ApplyInterest()
+        {
+            Balance += Balance * interestRate;
+        }
     
         // Method to display account information
         public string DisplayAccountInfo()
@@ -1043,7 +989,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To replace the default `Extensions` class with an extension class for the `BankCustomer` class, update your class file to match the following code:
+1. To create a class that contains the extension methods for the `BankCustomer` class, replace the contents of the Extensions.cs file with the following code:
 
     ```csharp
 
@@ -1073,7 +1019,7 @@ Use the following steps to complete this section of the exercise:
     - `IsValidCustomerId`: This method checks if the customer ID is valid by verifying that the length of the customer ID is 10.
     - `GreetCustomer`: This method greets the customer by returning a string that says "Hello" followed by the customer's full name. The extension method uses the `ReturnFullName` method of the `BankCustomer` class to get the full name.
 
-1. To create extension methods for the `BankAccount` class, add the following code:
+1. To create a class that contains the extension methods for the `BankAccount` class, add the following class definition to the end of the `Extensions` file:
 
     ```csharp
 
@@ -1098,9 +1044,9 @@ Use the following steps to complete this section of the exercise:
     - `IsOverdrawn`: This method checks if the account is overdrawn by verifying that the balance is less than zero.
     - `CanWithdraw`: This method checks if a specified amount can be withdrawn from the account by verifying that the balance is greater than or equal to the specified amount.
 
-1. Take a minute to review the extension methods:
+1. Take a minute to review the Extensions.cs file:
 
-    ```C#
+    ```csharp
 
     using System;
     
@@ -1143,7 +1089,7 @@ Use the following steps to complete this section of the exercise:
 
 ## Update the Program.cs file to demonstrate the updated classes, properties, and methods
 
-In this task, you update the Program.cs file to demonstrate the following steps:
+In this task, you update the Program.cs file with code that demonstrate the following steps:
 
 1. Create BankCustomer objects.
 1. Create BankAccount objects for the instantiated customers.
@@ -1234,9 +1180,15 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
+1. Notice that steps 4-6 demonstrate the use of the BankCustomer and BankAccount methods and extension methods.
+
+    - Step 4 demonstrates the use of BankAccount methods to deposit, withdraw, transfer, and apply interest to the account balance.
+    - Step 5 demonstrates the use of extension methods to greet the customer, check if the customer ID is valid, check if the account is overdrawn, and check if a specified amount can be withdrawn.
+    - Step 6 displays customer and account information using the DisplayCustomerInfo and DisplayAccountInfo methods.
+
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 

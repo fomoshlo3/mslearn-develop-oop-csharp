@@ -549,7 +549,7 @@ Use the following steps to complete this task:
     The updated constructor initializes the `customerId` field using the already initialized `nextCustomerId` field. Notice that `nextCustomerId` is incremented by 1 before the `customerId` field is assigned a value.
 
     > [!NOTE]
-    > The `this` keyword is used to refer to the current instance of the class. It's used to access fields, properties, and methods of the current instance. The `this` keyword is not available in a static constructor.
+    > The `this` keyword refers to the current instance of the class. It's used to access fields, properties, and methods of the current instance. In the `BankCustomer` class, the `this` keyword is used to access the read-only `customerId` field. The `this` keyword is not required in this context, but it's used for clarity. The `this` keyword is not available in a static constructor.
 
 1. To assign a unique value to `customerId` inside your constructor that accepts `firstName` and `lastName` parameters, update the constructor to match the following code:
 
