@@ -7,7 +7,7 @@ lab:
 
 # Create class definitions and instantiate objects
 
-A class is a blueprint for creating objects, and objects are the building-blocks that make up a program. In C#, you define classes using the `class` keyword. You can create objects from a class using the `new` operator. Each object created from a class is an instance of that class.
+In object-oriented programming, a class serves as a template for creating objects, which are the fundamental components of a program. In C#, classes are defined using the class keyword. Objects, the instances of a class, are instantiated using the `new` operator. Each object created from a class represents a specific realization of that class. Objects have their own data fields, and the values assigned to the fields can be different for each object.
 
 In this exercise, you create a console app that uses class definitions to instantiate objects.
 
@@ -21,7 +21,7 @@ Before you can start this exercise, you need to:
 1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code using the following URL: [https://code.visualstudio.com/download](https://code.visualstudio.com/download)
 1. Ensure that you have the C# Dev Kit configured in Visual Studio Code.
 
-For addition help configuring the Visual Studio Code environment, see [Install and configure Visual Studio Code for C# development](https://learn.microsoft.com/training/modules/install-configure-visual-studio-code/)
+For additional help configuring the Visual Studio Code environment, see [Install and configure Visual Studio Code for C# development](https://learn.microsoft.com/training/modules/install-configure-visual-studio-code/)
 
 ## Exercise scenario
 
@@ -475,6 +475,8 @@ Use the following steps to complete this task:
 
 1. Run your updated app and verify that you get the following output:
 
+    You should see the following output:
+
     ```plaintext
 
     BankCustomer 1: Tim Shao 1010101010
@@ -483,11 +485,15 @@ Use the following steps to complete this task:
 
     ```
 
-    Notice that the first two customers share the same ID number. Public fields in the BankCustomer class are initialized using default values. Although the constructors update some fields with the values passed as parameters, there are issues that must be addressed.
+1. Notice that the first two customers share the same ID number.
+
+    The BankCustomer class initializes data fields using default values. Although the constructors update field values using parameters, the current approach doesn't ensure unique customer IDs.
 
 ## Update the BankCustomer class using static members to ensure unique customer IDs
 
-Static fields are initialized before an instance of the class is created. They're accessed using the class name, not an instance of the class, and they're shared among all instances of the class. Static constructors are called when a class is loaded into memory. A static constructor is called only once, regardless of how many instances of the class are created.
+Static fields are initialized before an instance of the class is created. When an object is created, static fields are accessed using the class name, not an instance of the class. The same value is shared by all instances of the class.
+
+Static constructors are called when a class is loaded into memory. A static constructor is called only once, regardless of how many instances of the class are created. Static constructors are used to initialize static fields.
 
 In this task, you update the `BankCustomer` class using a static field and static constructor to ensure unique `customerId` values are assigned to each new customer object.
 
@@ -495,40 +501,7 @@ Use the following steps to complete this task:
 
 1. Open the `BankCustomer`class.
 
-    The `BankCustomer` should be similar to the following code snippet:
-
-    ```csharp
-
-    public class BankCustomer
-    {
-        // add public fields for fName, lName, and customerId
-        public string fName = "Tim";
-        public string lName = "Shao";
-        public string customerId = "1010101010";
-    
-        public BankCustomer()
-        {
-    
-        }
-    
-        public BankCustomer(string firstName, string lastName)
-        {
-            fName = firstName;
-            lName = lastName;
-    
-        }
-    
-        public BankCustomer(string firstName, string lastName, string customerIdNumber)
-        {
-            fName = firstName;
-            lName = lastName;
-            customerId = customerIdNumber;
-        }
-    }
-
-    ```
-
-1. To make `customerId` a read-only field, update the `customerId` field definition to include the `readonly` keyword:
+1. To convert `customerId` into a read-only field, add the `readonly` keyword to the `customerId` field declaration:
 
     ```csharp
 
@@ -912,7 +885,7 @@ Use the following steps to complete this task:
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -924,6 +897,8 @@ Use the following steps to complete this task:
     Account 3: Account # 12885969, type Checking, balance 2500, rate 0, customer ID 0014653178
 
     ```
+
+    The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
 ## Clean up
 

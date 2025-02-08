@@ -21,7 +21,7 @@ Before you can start this exercise, you will need to...
 1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code from the following URL: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 1. Ensure that you have the C# Dev Kit configured in Visual Studio Code.
 
-For addition help configuring the Visual Studio Code environment, see [https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/](https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/)
+For additional help configuring the Visual Studio Code environment, see [https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/](https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/)
 
 ## Exercise scenario
 
@@ -91,9 +91,9 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the Program.cs file and take a minute to review the demonstration code.
 
-    The Program.cs file demonstrate the creation and manipulation of `BankCustomer` and `BankAccount` objects within the `Classes_M3` namespace.
+    The Program.cs file demonstrates the creation and manipulation of `BankCustomer` and `BankAccount` objects within the `Classes_M3` namespace.
 
-    Top level code instantiates `BankCustomer` objects with different names, followed by the creation of corresponding `BankAccount` objects with varying initial balances. The program showcases the use of properties and methods of these classes, such as updating customer names, depositing and withdrawing funds, transferring money between accounts, and applying interest. Additionally, it demonstrates the use of extension methods to greet customers, validate customer IDs, check if accounts are overdrawn, and verify if withdrawals can be made. Finally, the program displays customer and account information to the console.
+    Top-level statements provide an implicit entry point for the app. The code instantiates `BankCustomer` objects with different names, followed by the creation of corresponding `BankAccount` objects with varying initial balances. The program showcases the use of properties and methods of these classes, such as updating customer names, depositing and withdrawing funds, transferring money between accounts, and applying interest. Additionally, it demonstrates the use of extension methods to greet customers, validate customer IDs, check if accounts are overdrawn, and verify if withdrawals can be made. Finally, the program displays customer and account information to the console.
 
 1. Run the app and review the output in the terminal window.
 

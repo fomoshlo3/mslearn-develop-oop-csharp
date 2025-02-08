@@ -21,15 +21,15 @@ Before you can start this exercise, you will need to:
 1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code from the following URL: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 1. Ensure that you have the C# Dev Kit configured in Visual Studio Code.
 
-For addition help configuring the Visual Studio Code environment, see [https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/](https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/)
+For additional help configuring the Visual Studio Code environment, see [https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/](https://learn.microsoft.com/en-us/training/modules/install-configure-visual-studio-code/)
 
 ## Exercise scenario
 
 Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You have an initial version of the app that includes the following files:
 
-- BankCustomer.cs: The BankCustomer class includes fields for first name, last name, and customer ID. The class also includes a constructor that initializes the fields.
+- BankCustomer.cs: The BankCustomer class includes fields for first name, last name, and customer ID. The class also includes constructors that initialize the fields.
 - BankAccount.cs: The BankAccount class includes fields for account number, balance, interest rate, account type, and customer ID. The class also includes constructors that initialize the fields.
-- Program.cs: The Program class includes code that creates instances of the BankCustomer and BankAccount classes. The code also demonstrates the use of the classes.
+- Program.cs: The Program.cs file includes code that creates instances of the BankCustomer and BankAccount classes and demonstrates how each class is used.
 
 This exercise includes the following tasks:
 
@@ -109,7 +109,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-1. Take a minute to review the BankCustomer class.
+1. Take a minute to review the BankAccount class.
 
     ```csharp
 
@@ -150,7 +150,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `BankAccount` class includes fields for `accountNumber`, `balance`, `interestRate`, `accountType`, and `customerId`. The `accountNumber` field is read-only and is set in the constructor. The `balance` field is read-write and can be changed at any time. The `accountType` field is read-write and can be changed at any time. The `customerId` field is read-only and is set in the constructor. The `BankAccount` class also has a static field `nextAccountNumber` which is used to generate unique account numbers for each new account. This field is initialized in a static constructor, which is called only once when the class is first loaded. The static constructor uses the `Random` class to generate a random starting value for `nextAccountNumber` between 10,000,000 and 20,000,000. Additionally, the static constructor initializes the static field `interestRate` to 0.
+    The `BankAccount` class includes fields for `accountNumber`, `balance`, `interestRate`, `accountType`, and `customerId`. The `accountNumber` field is read-only and is initialized in the instance constructors. The `balance` field is read-write and can be changed at any time. The `accountType` field is read-write and can be changed at any time. The `customerId` field is read-only and is initialized in the instance constructors. The `BankAccount` class also has a static field `nextAccountNumber` which is used to generate unique account numbers for each new account. This field is initialized in a static constructor, which is called only once when the class is first loaded. The static constructor uses the `Random` class to generate a random starting value for `nextAccountNumber`. Additionally, the static constructor initializes the static field `interestRate` to 0.
 
     The class also includes two instance constructors. The first instance constructor takes a single parameter, `customerIdNumber`, and initializes the `accountNumber` and `customerId` fields. The second instance constructor takes three parameters: `customerIdNumber`, `balance`, and `accountType`. This constructor initializes the accountNumber, customerId, balance, and accountType fields based on the provided values. Both constructors increment the nextAccountNumber to ensure that each new account has a unique account number. The static constructor initializes the `nextAccountNumber` and `interestRate` fields.
 
@@ -189,11 +189,11 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The code in Program.cs demonstrates creating and managing `BankCustomer` and `BankAccount` objects. It initializes customer details, creates three `BankCustomer` objects, and prints their information. Then, it creates three `BankAccount` objects for these customers, specifying different balances and account types, and prints the account details, including account number, type, balance, interest rate, and customer ID.
+    Top-level statements provide an implicit entry point for the app. The code in Program.cs demonstrates how to create and use `BankCustomer` and `BankAccount` objects. the code initializes customer details, creates three `BankCustomer` objects, and prints their information. Then, it creates three `BankAccount` objects for these customers, specifying different balances and account types, and prints the account details, including account number, type, balance, interest rate, and customer ID.
 
 1. Run the app and review the output in the terminal window.
 
-    You should see the following output:
+    Your app should produce output that's similar to the following example:
 
     ```plaintext
 
@@ -205,6 +205,8 @@ Use the following steps to complete this section of the exercise:
     Account 3: Account # 12885969, type Checking, balance 2500, rate 0, customer ID 0014653178
 
     ```
+
+    The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
 ## Implement properties for the BankCustomer class
 
