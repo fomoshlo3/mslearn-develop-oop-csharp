@@ -15,6 +15,11 @@ public class BankCustomer
         nextCustomerId = random.Next(10000000, 20000000);
     }
 
+    public BankCustomer()
+    {
+        this.customerId = (nextCustomerId++).ToString("D10");
+    }
+    
     public BankCustomer(string firstName, string lastName)
     {
         fName = firstName;

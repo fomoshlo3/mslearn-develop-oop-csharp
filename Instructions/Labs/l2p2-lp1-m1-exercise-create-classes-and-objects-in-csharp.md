@@ -183,6 +183,8 @@ Use the following steps to complete this task:
 
 ## Update the Program.cs file to create instances of the BankCustomer class
 
+The `new` operator is used to create objects based on a class constructor. Each object has its own data fields, and the values assigned to the fields can be different for each object.
+
 In this task, you update the Program.cs file to create instances of the `BankCustomer` class and run the app to verify that the instances are created successfully.
 
 Use the following steps to complete this task:
@@ -294,6 +296,8 @@ Use the following steps to complete this task:
 
 ## Add public fields and updated constructors to the BankCustomer class
 
+Public fields are accessible from outside the class. They can be read from and written to by any code that has access to the object. Public fields are often used to expose object data to other classes.
+
 In this task, you add public fields to the `BankCustomer` class, update the instance constructors to use additional parameters, and then update the Program.cs file to access each object's public data.
 
 Use the following steps to complete this task:
@@ -359,11 +363,11 @@ Use the following steps to complete this task:
 
     ```
 
-    The constructor initializes the `fName`, `lName`, and `accountId` fields with the values of the `firstName`, `lastName`, and `customerIdNumber` parameters, respectively.
+    The constructor initializes the `fName`, `lName`, and `customerId` fields with the values of the `firstName`, `lastName`, and `customerIdNumber` parameters, respectively.
 
 1. Switch to the Program.cs file
 
-1. To create local variables for `firstName`, `lastName`, and `accountNumber` just below the `namespace` declaration, enter the following code:
+1. To create local variables for `firstName`, `lastName`, and `customerIdNumber` just below the `namespace` declaration, enter the following code:
 
     ```csharp
 
@@ -430,7 +434,6 @@ Use the following steps to complete this task:
     Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.customerId}");
     Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.customerId}");
 
-
     ```
 
     BankCustomer.cs file:
@@ -443,7 +446,7 @@ Use the following steps to complete this task:
 
     public class BankCustomer
     {
-        // add public fields for fName, lName, and accountID
+        // add public fields for fName, lName, and customerId
         public string fName = "Tim";
         public string lName = "Shao";
         public string customerId = "1010101010";
@@ -480,9 +483,11 @@ Use the following steps to complete this task:
 
     ```
 
-    Notice that customer1 and customer2 share the same ID number. The public fields are initialized with default values. Although the constructors update the fields with the values passed as parameters, there are clearly some issues to address.
+    Notice that the first two customers share the same ID number. Public fields in the BankCustomer class are initialized using default values. Although the constructors update some fields with the values passed as parameters, there are issues that must be addressed.
 
 ## Update the BankCustomer class using static members to ensure unique customer IDs
+
+Static fields are initialized before an instance of the class is created. They're accessed using the class name, not an instance of the class, and they're shared among all instances of the class. Static constructors are called when a class is loaded into memory. A static constructor is called only once, regardless of how many instances of the class are created.
 
 In this task, you update the `BankCustomer` class using a static field and static constructor to ensure unique `customerId` values are assigned to each new customer object.
 
@@ -496,7 +501,7 @@ Use the following steps to complete this task:
 
     public class BankCustomer
     {
-        // add public fields for fName, lName, and accountID
+        // add public fields for fName, lName, and customerId
         public string fName = "Tim";
         public string lName = "Shao";
         public string customerId = "1010101010";
@@ -555,9 +560,9 @@ Use the following steps to complete this task:
 
     ```
 
-    The static constructor is called when the `BankCustomer` class is loaded into memory. The static constructor initializes the `nextCustomerId` field with a random value between 10,000,000 and 20,000,000.
+    The static constructor is called when the `BankCustomer` class is loaded into memory, and before any instances of the class are created. The static constructor initializes the `nextCustomerId` field with a random eight digit integer.
 
-1. To update the parameterless constructor to assign the `customerId` field using the `nextCustomerId` field, add the following code to the `BankCustomer` class definition:
+1. To assign a unique value to `customerId` inside your parameterless constructor, update the constructor to match the following code:
 
     ```csharp
 
@@ -568,12 +573,12 @@ Use the following steps to complete this task:
 
     ```
 
-    The constructor initializes the `customerId` field using the `nextCustomerId` field. Notice that `nextCustomerId` is incremented by 1 before the `customerId` field is assigned a value.
+    The updated constructor initializes the `customerId` field using the already initialized `nextCustomerId` field. Notice that `nextCustomerId` is incremented by 1 before the `customerId` field is assigned a value.
 
     > [!NOTE]
-    > The `this` keyword is used to refer to the current instance of the class. It's used to access fields, properties, and methods of the current instance.
+    > The `this` keyword is used to refer to the current instance of the class. It's used to access fields, properties, and methods of the current instance. The `this` keyword is not available in a static constructor.
 
-1. To update the constructor that accepts the first and last name fields, add the following code to the `BankCustomer` class definition:
+1. To assign a unique value to `customerId` inside your constructor that accepts `firstName` and `lastName` parameters, update the constructor to match the following code:
 
     ```csharp
 
@@ -586,11 +591,11 @@ Use the following steps to complete this task:
 
     ```
 
-    Once again, the constructor initializes the `customerId` field using the incremented `nextCustomerId` field value.
+    Once again, the constructor initializes the `customerId` field using an incremented `nextCustomerId` value.
 
 1. Delete the constructor accepts the `firstName`, `lastName`, and `customerIdNumber` parameters.
 
-    The static constructor ensures that each new instance of the `BankCustomer` class is assigned a unique customer ID. You already have a constructor that accepts the `firstName` and `lastName` parameters, so a constructor that accepts all three parameters is no longer needed.
+    Ensuring unique customer IDs includes removing the opportunity to create a new customer with an externally provided ID. Also, your parameterless and static constructors ensure that every new instance of the `BankCustomer` class is assigned a unique customer ID.
 
 1. Switch to the Program.cs file.
 
@@ -681,7 +686,7 @@ Use the following steps to complete this task:
 
 In this task, you create an `BankAccount` class that initializes a combination of public and static fields. You also create constructors that initialize the fields with default values and values passed as parameters.
 
-You need a `BankAccount` class that includes the following fields:
+You want a `BankAccount` class that includes the following fields:
 
 - `accountNumber` - A public field that stores the account number.
 - `balance` - A public field that stores the account balance.
