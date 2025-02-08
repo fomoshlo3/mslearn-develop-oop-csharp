@@ -2,11 +2,6 @@ using System;
 
 namespace Classes_M3;
 
-
-// Task 1 - review
-
-
-
 public static class BankCustomerExtensions
 {
     // Extension method to check if the customer ID is valid
@@ -36,32 +31,3 @@ public static class BankAccountExtensions
         return account.Balance >= amount;
     }
 }
-
-
-
-
-// Task 2 - Create partial classes (BankAccount)
-
-
-
-
-
-
-// Task 3 - Create a static classes (new AccountTypes class and Transactions class that contains BankAccount methods)
-
-
-
-
-
-
-// Task 4 - Implement named and optional parameters
-
-
-
-
-
-
-// Task 5 - Implement object initializers and copy constructors
-
-
-

@@ -2,14 +2,6 @@ using System;
 
 namespace Classes_M3;
 
-// Task 1 - Review
-
-// Task 2 - Create partial classes (BankAccount)
-
-// Task 3 - Create a static classes (new AccountTypes class and Transactions class that contains BankAccount methods)
-
-
-
 public static class Transactions
 {
     // Method to deposit money into the account
@@ -49,19 +41,3 @@ public static class Transactions
         account.Balance += account.Balance * BankAccount.interestRate;
     }
 }
-
-
-
-
-
-// Task 4 - Implement named and optional parameters 
-
-
-
-
-
-
-// Task 5 - Implement object initializers and copy constructors 
-
-
-
