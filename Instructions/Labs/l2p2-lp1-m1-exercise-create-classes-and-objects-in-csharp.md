@@ -593,7 +593,7 @@ Use the following steps to complete this task:
 
     Once again, the constructor initializes the `customerId` field using an incremented `nextCustomerId` value.
 
-1. Delete the constructor accepts the `firstName`, `lastName`, and `customerIdNumber` parameters.
+1. Delete the constructor that accepts the `firstName`, `lastName`, and `customerIdNumber` parameters.
 
     Ensuring unique customer IDs includes removing the opportunity to create a new customer with an externally provided ID. Also, your parameterless and static constructors ensure that every new instance of the `BankCustomer` class is assigned a unique customer ID.
 
@@ -753,7 +753,7 @@ Use the following steps to complete this task:
 
     ```
 
-    The static constructor is called when the `BankAccount` class is loaded into memory. The static constructor initializes the `nextAccountNumber` and `interestRate` fields. These fields cannot be accessed from outside the class.
+    The static constructor is called when the `BankAccount` class is loaded into memory. The static constructor initializes the `nextAccountNumber` and `interestRate` fields. These fields cannot be assigned a value from outside the class.
 
 1. To create a constructor that accepts a `customerId` parameter and initializes the other fields with default values, add the following code to the `BankAccount` class definition:
 
