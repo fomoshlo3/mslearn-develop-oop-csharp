@@ -972,7 +972,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Use the **Classes_M1** project to create a new `Extensions.cs` class file.
 
-    You can use the `Classes_M1` project to create new class file named Extensions. Right-click the **Classes_M1** project in the Solution Explorer, select **New File**, select **Class**, and then enter **Extensions**.
+    You can use the `Classes_M2` project to create new class file named Extensions. Right-click the **Classes_M2** project in the Solution Explorer, select **New File**, select **Class**, and then enter **Extensions**.
 
     Your `Extensions` class should look similar to the following code snippet:
 
@@ -980,7 +980,7 @@ Use the following steps to complete this section of the exercise:
 
     using System;
 
-    namespace Classes_M1;
+    namespace Classes_M2;
 
     public class Extensions
     {
@@ -1089,7 +1089,7 @@ Use the following steps to complete this section of the exercise:
 
 ## Update the Program.cs file to demonstrate the updated classes, properties, and methods
 
-In this task, you update the Program.cs file with code that demonstrate the following steps:
+In this task, you update the Program.cs file with code that demonstrates the following steps:
 
 1. Create BankCustomer objects.
 1. Create BankAccount objects for the instantiated customers.

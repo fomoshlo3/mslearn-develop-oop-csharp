@@ -145,7 +145,7 @@ Use the following steps to complete this section of the exercise:
     The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
     > [!TIP]
-    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can the solution code In the samples that you downloaded at the beginning of this exercise. To view the solution navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
+    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Classes_M3 solution, navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
 
 ## Split the BankCustomer class into two partial class files
 
@@ -470,15 +470,14 @@ Use the following steps to complete this section of the exercise:
     Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the required properties and fields.
 
     > [!IMPORTANT]
-    > Remember that static fields are accessed using the class name, not an instance of the class. For example, to access the `interestRate` field, you use `BankAccount.interestRate`.
-    >
-    > Also, keep in mind that the `Transfer` method uses the updates `Deposit` and `Withdraw` methods in the `Transactions` class, not the old methods from the `BankAccount` class. Ensure that you update the `Withdraw` and `Deposit` method signatures within the `Transfer` method to accept `BankAccount` and `amount` parameters. For example, the `Withdraw` method should be updated to `Withdraw(sourceAccount, amount)` and the `Deposit` method should be updated to `Deposit(targetAccount, amount)`.
+    > Remember that static fields are accessed using the class name, not an instance of the class. For example, to access the `interestRate` field, you use `BankAccount.interestRate`. Also, keep in mind that the `Transfer` method uses the updates `Deposit` and `Withdraw` methods in the `Transactions` class, not the old methods from the `BankAccount` class. Ensure that you update the `Withdraw` and `Deposit` method signatures within the `Transfer` method to accept `BankAccount` and `amount` parameters. For example, the `Withdraw` method should be updated to `Withdraw(sourceAccount, amount)` and the `Deposit` method should be updated to `Deposit(targetAccount, amount)`.
 
 1. Take a minute to review your updated Transactions class.
 
     Your updated Transactions class should look similar to the following code snippet:
 
     ```csharp
+
     public static class Transactions
     {
 
@@ -567,7 +566,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To use the `Transactions.Deposit()` for the deposit into `account1`, update your code to match the following code snippet:
+1. To use the `Transactions.Deposit()` static method for the deposit into `account1`, update your code to match the following code snippet:
 
     ```csharp
 
@@ -856,6 +855,7 @@ Use the following steps to complete this section of the exercise:
         this.Balance = existingAccount.Balance;
         this.AccountType = existingAccount.AccountType;
     }
+
     ```
 
     Notice that a new `AccountNumber` field is generated for the new account. The `CustomerId`, `Balance`, and `AccountType` fields are copied from the existing account. The `interestRate` field is not copied because it's a static field that's shared across all instances of the BankAccount class. The `customerId` field is copied because the intension is to create a new account for the same customer.
