@@ -259,8 +259,8 @@ Use the following steps to complete this section of the exercise:
     public partial class BankCustomer
     {
         private static int nextCustomerId;
-        private string fName = "John";
-        private string lName = "Doe";
+        private string fName = "Tim";
+        private string lName = "Shao";
         public readonly string customerId;
     
         static BankCustomer()
