@@ -2,16 +2,16 @@
 
 // Step 1: Create BankCustomer objects
 Console.WriteLine("Creating BankCustomer objects...");
-string firstName = "John";
-string lastName = "Doe";
+string firstName = "Tim";
+string lastName = "Shao";
 
 BankCustomer customer1 = new BankCustomer(firstName, lastName);
 
-firstName = "Jane";
+firstName = "Lisa";
 BankCustomer customer2 = new BankCustomer(firstName, lastName);
 
-firstName = "Leonardo";
-lastName = "Rossi";
+firstName = "Sandy";
+lastName = "Zoeng";
 BankCustomer customer3 = new BankCustomer(firstName, lastName);
 
 Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
@@ -30,8 +30,8 @@ Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account
 
 // Step 3: Demonstrate the use of BankCustomer properties
 Console.WriteLine("\nUpdating BankCustomer 1's name...");
-customer1.FirstName = "Johnny";
-customer1.LastName = "Doe-Smith";
+customer1.FirstName = "Thomas";
+customer1.LastName = "Margand";
 Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
 
 // Step 4: Demonstrate the use of BankAccount methods
@@ -74,7 +74,7 @@ Console.WriteLine(account1.DisplayAccountInfo());
 Console.WriteLine("\nDemonstrating object initializers and copy constructors...");
 
 // Using object initializer
-BankCustomer customer4 = new BankCustomer("Alice", "Smith") { FirstName = "Alicia", LastName = "Smith-Jones" };
+BankCustomer customer4 = new BankCustomer("Mikaela", "Lee") { FirstName = "Mikaela", LastName = "Lee" };
 Console.WriteLine($"BankCustomer 4: {customer4.FirstName} {customer4.LastName} {customer4.customerId}");
 
 // Using copy constructor

@@ -734,7 +734,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-    The `BankAccount` class has a `Balance` property and `interestRate` field. These two class members can be used to create methods to deposit and withdraw money from the account, transfer money to another account, display account information, and apply interest to the account balance.
+    The `BankAccount` class has a `Balance` property and `interestRate` field. These two class members can be used to create methods to deposit and withdraw money from the account, transfer money to another account, display account information, and apply interest to the account balance. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field.
 
 1. Create a blank code line below the last constructor.
 
@@ -791,7 +791,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Transfer` method takes a `BankAccount` object and an amount as parameters. It withdraws the amount from the current account and deposits it into the target account. The method returns `true` if the transfer is successful and `false` otherwise.
+    The `Transfer` method takes a `BankAccount` object and an `amount` variable as parameters. It uses the `Withdraw` method to withdraw the `amount` value from the current account and the `Deposit` method to deposit it into the `targetAccount` account. The method returns `true` if the transfer is successful and `false` otherwise.
 
 1. To create a method that applies interest to the account balance, add the following code:
 
@@ -806,6 +806,28 @@ Use the following steps to complete this section of the exercise:
     ```
 
     The `ApplyInterest` method calculates the interest on the account balance using the `interestRate` field and adds the interest to the `Balance` property. At this point, the `interestRate` field is a static field that's shared among all instances of the `BankAccount` class. Since interest rate is initialized to 0, the `ApplyInterest` method doesn't actually apply any interest. You can update the `interestRate` field to a non-zero value in the static constructor to see the effect of the `ApplyInterest` method.
+
+1. Take a minute to consider the current implementation of the `Balance` property.
+
+    ```csharp
+
+    public double Balance { get; set; } = 0;
+
+    ```
+
+    The `Balance` property currently uses auto-implemented property syntax, which defines the property without explicitly declaring a backing field. The `{ get; set; }` syntax automatically creates a private backing field for the value, which is initialized to `0`. Since `Balance` is declared `public`, the value of the `Balance` property can be modified directly from outside the class. Public access to the property setter allows the balance to be updated directly without going through the `Deposit`, `Withdraw`, and `Transfer` methods. This can lead to inconsistent account balances and make it difficult to track changes to the balance.
+
+    You can convert the `Balance` property to a read-only property with a private backing field to prevent direct modification of the balance value from outside the class. This ensures that the balance can only be updated through the `Deposit`, `Withdraw`, and `Transfer` methods.
+
+1. To convert the `Balance` property to a read-only property with a private backing field, replace the `Balance` property definition with the following code:
+
+    ```csharp
+
+    public double Balance { get; private set; } = 0;
+
+    ```
+
+    The `{ get; private set; }` syntax indicates that the `Balance` property has a private setter, meaning the value of the property can only be set from within the `BankAccount` class. The `Balance` property can still be read from outside the class, but it can only be updated through the `Deposit`, `Withdraw`, and `Transfer` methods.
 
 1. To create a method that displays account information, add the following code:
 
@@ -891,7 +913,7 @@ Use the following steps to complete this section of the exercise:
         public static double interestRate;
         public int AccountNumber { get; }
         public string CustomerId { get; }
-        public double Balance { get; set; } = 0;
+        public double Balance { get; private set; } = 0;
         public string AccountType { get; set; } = "Checking";
     
         static BankAccount()

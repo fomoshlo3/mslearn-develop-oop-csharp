@@ -8,7 +8,7 @@ public class BankAccount
     public static double interestRate;
     public int AccountNumber { get; }
     public string CustomerId { get; }
-    public double Balance { get; set; } = 0;
+    public double Balance { get; private set; } = 0;
     public string AccountType { get; set; } = "Checking";
 
     static BankAccount()

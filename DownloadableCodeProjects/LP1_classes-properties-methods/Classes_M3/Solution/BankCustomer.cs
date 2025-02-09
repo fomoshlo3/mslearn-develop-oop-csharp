@@ -5,9 +5,8 @@ namespace Classes_M3;
 public partial class BankCustomer
 {
     private static int nextCustomerId;
-    private static readonly Random random = new Random(); // Shared Random instance
-    private string fName = "John";
-    private string lName = "Doe";
+    private string fName = "Tim";
+    private string lName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()
