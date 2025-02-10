@@ -11,6 +11,7 @@ public partial class BankCustomer
 
     static BankCustomer()
     {
+        Random random = new Random();
         nextCustomerId = random.Next(10000000, 20000000);
     }
 
