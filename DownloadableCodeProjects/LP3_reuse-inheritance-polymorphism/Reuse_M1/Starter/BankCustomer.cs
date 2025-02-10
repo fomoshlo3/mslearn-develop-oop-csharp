@@ -1,8 +1,8 @@
 using System;
 
-namespace Classes_M2;
+namespace Reuse_M1;
 
-public class BankCustomer
+public partial class BankCustomer
 {
     private static int nextCustomerId;
     private string fName = "Tim";
@@ -11,7 +11,6 @@ public class BankCustomer
 
     static BankCustomer()
     {
-        Random random = new Random();
         nextCustomerId = random.Next(10000000, 20000000);
     }
 
@@ -20,6 +19,14 @@ public class BankCustomer
         FirstName = firstName;
         LastName = lastName;
         this.customerId = (nextCustomerId++).ToString("D10");
+    }
+
+    // Copy constructor with unique customerId
+    public BankCustomer(BankCustomer existingCustomer)
+    {
+        this.customerId = (nextCustomerId++).ToString("D10");
+        this.FirstName = existingCustomer.FirstName;
+        this.LastName = existingCustomer.LastName;
     }
 
     public string FirstName
@@ -32,24 +39,5 @@ public class BankCustomer
     {
         get { return lName; }
         set { lName = value; }
-    }
-
-    // Method to return the full name of the customer
-    public string ReturnFullName()
-    {
-        return $"{FirstName} {LastName}";
-    }
-
-    // Method to update the customer's name
-    public void UpdateName(string firstName, string lastName)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-    }
-
-    // Method to display customer information
-    public string DisplayCustomerInfo()
-    {
-        return $"Customer ID: {customerId}, Name: {ReturnFullName()}";
     }
 }

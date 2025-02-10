@@ -1,6 +1,6 @@
 using System;
 
-namespace Classes_M2;
+namespace Reuse_M1;
 
 public class BankAccount
 {
@@ -18,13 +18,7 @@ public class BankAccount
         interestRate = 0;
     }
 
-    public BankAccount(string customerIdNumber)
-    {
-        this.AccountNumber = nextAccountNumber++;
-        this.CustomerId = customerIdNumber;
-    }
-
-    public BankAccount(string customerIdNumber, double balance, string accountType)
+    public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
     {
         this.AccountNumber = nextAccountNumber++;
         this.CustomerId = customerIdNumber;
@@ -32,41 +26,13 @@ public class BankAccount
         this.AccountType = accountType;
     }
 
-    // Method to deposit money into the account
-    public void Deposit(double amount)
+    // Add a copy constructor here
+    public BankAccount(BankAccount existingAccount)
     {
-        if (amount > 0)
-        {
-            Balance += amount;
-        }
-    }
-
-    // Method to withdraw money from the account
-    public bool Withdraw(double amount)
-    {
-        if (amount > 0 && Balance >= amount)
-        {
-            Balance -= amount;
-            return true;
-        }
-        return false;
-    }
-
-    // Method to transfer money to another account
-    public bool Transfer(BankAccount targetAccount, double amount)
-    {
-        if (Withdraw(amount))
-        {
-            targetAccount.Deposit(amount);
-            return true;
-        }
-        return false;
-    }
-
-    // Method to apply interest to the account
-    public void ApplyInterest()
-    {
-        Balance += Balance * interestRate;
+        this.AccountNumber = nextAccountNumber++;
+        this.CustomerId = existingAccount.CustomerId;
+        this.Balance = existingAccount.Balance;
+        this.AccountType = existingAccount.AccountType;
     }
 
     // Method to display account information

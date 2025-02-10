@@ -1,4 +1,4 @@
-﻿using Classes_M2;
+﻿using Reuse_M1;
 
 // Step 1: Create BankCustomer objects
 Console.WriteLine("Creating BankCustomer objects...");
@@ -39,23 +39,23 @@ Console.WriteLine("\nDemonstrating BankAccount methods...");
 
 // Deposit
 Console.WriteLine("Depositing 500 into Account 1...");
-account1.Deposit(500);
+Transactions.Deposit(account1, 500);
 Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
 
 // Withdraw
 Console.WriteLine("Withdrawing 200 from Account 2...");
-bool withdrawSuccess = account2.Withdraw(200);
+bool withdrawSuccess = Transactions.Withdraw(account2, 200);
 Console.WriteLine($"Account 2 after withdrawal: Balance = {account2.Balance}, Withdrawal successful: {withdrawSuccess}");
 
 // Transfer
 Console.WriteLine("Transferring 300 from Account 3 to Account 1...");
-bool transferSuccess = account3.Transfer(account1, 300);
+bool transferSuccess = Transactions.Transfer(account3, account1, 300);
 Console.WriteLine($"Account 3 after transfer: Balance = {account3.Balance}, Transfer successful: {transferSuccess}");
 Console.WriteLine($"Account 1 after receiving transfer: Balance = {account1.Balance}");
 
 // Apply interest
 Console.WriteLine("Applying interest to Account 1...");
-account1.ApplyInterest();
+Transactions.ApplyInterest(account1);
 Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
 
 // Step 5: Demonstrate the use of extension methods
@@ -69,3 +69,19 @@ Console.WriteLine($"Is account3 overdrawn? {account3.IsOverdrawn()}");
 Console.WriteLine("\nDisplaying customer and account information...");
 Console.WriteLine(customer1.DisplayCustomerInfo());
 Console.WriteLine(account1.DisplayAccountInfo());
+
+// Step 7: Demonstrate using object initializers and copy constructors
+Console.WriteLine("\nDemonstrating object initializers and copy constructors...");
+
+// Using object initializer
+BankCustomer customer4 = new BankCustomer("Mikaela", "Lee") { FirstName = "Mikaela", LastName = "Lee" };
+Console.WriteLine($"BankCustomer 4: {customer4.FirstName} {customer4.LastName} {customer4.customerId}");
+
+// Using copy constructor
+BankCustomer customer5 = new BankCustomer(customer4);
+Console.WriteLine($"BankCustomer 5 (copy of customer4): {customer5.FirstName} {customer5.LastName} {customer5.customerId}");
+
+BankAccount account4 = new BankAccount(customer4.customerId, 3000, "Savings");
+BankAccount account5 = new BankAccount(account4);
+Console.WriteLine($"Account 4: Account # {account4.AccountNumber}, type {account4.AccountType}, balance {account4.Balance}, rate {BankAccount.interestRate}, customer ID {account4.CustomerId}");
+Console.WriteLine($"Account 5 (copy of account4): Account # {account5.AccountNumber}, type {account5.AccountType}, balance {account5.Balance}, rate {BankAccount.interestRate}, customer ID {account5.CustomerId}");
