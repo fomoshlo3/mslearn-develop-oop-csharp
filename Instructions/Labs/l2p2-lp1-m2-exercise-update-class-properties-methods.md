@@ -82,34 +82,34 @@ Use the following steps to complete this section of the exercise:
     
     public class BankCustomer
     {
-        private static int nextCustomerId;
-        public string fName = "Tim";
-        public string lName = "Shao";
-        public readonly string customerId;
+        private static int s_nextCustomerId;
+        public string FirstName = "Tim";
+        public string LastName = "Shao";
+        public readonly string CustomerId;
     
         static BankCustomer()
         {
             Random random = new Random();
-            nextCustomerId = random.Next(10000000, 20000000);
+            s_nextCustomerId = random.Next(10000000, 20000000);
         }
     
         public BankCustomer(string firstName, string lastName)
         {
-            fName = firstName;
-            lName = lastName;
-            this.customerId = (nextCustomerId++).ToString("D10");
+            FirstName = firstName;
+            LastName = lastName;
+            this.CustomerId = (s_nextCustomerId++).ToString("D10");
         }
         
     }
 
     ```
 
-    The `BankCustomer` class includes fields for `fname` (first name), `lName` (last name), `customerId` (customer ID), and a static field `nextCustomerId`. The `nextCustomerId` field is used to generate a unique customer ID for each customer.
+    The `BankCustomer` class includes fields for `fname` (first name), `LastName` (last name), `CustomerId` (customer ID), and a static field `s_nextCustomerId`. The `s_nextCustomerId` field is used to generate a unique customer ID for each customer.
 
-    The `BankCustomer` class also includes two constructors. The first constructor is a static constructor that initializes the `nextCustomerId` field with a random number eight-digit integer. The second constructor takes two parameters, `firstName` and `lastName`, and initializes the `fname` and `lName` fields with the values of the parameters. The constructor also increments `nextCustomerId` and uses the value to assign a unique value to `customerId`.
+    The `BankCustomer` class also includes two constructors. The first constructor is a static constructor that initializes the `s_nextCustomerId` field with a random number eight-digit integer. The second constructor takes two parameters, `firstName` and `lastName`, and initializes the `fname` and `LastName` fields with the values of the parameters. The constructor also increments `s_nextCustomerId` and uses the value to assign a unique value to `CustomerId`.
 
     > [!NOTE]
-    > The `this` keyword refers to the current instance of the class. It's used to access fields, properties, and methods of the current instance. In the `BankCustomer` class, the `this` keyword is used to access the read-only `customerId` field. The `this` keyword is not required in this context, but it's used for clarity. The `this` keyword is not available in a static constructor.
+    > The `this` keyword refers to the current instance of the class. It's used to access fields, properties, and methods of the current instance. In the `BankCustomer` class, the `this` keyword is used to access the read-only `CustomerId` field. The `this` keyword is not required in this context, but it's used for clarity. The `this` keyword is not available in a static constructor.
 
 1. Open the BankAccount.cs file.
 
@@ -123,40 +123,40 @@ Use the following steps to complete this section of the exercise:
     
     public class BankAccount
     {
-        private static int nextAccountNumber;
-        public readonly int accountNumber;
-        public double balance = 0;
-        public static double interestRate;
-        public string accountType = "Checking";
-        public readonly string customerId;
+        private static int s_nextAccountNumber;
+        public readonly int AccountNumber;
+        public double Balance = 0;
+        public static double InterestRate;
+        public string AccountType = "Checking";
+        public readonly string CustomerId;
     
         static BankAccount()
         {
             Random random = new Random();
-            nextAccountNumber = random.Next(10000000, 20000000);
-            interestRate = 0;
+            s_nextAccountNumber = random.Next(10000000, 20000000);
+            InterestRate = 0;
         }
     
         public BankAccount(string customerIdNumber)
         {
-            this.accountNumber = nextAccountNumber++;
-            this.customerId = customerIdNumber;
+            this.AccountNumber = s_nextAccountNumber++;
+            this.CustomerId = customerIdNumber;
         }
     
         public BankAccount(string customerIdNumber, double balance, string accountType)
         {
-            this.accountNumber = nextAccountNumber++;
-            this.customerId = customerIdNumber;
-            this.balance = balance;
-            this.accountType = accountType;
+            this.AccountNumber = s_nextAccountNumber++;
+            this.CustomerId = customerIdNumber;
+            this.Balance = balance;
+            this.AccountType = accountType;
         }
     }
 
     ```
 
-    The `BankAccount` class includes fields for `accountNumber`, `balance`, `interestRate`, `accountType`, and `customerId`. The `accountNumber` field is read-only and is initialized in the instance constructors. The `balance` field is read-write and can be changed at any time. The `accountType` field is read-write and can be changed at any time. The `customerId` field is read-only and is initialized in the instance constructors. The `BankAccount` class also has a static field `nextAccountNumber` which is used to generate unique account numbers for each new account. This field is initialized in a static constructor, which is called only once when the class is first loaded. The static constructor uses the `Random` class to generate a random starting value for `nextAccountNumber`. Additionally, the static constructor initializes the static field `interestRate` to 0.
+    The `BankAccount` class includes fields for `AccountNumber`, `Balance`, `InterestRate`, `AccountType`, and `CustomerId`. The `AccountNumber` field is read-only and is initialized in the instance constructors. The `Balance` field is read-write and can be changed at any time. The `AccountType` field is read-write and can be changed at any time. The `CustomerId` field is read-only and is initialized in the instance constructors. The `BankAccount` class also has a static field `s_nextAccountNumber` which is used to generate unique account numbers for each new account. This field is initialized in a static constructor, which is called only once when the class is first loaded. The static constructor uses the `Random` class to generate a random starting value for `s_nextAccountNumber`. Additionally, the static constructor initializes the static field `InterestRate` to 0.
 
-    The class also includes two instance constructors. The first instance constructor takes a single parameter, `customerIdNumber`, and initializes the `accountNumber` and `customerId` fields. The second instance constructor takes three parameters: `customerIdNumber`, `balance`, and `accountType`. This constructor initializes the accountNumber, customerId, balance, and accountType fields based on the provided values. Both constructors increment the nextAccountNumber to ensure that each new account has a unique account number. The static constructor initializes the `nextAccountNumber` and `interestRate` fields.
+    The class also includes two instance constructors. The first instance constructor takes a single parameter, `customerIdNumber`, and initializes the `AccountNumber` and `CustomerId` fields. The second instance constructor takes three parameters: `customerIdNumber`, `Balance`, and `AccountType`. This constructor initializes the AccountNumber, CustomerId, balance, and AccountType fields based on the provided values. Both constructors increment the s_nextAccountNumber to ensure that each new account has a unique account number. The static constructor initializes the `s_nextAccountNumber` and `InterestRate` fields.
 
 1. Open the Program.cs file.
 
@@ -178,18 +178,18 @@ Use the following steps to complete this section of the exercise:
     lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
-    Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.customerId}");
+    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.CustomerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.CustomerId}");
     
     // Create accounts for customers
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    BankAccount account1 = new BankAccount(customer1.CustomerId);
+    BankAccount account2 = new BankAccount(customer2.CustomerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.CustomerId, 2500, "Checking");
     
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -219,45 +219,45 @@ Use the following steps to complete this section of the exercise:
 
 Properties are used to encapsulate data and provide controlled access to the fields of a class. Properties use property accessors to read (get) and write (set) the values of fields. In C#, properties are defined using the `get` and `set` accessors.
 
-In this task, you create `FirstName` and `LastName` properties for the `BankCustomer` class using `get` and `set` property accessors. The `get` and `set` accessors provide controlled access to the private fields `fName` and `lName`. You also update the `Program.cs` file to use the new properties.
+In this task, you create `FirstName` and `LastName` properties for the `BankCustomer` class using `get` and `set` property accessors. The `get` and `set` accessors provide controlled access to the private fields `FirstName` and `LastName`. You also update the `Program.cs` file to use the new properties.
 
 Use the following steps to complete this section of the exercise:
 
 1. Open the BankCustomer.cs file.
 
-1. To create a `FirstName` property that accesses the `fName` field, add the following code to the bottom of `BankCustomer` class:
+1. To create a `FirstName` property that accesses the `FirstName` field, add the following code to the bottom of `BankCustomer` class:
 
     ```csharp
 
     public string FirstName
     {
-        get { return fName; }
-        set { fName = value; }
+        get { return FirstName; }
+        set { FirstName = value; }
     }
 
     ```
 
-    The `FirstName` property is used to encapsulate the private field `fName` and provides controlled access to it.
+    The `FirstName` property is used to encapsulate the private field `FirstName` and provides controlled access to it.
 
     The `public` keyword indicates that the `FirstName` property is accessible from outside the class, meaning other classes and code can read and modify this property. The property is of type `string`, which means it holds text data.
 
-    The property has two accessors: `get` and `set`. The `get` accessor is used to retrieve the value of the private field `fName`. When the property is accessed, the `get` accessor returns the current value of `fName`.
+    The property has two accessors: `get` and `set`. The `get` accessor is used to retrieve the value of the private field `FirstName`. When the property is accessed, the `get` accessor returns the current value of `FirstName`.
 
-    The `set` accessor is used to assign a new value to the private field `fName`. The keyword `value` represents the value being assigned to the property. When a new value is assigned to `FirstName`, the `set` accessor sets `fName` to this new value.
+    The `set` accessor is used to assign a new value to the private field `FirstName`. The keyword `value` represents the value being assigned to the property. When a new value is assigned to `FirstName`, the `set` accessor sets `FirstName` to this new value.
 
-1. To create a `LastName` property that accesses the `lName` field, add the following code to the bottom of the `BankCustomer` class:
+1. To create a `LastName` property that accesses the `LastName` field, add the following code to the bottom of the `BankCustomer` class:
 
     ```csharp
 
     public string LastName
     {
-        get { return lName; }
-        set { lName = value; }
+        get { return LastName; }
+        set { LastName = value; }
     }
 
     ```
 
-    The `LastName` property works the same way as the `FirstName` property. It encapsulates the private field `lName` and provides controlled access to it.
+    The `LastName` property works the same way as the `FirstName` property. It encapsulates the private field `LastName` and provides controlled access to it.
 
 1. Open the Program.cs file.
 
@@ -265,14 +265,14 @@ Use the following steps to complete this section of the exercise:
 
     ```C#
 
-    Console.WriteLine($"BankCustomer 1: {customer1.fName} {customer1.lName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.fName} {customer2.lName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.fName} {customer3.lName} {customer3.customerId}");
+    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.CustomerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.CustomerId}");
     
     // Create accounts for customers
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    BankAccount account1 = new BankAccount(customer1.CustomerId);
+    BankAccount account2 = new BankAccount(customer2.CustomerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.CustomerId, 2500, "Checking");
 
     ```
 
@@ -280,27 +280,27 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
-    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
+    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.CustomerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.CustomerId}");
     
     // Create accounts for customers
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    BankAccount account1 = new BankAccount(customer1.CustomerId);
+    BankAccount account2 = new BankAccount(customer2.CustomerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.CustomerId, 2500, "Checking");
     
     // Demonstrate the use of BankCustomer properties
     customer1.FirstName = "Thomas";
     customer1.LastName = "Margand";
-    // customer1.customerId = "1234567890"; // This line will not compile
+    // customer1.CustomerId = "1234567890"; // This line will not compile
     
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
+    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
 
     ```
 
     Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code also demonstrates setting the `FirstName` and `LastName` properties to change the name of `customer1`.
 
-    You may also notice the commented code line that assigns a value to the `customerId` field directly. The `customerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, the code will not compile.
+    You may also notice the commented code line that assigns a value to the `CustomerId` field directly. The `CustomerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, the code will not compile.
 
 1. Take a minute to review your code.
 
@@ -310,34 +310,34 @@ Use the following steps to complete this section of the exercise:
 
     public class BankCustomer
     {
-        private static int nextCustomerId;
-        private string fName = "Tim";
-        private string lName = "Shao";
-        public readonly string customerId;
+        private static int s_nextCustomerId;
+        private string FirstName = "Tim";
+        private string LastName = "Shao";
+        public readonly string CustomerId;
     
         static BankCustomer()
         {
             Random random = new Random();
-            nextCustomerId = random.Next(10000000, 20000000);
+            s_nextCustomerId = random.Next(10000000, 20000000);
         }
     
         public BankCustomer(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
-            this.customerId = (nextCustomerId++).ToString("D10");
+            this.CustomerId = (s_nextCustomerId++).ToString("D10");
         }
     
         public string FirstName
         {
-            get { return fName; }
-            set { fName = value; }
+            get { return FirstName; }
+            set { FirstName = value; }
         }
     
         public string LastName
         {
-            get { return lName; }
-            set { lName = value; }
+            get { return LastName; }
+            set { LastName = value; }
         }
     }
 
@@ -359,25 +359,25 @@ Use the following steps to complete this section of the exercise:
     lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
-    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
+    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.CustomerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.CustomerId}");
     
     // Create accounts for customers
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    BankAccount account1 = new BankAccount(customer1.CustomerId);
+    BankAccount account2 = new BankAccount(customer2.CustomerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.CustomerId, 2500, "Checking");
     
     // Demonstrate the use of BankCustomer properties
     customer1.FirstName = "Thomas";
     customer1.LastName = "Margand";
-    // customer1.customerId = "1234567890"; // This line will not compile
+    // customer1.CustomerId = "1234567890"; // This line will not compile
     
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
+    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
     
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -407,18 +407,18 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-1. Notice that the `BankAccount` class has two public read-write fields: `balance` and `accountType`.
+1. Notice that the `BankAccount` class has two public read-write fields: `Balance` and `AccountType`.
 
-    - `balance` is a read-write field that can be changed at any time.
-    - `accountType` is a read-write field that can be changed at any time.
+    - `Balance` is a read-write field that can be changed at any time.
+    - `AccountType` is a read-write field that can be changed at any time.
 
     The other fields in the `BankAccount` class are either static or read-only:
-    - `accountNumber` is a read-only field that is set in the constructor and cannot be changed after that.
-    - `customerId` is a read-only field that is set in the constructor and cannot be changed after that.
-    - `interestRate` is a static field that is shared among all instances of the `BankAccount` class.
-    - `nextAccountNumber` is a static field that is shared among all instances of the `BankAccount` class.
+    - `AccountNumber` is a read-only field that is set in the constructor and cannot be changed after that.
+    - `CustomerId` is a read-only field that is set in the constructor and cannot be changed after that.
+    - `InterestRate` is a static field that is shared among all instances of the `BankAccount` class.
+    - `s_nextAccountNumber` is a static field that is shared among all instances of the `BankAccount` class.
 
-1. To convert the `balance` and `accountType` fields to automatically implemented properties, replace the `balance` and `accountType` field declarations with the following code:
+1. To convert the `Balance` and `AccountType` fields to automatically implemented properties, replace the `Balance` and `AccountType` field declarations with the following code:
 
     ```csharp
 
@@ -427,7 +427,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Balance` and `AccountType` properties are automatically implemented properties that encapsulate anonymous backing fields that store the property values. The anonymous backing fields (`balance` and `accountType`) are created automatically by the C# compiler, so they're not explicitly defined in the code.
+    The `Balance` and `AccountType` properties are automatically implemented properties that encapsulate anonymous backing fields that store the property values. The anonymous backing fields (`Balance` and `AccountType`) are created automatically by the C# compiler, so they're not explicitly defined in the code.
 
     The `public` keyword indicates that the properties are accessible from outside the class, meaning other classes and code can read and write property values.
 
@@ -436,9 +436,9 @@ Use the following steps to complete this section of the exercise:
     The `set` accessor is used to assign a new value to the private field. The `value` keyword represents the value being assigned to the property. When a new value is assigned to the property, the `set` accessor assigns `value` to the private field.
 
     > [!NOTE]
-    > Your code doesn't explicitly define the anonymous backing fields (`balance` and `accountType`) for auto-implemented properties. The C# compiler automatically creates these fields for auto-implemented properties.
+    > Your code doesn't explicitly define the anonymous backing fields (`Balance` and `AccountType`) for auto-implemented properties. The C# compiler automatically creates these fields for auto-implemented properties.
 
-1. Notice that the final constructor is still assigning values to the `balance` and `accountType` fields.
+1. Notice that the final constructor is still assigning values to the `Balance` and `AccountType` fields.
 
     You need to update the constructor to use the new properties instead of the fields.
 
@@ -448,15 +448,15 @@ Use the following steps to complete this section of the exercise:
 
     public BankAccount(string customerIdNumber, double balance, string accountType)
     {
-        this.accountNumber = nextAccountNumber++;
-        this.customerId = customerIdNumber;
+        this.AccountNumber = s_nextAccountNumber++;
+        this.CustomerId = customerIdNumber;
         this.Balance = balance;
         this.AccountType = accountType;
     }
 
     ```
 
-    Your updated constructor uses the `balance` and `accountType` parameters to assign values to the `Balance` and `AccountType` properties.
+    Your updated constructor uses the `Balance` and `AccountType` parameters to assign values to the `Balance` and `AccountType` properties.
 
 1. Open the Program.cs file.
 
@@ -464,9 +464,9 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.accountType}, balance {account1.balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.accountType}, balance {account2.balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.accountType}, balance {account3.balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -474,9 +474,9 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -490,10 +490,10 @@ Use the following steps to complete this section of the exercise:
 
     public class BankAccount
     {
-        private static int nextAccountNumber;
-        public readonly int accountNumber;
-        public static double interestRate;
-        public readonly string customerId;
+        private static int s_nextAccountNumber;
+        public readonly int AccountNumber;
+        public static double InterestRate;
+        public readonly string CustomerId;
         
         public double Balance { get; set; } = 0;
         public string AccountType { get; set; } = "Checking";
@@ -501,20 +501,20 @@ Use the following steps to complete this section of the exercise:
         static BankAccount()
         {
             Random random = new Random();
-            nextAccountNumber = random.Next(10000000, 20000000);
-            interestRate = 0;
+            s_nextAccountNumber = random.Next(10000000, 20000000);
+            InterestRate = 0;
         }
     
         public BankAccount(string customerIdNumber)
         {
-            this.accountNumber = nextAccountNumber++;
-            this.customerId = customerIdNumber;
+            this.AccountNumber = s_nextAccountNumber++;
+            this.CustomerId = customerIdNumber;
         }
     
         public BankAccount(string customerIdNumber, double balance, string accountType)
         {
-            this.accountNumber = nextAccountNumber++;
-            this.customerId = customerIdNumber;
+            this.AccountNumber = s_nextAccountNumber++;
+            this.CustomerId = customerIdNumber;
 
             this.Balance = balance;
             this.AccountType = accountType;
@@ -541,25 +541,25 @@ Use the following steps to complete this section of the exercise:
     lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
-    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
+    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.CustomerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.CustomerId}");
     
     // Create accounts for customers
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    BankAccount account1 = new BankAccount(customer1.CustomerId);
+    BankAccount account2 = new BankAccount(customer2.CustomerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.CustomerId, 2500, "Checking");
     
     // Demonstrate the use of BankCustomer properties
     customer1.FirstName = "Thomas";
     customer1.LastName = "Margand";
-    // customer1.customerId = "1234567890"; // This line will not compile
+    // customer1.CustomerId = "1234567890"; // This line will not compile
     
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
+    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
     
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -589,18 +589,18 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-1. Locate the two read-only fields: `accountNumber` and `customerId`.
+1. Locate the two read-only fields: `AccountNumber` and `CustomerId`.
 
     ```csharp
 
-    public readonly int accountNumber;
-    public readonly string customerId;
+    public readonly int AccountNumber;
+    public readonly string CustomerId;
 
     ```
 
-    The read-only fields `accountNumber` and `customerId` are both initialized in the constructors. The `accountNumber` field is initialized with a unique value, and the `customerId` field is initialized with the value of the `customerIdNumber` parameter.
+    The read-only fields `AccountNumber` and `CustomerId` are both initialized in the constructors. The `AccountNumber` field is initialized with a unique value, and the `CustomerId` field is initialized with the value of the `customerIdNumber` parameter.
 
-1. To convert the `accountNumber` and `customerId` fields to read-only properties, replace the `accountNumber` and `customerId` field declarations with the following code:
+1. To convert the `AccountNumber` and `CustomerId` fields to read-only properties, replace the `AccountNumber` and `CustomerId` field declarations with the following code:
 
     ```csharp
 
@@ -619,13 +619,13 @@ Use the following steps to complete this section of the exercise:
 
     public BankAccount(string customerIdNumber)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
     }
 
     public BankAccount(string customerIdNumber, double balance, string accountType)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
         this.Balance = balance;
         this.AccountType = accountType;
@@ -633,17 +633,17 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The updated instance constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `accountNumber` and `customerId`.
+    The updated instance constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `AccountNumber` and `CustomerId`.
 
 1. Open the Program.cs file.
 
-1. Notice that the `Console.WriteLine` statements that display the account information are still using the `accountNumber` and `customerId` fields.
+1. Notice that the `Console.WriteLine` statements that display the account information are still using the `AccountNumber` and `CustomerId` fields.
 
     ```csharp
 
-    Console.WriteLine($"Account 1: Account # {account1.accountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.customerId}");
-    Console.WriteLine($"Account 2: Account # {account2.accountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.customerId}");
-    Console.WriteLine($"Account 3: Account # {account3.accountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.customerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -651,9 +651,9 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
-    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.CustomerId}");
-    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.CustomerId}");
-    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.CustomerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
 
     ```
 
@@ -725,7 +725,7 @@ Use the following steps to complete this section of the exercise:
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {customerId}, Name: {ReturnFullName()}";
+        return $"Customer ID: {CustomerId}, Name: {ReturnFullName()}";
     }
 
     ```
@@ -734,7 +734,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-    The `BankAccount` class has a `Balance` property and `interestRate` field. These two class members can be used to create methods to deposit and withdraw money from the account, transfer money to another account, display account information, and apply interest to the account balance. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field.
+    The `BankAccount` class has a `Balance` property and `InterestRate` field. These two class members can be used to create methods to deposit and withdraw money from the account, transfer money to another account, display account information, and apply interest to the account balance. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field.
 
 1. Create a blank code line below the last constructor.
 
@@ -800,12 +800,12 @@ Use the following steps to complete this section of the exercise:
     // Method to apply interest to the account
     public void ApplyInterest()
     {
-        Balance += Balance * interestRate;
+        Balance += Balance * InterestRate;
     }
 
     ```
 
-    The `ApplyInterest` method calculates the interest on the account balance using the `interestRate` field and adds the interest to the `Balance` property. At this point, the `interestRate` field is a static field that's shared among all instances of the `BankAccount` class. Since interest rate is initialized to 0, the `ApplyInterest` method doesn't actually apply any interest. You can update the `interestRate` field to a non-zero value in the static constructor to see the effect of the `ApplyInterest` method.
+    The `ApplyInterest` method calculates the interest on the account balance using the `InterestRate` field and adds the interest to the `Balance` property. At this point, the `InterestRate` field is a static field that's shared among all instances of the `BankAccount` class. Since interest rate is initialized to 0, the `ApplyInterest` method doesn't actually apply any interest. You can update the `InterestRate` field to a non-zero value in the static constructor to see the effect of the `ApplyInterest` method.
 
 1. Take a minute to consider the current implementation of the `Balance` property.
 
@@ -836,7 +836,7 @@ Use the following steps to complete this section of the exercise:
     // Method to display account information
     public string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
     }
 
     ```
@@ -851,34 +851,34 @@ Use the following steps to complete this section of the exercise:
 
     public class BankCustomer
     {
-        private static int nextCustomerId;
-        private string fName = "Tim";
-        private string lName = "Shao";
-        public readonly string customerId;
+        private static int s_nextCustomerId;
+        private string FirstName = "Tim";
+        private string LastName = "Shao";
+        public readonly string CustomerId;
     
         static BankCustomer()
         {
             Random random = new Random();
-            nextCustomerId = random.Next(10000000, 20000000);
+            s_nextCustomerId = random.Next(10000000, 20000000);
         }
     
         public BankCustomer(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
-            this.customerId = (nextCustomerId++).ToString("D10");
+            this.CustomerId = (s_nextCustomerId++).ToString("D10");
         }
     
         public string FirstName
         {
-            get { return fName; }
-            set { fName = value; }
+            get { return FirstName; }
+            set { FirstName = value; }
         }
     
         public string LastName
         {
-            get { return lName; }
-            set { lName = value; }
+            get { return LastName; }
+            set { LastName = value; }
         }
     
         // Method to return the full name of the customer
@@ -897,7 +897,7 @@ Use the following steps to complete this section of the exercise:
         // Method to display customer information
         public string DisplayCustomerInfo()
         {
-            return $"Customer ID: {customerId}, Name: {FullName()}";
+            return $"Customer ID: {CustomerId}, Name: {FullName()}";
         }
 
     }
@@ -909,8 +909,8 @@ Use the following steps to complete this section of the exercise:
 
     public class BankAccount
     {
-        private static int nextAccountNumber;
-        public static double interestRate;
+        private static int s_nextAccountNumber;
+        public static double InterestRate;
         public int AccountNumber { get; }
         public string CustomerId { get; }
         public double Balance { get; private set; } = 0;
@@ -919,19 +919,19 @@ Use the following steps to complete this section of the exercise:
         static BankAccount()
         {
             Random random = new Random();
-            nextAccountNumber = random.Next(10000000, 20000000);
-            interestRate = 0;
+            s_nextAccountNumber = random.Next(10000000, 20000000);
+            InterestRate = 0;
         }
     
         public BankAccount(string customerIdNumber)
         {
-            this.AccountNumber = nextAccountNumber++;
+            this.AccountNumber = s_nextAccountNumber++;
             this.CustomerId = customerIdNumber;
         }
     
         public BankAccount(string customerIdNumber, double balance, string accountType)
         {
-            this.AccountNumber = nextAccountNumber++;
+            this.AccountNumber = s_nextAccountNumber++;
             this.CustomerId = customerIdNumber;
             this.Balance = balance;
             this.AccountType = accountType;
@@ -971,13 +971,13 @@ Use the following steps to complete this section of the exercise:
         // Method to apply interest to the account
         public void ApplyInterest()
         {
-            Balance += Balance * interestRate;
+            Balance += Balance * InterestRate;
         }
     
         // Method to display account information
         public string DisplayAccountInfo()
         {
-            return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
+            return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
         }
 
     }
@@ -1024,7 +1024,7 @@ Use the following steps to complete this section of the exercise:
         // Extension method to check if the customer ID is valid
         public static bool IsValidCustomerId(this BankCustomer customer)
         {
-            return customer.customerId.Length == 10;
+            return customer.CustomerId.Length == 10;
         }
 
         // Extension method to greet the customer
@@ -1079,7 +1079,7 @@ Use the following steps to complete this section of the exercise:
         // Extension method to check if the customer ID is valid
         public static bool IsValidCustomerId(this BankCustomer customer)
         {
-            return customer.customerId.Length == 10;
+            return customer.CustomerId.Length == 10;
         }
 
         // Extension method to greet the customer
@@ -1144,25 +1144,25 @@ Use the following steps to complete this section of the exercise:
     lastName = "Zoeng";
     BankCustomer customer3 = new BankCustomer(firstName, lastName);
     
-    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
+    Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
+    Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.CustomerId}");
+    Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.CustomerId}");
     
     // Step 2: Create BankAccount objects for customers
     Console.WriteLine("\nCreating BankAccount objects for customers...");
-    BankAccount account1 = new BankAccount(customer1.customerId);
-    BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-    BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+    BankAccount account1 = new BankAccount(customer1.CustomerId);
+    BankAccount account2 = new BankAccount(customer2.CustomerId, 1500, "Checking");
+    BankAccount account3 = new BankAccount(customer3.CustomerId, 2500, "Checking");
     
-    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.CustomerId}");
-    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.CustomerId}");
-    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.CustomerId}");
+    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
+    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
+    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
     
     // Step 3: Demonstrate the use of BankCustomer properties
     Console.WriteLine("\nUpdating BankCustomer 1's name...");
     customer1.FirstName = "Thomas";
     customer1.LastName = "Margand";
-    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
+    Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.CustomerId}");
     
     // Step 4: Demonstrate the use of BankAccount methods
     Console.WriteLine("\nDemonstrating BankAccount methods...");

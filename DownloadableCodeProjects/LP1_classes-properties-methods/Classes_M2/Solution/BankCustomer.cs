@@ -4,34 +4,34 @@ namespace Classes_M2;
 
 public class BankCustomer
 {
-    private static int nextCustomerId;
-    private string fName = "Tim";
-    private string lName = "Shao";
+    private static int s_nextCustomerId;
+    private string FirstName = "Tim";
+    private string LastName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()
     {
         Random random = new Random();
-        nextCustomerId = random.Next(10000000, 20000000);
+        s_nextCustomerId = random.Next(10000000, 20000000);
     }
 
     public BankCustomer(string firstName, string lastName)
     {
         FirstName = firstName;
         LastName = lastName;
-        this.customerId = (nextCustomerId++).ToString("D10");
+        this.customerId = (s_nextCustomerId++).ToString("D10");
     }
 
     public string FirstName
     {
-        get { return fName; }
-        set { fName = value; }
+        get { return FirstName; }
+        set { FirstName = value; }
     }
 
     public string LastName
     {
-        get { return lName; }
-        set { lName = value; }
+        get { return LastName; }
+        set { LastName = value; }
     }
 
     // Method to return the full name of the customer

@@ -4,22 +4,22 @@ namespace Classes_M2;
 
 public class BankCustomer
 {
-    private static int nextCustomerId;
-    public string fName = "Tim";
-    public string lName = "Shao";
+    private static int s_nextCustomerId;
+    public string FirstName = "Tim";
+    public string LastName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()
     {
         Random random = new Random();
-        nextCustomerId = random.Next(10000000, 20000000);
+        s_nextCustomerId = random.Next(10000000, 20000000);
     }
 
     public BankCustomer(string firstName, string lastName)
     {
-        fName = firstName;
-        lName = lastName;
-        this.customerId = (nextCustomerId++).ToString("D10");
+        FirstName = firstName;
+        LastName = lastName;
+        this.customerId = (s_nextCustomerId++).ToString("D10");
     }
     
 }

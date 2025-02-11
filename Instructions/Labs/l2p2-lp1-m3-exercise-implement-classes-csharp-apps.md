@@ -74,7 +74,7 @@ Use the following steps to complete this section of the exercise:
 
     The `BankAccount` class represents a bank account with properties and methods to manage account operations.
 
-    Notice that the class includes static fields `nextAccountNumber` and `interestRate`, which track the next account number and the interest rate applied to accounts, respectively. Each `BankAccount` instance has properties such as `AccountNumber`, `CustomerId`, `Balance`, and `AccountType`, with default values for balance and account type. The class includes constructors for initializing accounts with or without an initial balance and account type. Methods provided by the class include `Deposit` for adding funds, `Withdraw` for removing funds, `Transfer` for transferring funds between accounts, `ApplyInterest` for applying interest to the balance, and `DisplayAccountInfo` for displaying account details. The class also features a static constructor to initialize static fields.
+    Notice that the class includes static fields `s_nextAccountNumber` and `InterestRate`, which track the next account number and the interest rate applied to accounts, respectively. Each `BankAccount` instance has properties such as `AccountNumber`, `CustomerId`, `Balance`, and `AccountType`, with default values for balance and account type. The class includes constructors for initializing accounts with or without an initial balance and account type. Methods provided by the class include `Deposit` for adding funds, `Withdraw` for removing funds, `Transfer` for transferring funds between accounts, `ApplyInterest` for applying interest to the balance, and `DisplayAccountInfo` for displaying account details. The class also features a static constructor to initialize static fields.
 
     The `this` keyword is used to access the properties of the current class instance. For example, `this.AccountNumber` refers to the `AccountNumber` property of the current `BankAccount` instance.
 
@@ -82,7 +82,7 @@ Use the following steps to complete this section of the exercise:
 
     The BankCustomer class represents a bank customer with properties and methods to manage customer information.
 
-    Notice that the class includes a static field `nextCustomerId` to track the next customer ID, and instance fields `fName` and `lName` for storing the customer's first and last names, respectively. Each `BankCustomer` instance has a read-only `customerId` property, which is initialized using a static constructor that generates a random starting ID. The class provides properties `FirstName` and `LastName` for accessing and modifying the customer's name. Methods in the class include `ReturnFullName` to return the customer's full name, `UpdateName` to update the customer's name, and `DisplayCustomerInfo` to display customer details. The class also features a constructor for initializing a new customer with a first and last name.
+    Notice that the class includes a static field `nextCustomerId` to track the next customer ID, and instance fields `FirstName` and `LastName` for storing the customer's first and last names, respectively. Each `BankCustomer` instance has a read-only `CustomerId` property, which is initialized using a static constructor that generates a random starting ID. The class provides properties `FirstName` and `LastName` for accessing and modifying the customer's name. Methods in the class include `ReturnFullName` to return the customer's full name, `UpdateName` to update the customer's name, and `DisplayCustomerInfo` to display customer details. The class also features a constructor for initializing a new customer with a first and last name.
 
 1. Open the Extensions.cs file and take a minute to review the BankCustomerExtensions and BankAccountExtensions classes.
 
@@ -242,7 +242,7 @@ Use the following steps to complete this section of the exercise:
         // Method to display customer information
         public string DisplayCustomerInfo()
         {
-            return $"Customer ID: {customerId}, Name: {FullName()}";
+            return $"Customer ID: {CustomerId}, Name: {FullName()}";
         }
     }
     
@@ -259,9 +259,9 @@ Use the following steps to complete this section of the exercise:
     public partial class BankCustomer
     {
         private static int nextCustomerId;
-        private string fName = "Tim";
-        private string lName = "Shao";
-        public readonly string customerId;
+        private string FirstName = "Tim";
+        private string LastName = "Shao";
+        public readonly string CustomerId;
     
         static BankCustomer()
         {
@@ -273,19 +273,19 @@ Use the following steps to complete this section of the exercise:
         {
             FirstName = firstName;
             LastName = lastName;
-            this.customerId = (nextCustomerId++).ToString("D10");
+            this.CustomerId = (nextCustomerId++).ToString("D10");
         }
     
         public string FirstName
         {
-            get { return fName; }
-            set { fName = value; }
+            get { return FirstName; }
+            set { FirstName = value; }
         }
     
         public string LastName
         {
-            get { return lName; }
-            set { lName = value; }
+            get { return LastName; }
+            set { LastName = value; }
         }
     }
 
@@ -417,7 +417,7 @@ Use the following steps to complete this section of the exercise:
         // Method to apply interest to the account
         public void ApplyInterest()
         {
-            Balance += Balance * interestRate;
+            Balance += Balance * InterestRate;
         }
 
     }
@@ -470,7 +470,7 @@ Use the following steps to complete this section of the exercise:
     Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the required properties and fields.
 
     > [!IMPORTANT]
-    > Remember that static fields are accessed using the class name, not an instance of the class. For example, to access the `interestRate` field, you use `BankAccount.interestRate`. Also, keep in mind that the `Transfer` method uses the updates `Deposit` and `Withdraw` methods in the `Transactions` class, not the old methods from the `BankAccount` class. Ensure that you update the `Withdraw` and `Deposit` method signatures within the `Transfer` method to accept `BankAccount` and `amount` parameters. For example, the `Withdraw` method should be updated to `Withdraw(sourceAccount, amount)` and the `Deposit` method should be updated to `Deposit(targetAccount, amount)`.
+    > Remember that static fields are accessed using the class name, not an instance of the class. For example, to access the `InterestRate` field, you use `BankAccount.InterestRate`. Also, keep in mind that the `Transfer` method uses the updates `Deposit` and `Withdraw` methods in the `Transactions` class, not the old methods from the `BankAccount` class. Ensure that you update the `Withdraw` and `Deposit` method signatures within the `Transfer` method to accept `BankAccount` and `amount` parameters. For example, the `Withdraw` method should be updated to `Withdraw(sourceAccount, amount)` and the `Deposit` method should be updated to `Deposit(targetAccount, amount)`.
 
 1. Take a minute to review your updated Transactions class.
 
@@ -515,7 +515,7 @@ Use the following steps to complete this section of the exercise:
         // Method to apply interest to the account balance
         public static void ApplyInterest(BankAccount account)
         {
-            account.Balance += account.Balance * BankAccount.interestRate;
+            account.Balance += account.Balance * BankAccount.InterestRate;
         }
     }
 
@@ -674,19 +674,19 @@ In this task, you update a constructor in the BankAccount class using optional p
     static BankAccount()
     {
         Random random = new Random();
-        nextAccountNumber = random.Next(10000000, 20000000);
-        interestRate = 0;
+        s_nextAccountNumber = random.Next(10000000, 20000000);
+        InterestRate = 0;
     }
     
     public BankAccount(string customerIdNumber)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
     }
     
     public BankAccount(string customerIdNumber, double balance, string accountType)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
         this.Balance = balance;
         this.AccountType = accountType;
@@ -702,7 +702,7 @@ In this task, you update a constructor in the BankAccount class using optional p
     
     public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
         this.Balance = balance;
         this.AccountType = accountType;
@@ -710,7 +710,7 @@ In this task, you update a constructor in the BankAccount class using optional p
     
     ```
 
-    By using optional parameters in the BankAccount constructor, you can create instances of `BankAccount` with varying levels of parameter detail, making class instantiation more flexible and reducing the need for multiple constructor overloads. For example, you can create a `BankAccount` object with only a `customerIdNumber`, or you can specify combinations of `balance` and `accountType` as well:
+    By using optional parameters in the BankAccount constructor, you can create instances of `BankAccount` with varying levels of parameter detail, making class instantiation more flexible and reducing the need for multiple constructor overloads. For example, you can create a `BankAccount` object with only a `customerIdNumber`, or you can specify combinations of `Balance` and `accountType` as well:
 
     ```csharp
 
@@ -735,8 +735,8 @@ In this task, you update a constructor in the BankAccount class using optional p
     
     public class BankAccount
     {
-        private static int nextAccountNumber;
-        public static double interestRate;
+        private static int s_nextAccountNumber;
+        public static double InterestRate;
         public int AccountNumber { get; }
         public string CustomerId { get; }
         public double Balance { get; private set; } = 0;
@@ -745,13 +745,13 @@ In this task, you update a constructor in the BankAccount class using optional p
         static BankAccount()
         {
             Random random = new Random();
-            nextAccountNumber = random.Next(10000000, 20000000);
-            interestRate = 0;
+            s_nextAccountNumber = random.Next(10000000, 20000000);
+            InterestRate = 0;
         }
     
         public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
         {
-            this.AccountNumber = nextAccountNumber++;
+            this.AccountNumber = s_nextAccountNumber++;
             this.CustomerId = customerIdNumber;
             this.Balance = balance;
             this.AccountType = accountType;
@@ -760,7 +760,7 @@ In this task, you update a constructor in the BankAccount class using optional p
         // Method to display account information
         public string DisplayAccountInfo()
         {
-            return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
+            return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
         }
     
     }
@@ -832,14 +832,14 @@ Use the following steps to complete this section of the exercise:
 
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
-        //this.customerId = existingCustomer.customerId;
-        this.customerId = (nextCustomerId++).ToString("D10");
+        //this.CustomerId = existingCustomer.CustomerId;
+        this.CustomerId = (nextCustomerId++).ToString("D10");
 
     }
 
     ```
 
-    Notice that the `customerId` field from the existing customer isn't used. Instead, a new `customerId` is generated for the new customer. This supports the logic already implemented by the BankCustomer class.
+    Notice that the `CustomerId` field from the existing customer isn't used. Instead, a new `CustomerId` is generated for the new customer. This supports the logic already implemented by the BankCustomer class.
 
 1. Open the BankAccount.cs file.
 
@@ -850,7 +850,7 @@ Use the following steps to complete this section of the exercise:
     // Copy constructor for BankAccount
     public BankAccount(BankAccount existingAccount)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = existingAccount.CustomerId;
         this.Balance = existingAccount.Balance;
         this.AccountType = existingAccount.AccountType;
@@ -858,7 +858,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that a new `AccountNumber` field is generated for the new account. The `CustomerId`, `Balance`, and `AccountType` fields are copied from the existing account. The `interestRate` field is not copied because it's a static field that's shared across all instances of the BankAccount class. The `customerId` field is copied because the intension is to create a new account for the same customer.
+    Notice that a new `AccountNumber` field is generated for the new account. The `CustomerId`, `Balance`, and `AccountType` fields are copied from the existing account. The `InterestRate` field is not copied because it's a static field that's shared across all instances of the BankAccount class. The `CustomerId` field is copied because the intension is to create a new account for the same customer.
 
 1. Open the Program.cs file.
 
@@ -871,16 +871,16 @@ Use the following steps to complete this section of the exercise:
     
     // Using object initializer
     BankCustomer customer4 = new BankCustomer("Mikaela", "Lee") { FirstName = "Mikaela", LastName = "Lee" };
-    Console.WriteLine($"BankCustomer 4: {customer4.FirstName} {customer4.LastName} {customer4.customerId}");
+    Console.WriteLine($"BankCustomer 4: {customer4.FirstName} {customer4.LastName} {customer4.CustomerId}");
     
     // Using copy constructor
     BankCustomer customer5 = new BankCustomer(customer4);
-    Console.WriteLine($"BankCustomer 5 (copy of customer4): {customer5.FirstName} {customer5.LastName} {customer5.customerId}");
+    Console.WriteLine($"BankCustomer 5 (copy of customer4): {customer5.FirstName} {customer5.LastName} {customer5.CustomerId}");
     
-    BankAccount account4 = new BankAccount(customer4.customerId, 3000, "Savings");
+    BankAccount account4 = new BankAccount(customer4.CustomerId, 3000, "Savings");
     BankAccount account5 = new BankAccount(account4);
-    Console.WriteLine($"Account 4: Account # {account4.AccountNumber}, type {account4.AccountType}, balance {account4.Balance}, rate {BankAccount.interestRate}, customer ID {account4.CustomerId}");
-    Console.WriteLine($"Account 5 (copy of account4): Account # {account5.AccountNumber}, type {account5.AccountType}, balance {account5.Balance}, rate {BankAccount.interestRate}, customer ID {account5.CustomerId}");
+    Console.WriteLine($"Account 4: Account # {account4.AccountNumber}, type {account4.AccountType}, balance {account4.Balance}, rate {BankAccount.InterestRate}, customer ID {account4.CustomerId}");
+    Console.WriteLine($"Account 5 (copy of account4): Account # {account5.AccountNumber}, type {account5.AccountType}, balance {account5.Balance}, rate {BankAccount.InterestRate}, customer ID {account5.CustomerId}");
 
     ```
 

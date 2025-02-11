@@ -4,8 +4,8 @@ namespace Classes_M3;
 
 public class BankAccount
 {
-    private static int nextAccountNumber;
-    public static double interestRate;
+    private static int s_nextAccountNumber;
+    public static double InterestRate;
     public int AccountNumber { get; }
     public string CustomerId { get; }
     public double Balance { get; private set; } = 0;
@@ -14,19 +14,19 @@ public class BankAccount
     static BankAccount()
     {
         Random random = new Random();
-        nextAccountNumber = random.Next(10000000, 20000000);
-        interestRate = 0;
+        s_nextAccountNumber = random.Next(10000000, 20000000);
+        InterestRate = 0;
     }
 
     public BankAccount(string customerIdNumber)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
     }
 
     public BankAccount(string customerIdNumber, double balance, string accountType)
     {
-        this.AccountNumber = nextAccountNumber++;
+        this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
         this.Balance = balance;
         this.AccountType = accountType;
@@ -68,13 +68,13 @@ public class BankAccount
     // Method to apply interest to the account
     public void ApplyInterest()
     {
-        Balance += Balance * interestRate;
+        Balance += Balance * InterestRate;
     }
 
     // Method to display account information
     public string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {interestRate}, Customer ID: {CustomerId}";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
     }
 
 }
