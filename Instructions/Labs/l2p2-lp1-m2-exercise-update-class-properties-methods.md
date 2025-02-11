@@ -245,7 +245,7 @@ Use the following steps to complete this section of the exercise:
 
     The `_firstName` and `_lastName` fields are now private, meaning they can only be accessed from within the `BankCustomer` class. This is a common practice in object-oriented programming to encapsulate data and prevent direct access to fields from outside the class.
 
-1. To create a `FirstName` property that accesses the private `_firstName` field, add the following code to the bottom of `BankCustomer` class:
+1. To create a `FirstName` property that accesses the private `_firstName` field, add the following code below the field declaration in the `BankCustomer` class:
 
     ```csharp
 
@@ -265,7 +265,7 @@ Use the following steps to complete this section of the exercise:
 
     The `set` accessor is used to assign a new value to the private field `_firstName`. The keyword `value` represents the value being assigned to the property. When a new value is assigned to `_firstName`, the `set` accessor sets `_firstName` to this new value.
 
-1. To create a `LastName` property that accesses the private `_lastName` field, add the following code to the bottom of the `BankCustomer` class:
+1. To create a `LastName` property that accesses the private `_lastName` field, add the following code to the `BankCustomer` class:
 
     ```csharp
 
@@ -335,6 +335,18 @@ Use the following steps to complete this section of the exercise:
         private string _lastName = "Shao";
         public readonly string CustomerId;
     
+        public string FirstName
+        {
+            get { return _firstName; }
+            set { _firstName = value; }
+        }
+    
+        public string LastName
+        {
+            get { return _lastName; }
+            set { _lastName = value; }
+        }
+    
         static BankCustomer()
         {
             Random random = new Random();
@@ -346,18 +358,6 @@ Use the following steps to complete this section of the exercise:
             FirstName = firstName;
             LastName = lastName;
             this.CustomerId = (s_nextCustomerId++).ToString("D10");
-        }
-    
-        public string FirstName
-        {
-            get { return _firstName; }
-            set { _firstName = value; }
-        }
-    
-        public string LastName
-        {
-            get { return _lastName; }
-            set { _lastName = value; }
         }
     }
 
@@ -456,27 +456,11 @@ Use the following steps to complete this section of the exercise:
     The `set` accessor is used to assign a new value to the private field. The `value` keyword represents the value being assigned to the property. When a new value is assigned to the property, the `set` accessor assigns `value` to the private field.
 
     > [!NOTE]
-    > Your code doesn't explicitly define the anonymous backing fields (`Balance` and `AccountType`) for auto-implemented properties. The C# compiler automatically creates these fields for auto-implemented properties.
+    > Your code doesn't need to explicitly define the anonymous backing fields (`_balance` and `_accountType`) for auto-implemented properties. The C# compiler automatically creates these fields for you when using auto-implemented properties.
 
-1. Notice that the final constructor is still assigning values to the `Balance` and `AccountType` fields.
+1. Notice that the final constructor is now assigning values to the `Balance` and `AccountType` properties.
 
-    You need to update the constructor to use the new properties instead of the fields.
-
-1. To update the constructor, replace the existing constructor with the following code:
-
-    ```csharp
-
-    public BankAccount(string customerIdNumber, double balance, string accountType)
-    {
-        this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = customerIdNumber;
-        this.Balance = balance;
-        this.AccountType = accountType;
-    }
-
-    ```
-
-    Your updated constructor uses the `Balance` and `AccountType` parameters to assign values to the `Balance` and `AccountType` properties.
+    Your updated constructor uses the `balance` and `accountType` parameters to assign values to the `Balance` and `AccountType` properties. The new properties reuse the identifiers previously defined for the public fields.
 
 1. Open the Program.cs file.
 
@@ -490,17 +474,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To implement the new `BankAccount` properties, replace the code statements identified in the previous step with the following code snippet:
-
-    ```csharp
-
-    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
-    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
-    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
-
-    ```
-
-    Notice that your code now uses the `Balance` and `AccountType` properties of the `BankAccount` class to access the balance and account type of each account.
+    Notice that your code uses the `Balance` and `AccountType` properties of the `BankAccount` class to access the balance and account type of each account.
 
 1. Take a minute to review your code.
 
@@ -633,7 +607,9 @@ Use the following steps to complete this section of the exercise:
 
     Read-only properties provide a level of immutability (the object's state can't be modified after it's created) and help to protect the integrity of the account data.
 
-1. To implement the new properties in the two `BankAccount` instance constructors, replace the existing constructors with the following code:
+    Backing fields are not required for read-only properties because the C# compiler automatically creates them for you. The `{ get; }` syntax tells the compiler to create an anonymous backing field to store the property value.
+
+1. Notice that the two instance constructors are now assigning values to the `AccountNumber` and `CustomerId` properties:
 
     ```csharp
 
@@ -653,7 +629,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The updated instance constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `AccountNumber` and `CustomerId`.
+    The instance constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `_accountNumber` and `_customerId`.
 
 1. Open the Program.cs file.
 
