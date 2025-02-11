@@ -259,8 +259,8 @@ Use the following steps to complete this section of the exercise:
     public partial class BankCustomer
     {
         private static int nextCustomerId;
-        private string FirstName = "Tim";
-        private string LastName = "Shao";
+        private string _firstName = "Tim";
+        private string _lastName = "Shao";
         public readonly string CustomerId;
     
         static BankCustomer()
@@ -278,14 +278,14 @@ Use the following steps to complete this section of the exercise:
     
         public string FirstName
         {
-            get { return FirstName; }
-            set { FirstName = value; }
+            get { return _firstName; }
+            set { _firstName = value; }
         }
     
         public string LastName
         {
-            get { return LastName; }
-            set { LastName = value; }
+            get { return _lastName; }
+            set { _lastName = value; }
         }
     }
 

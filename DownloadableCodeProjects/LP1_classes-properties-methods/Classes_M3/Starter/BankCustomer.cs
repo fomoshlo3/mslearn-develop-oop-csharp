@@ -5,8 +5,8 @@ namespace Classes_M3;
 public class BankCustomer
 {
     private static int s_nextCustomerId;
-    private string FirstName = "Tim";
-    private string LastName = "Shao";
+    private string _firstName = "Tim";
+    private string _lastName = "Shao";
     public readonly string customerId;
 
     static BankCustomer()
@@ -24,14 +24,14 @@ public class BankCustomer
 
     public string FirstName
     {
-        get { return FirstName; }
-        set { FirstName = value; }
+        get { return _firstName; }
+        set { _firstName = value; }
     }
 
     public string LastName
     {
-        get { return LastName; }
-        set { LastName = value; }
+        get { return _lastName; }
+        set { _lastName = value; }
     }
 
     // Method to return the full name of the customer

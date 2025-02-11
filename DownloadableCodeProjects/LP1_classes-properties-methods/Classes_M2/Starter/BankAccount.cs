@@ -6,10 +6,10 @@ public class BankAccount
 {
     private static int s_nextAccountNumber;
     public readonly int AccountNumber;
-    public double balance = 0;
+    public double Balance = 0;
     public static double InterestRate;
     public string AccountType = "Checking";
-    public readonly string customerId;
+    public readonly string CustomerId;
 
     static BankAccount()
     {
@@ -21,14 +21,14 @@ public class BankAccount
     public BankAccount(string customerIdNumber)
     {
         this.AccountNumber = s_nextAccountNumber++;
-        this.customerId = customerIdNumber;
+        this.CustomerId = customerIdNumber;
     }
 
     public BankAccount(string customerIdNumber, double balance, string accountType)
     {
         this.AccountNumber = s_nextAccountNumber++;
-        this.customerId = customerIdNumber;
-        this.balance = balance;
+        this.CustomerId = customerIdNumber;
+        this.Balance = balance;
         this.AccountType = accountType;
     }
 }

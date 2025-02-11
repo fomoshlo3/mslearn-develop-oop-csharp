@@ -156,7 +156,7 @@ Use the following steps to complete this section of the exercise:
 
     The `BankAccount` class includes fields for `AccountNumber`, `Balance`, `InterestRate`, `AccountType`, and `CustomerId`. The `AccountNumber` field is read-only and is initialized in the instance constructors. The `Balance` field is read-write and can be changed at any time. The `AccountType` field is read-write and can be changed at any time. The `CustomerId` field is read-only and is initialized in the instance constructors. The `BankAccount` class also has a static field `s_nextAccountNumber` which is used to generate unique account numbers for each new account. This field is initialized in a static constructor, which is called only once when the class is first loaded. The static constructor uses the `Random` class to generate a random starting value for `s_nextAccountNumber`. Additionally, the static constructor initializes the static field `InterestRate` to 0.
 
-    The class also includes two instance constructors. The first instance constructor takes a single parameter, `customerIdNumber`, and initializes the `AccountNumber` and `CustomerId` fields. The second instance constructor takes three parameters: `customerIdNumber`, `Balance`, and `AccountType`. This constructor initializes the AccountNumber, CustomerId, balance, and AccountType fields based on the provided values. Both constructors increment the s_nextAccountNumber to ensure that each new account has a unique account number. The static constructor initializes the `s_nextAccountNumber` and `InterestRate` fields.
+    The class also includes two instance constructors. The first instance constructor takes a single parameter, `customerIdNumber`, and initializes the `AccountNumber` and `CustomerId` fields. The second instance constructor takes three parameters: `customerIdNumber`, `balance`, and `accountType`. This constructor initializes the `AccountNumber`, `CustomerId`, `Balance`, and `AccountType` fields based on the provided values. Both constructors increment the `s_nextAccountNumber` to ensure that each new account has a unique account number. The static constructor initializes the `s_nextAccountNumber` and `InterestRate` fields.
 
 1. Open the Program.cs file.
 
@@ -225,39 +225,59 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankCustomer.cs file.
 
-1. To create a `FirstName` property that accesses the `FirstName` field, add the following code to the bottom of `BankCustomer` class:
+1. Locate the FirstName and LastName fields in the `BankCustomer` class:
+
+    ```csharp
+
+    public string FirstName = "Tim";
+    public string LastName = "Shao";
+
+    ```
+
+1. To change the fields from public to private, update the `FirstName` and `LastName` fields to the following code:
+
+    ```csharp
+
+    private string _firstName = "Tim";
+    private string _lastName = "Shao";
+
+    ```
+
+    The `_firstName` and `_lastName` fields are now private, meaning they can only be accessed from within the `BankCustomer` class. This is a common practice in object-oriented programming to encapsulate data and prevent direct access to fields from outside the class.
+
+1. To create a `FirstName` property that accesses the private `_firstName` field, add the following code to the bottom of `BankCustomer` class:
 
     ```csharp
 
     public string FirstName
     {
-        get { return FirstName; }
-        set { FirstName = value; }
+        get { return _firstName; }
+        set { _firstName = value; }
     }
 
     ```
 
-    The `FirstName` property is used to encapsulate the private field `FirstName` and provides controlled access to it.
+    The `FirstName` property is used to encapsulate the private field `_firstName` and provides controlled access to it.
 
     The `public` keyword indicates that the `FirstName` property is accessible from outside the class, meaning other classes and code can read and modify this property. The property is of type `string`, which means it holds text data.
 
-    The property has two accessors: `get` and `set`. The `get` accessor is used to retrieve the value of the private field `FirstName`. When the property is accessed, the `get` accessor returns the current value of `FirstName`.
+    The property has two accessors: `get` and `set`. The `get` accessor is used to retrieve the value of the private field `_firstName`. When the property is accessed, the `get` accessor returns the current value of `_firstName`.
 
-    The `set` accessor is used to assign a new value to the private field `FirstName`. The keyword `value` represents the value being assigned to the property. When a new value is assigned to `FirstName`, the `set` accessor sets `FirstName` to this new value.
+    The `set` accessor is used to assign a new value to the private field `_firstName`. The keyword `value` represents the value being assigned to the property. When a new value is assigned to `_firstName`, the `set` accessor sets `_firstName` to this new value.
 
-1. To create a `LastName` property that accesses the `LastName` field, add the following code to the bottom of the `BankCustomer` class:
+1. To create a `LastName` property that accesses the private `_lastName` field, add the following code to the bottom of the `BankCustomer` class:
 
     ```csharp
 
     public string LastName
     {
-        get { return LastName; }
-        set { LastName = value; }
+        get { return _lastName; }
+        set { _lastName = value; }
     }
 
     ```
 
-    The `LastName` property works the same way as the `FirstName` property. It encapsulates the private field `LastName` and provides controlled access to it.
+    The `LastName` property works the same way as the `FirstName` property. It encapsulates the private field `_lastName` and provides controlled access to it.
 
 1. Open the Program.cs file.
 
@@ -298,7 +318,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code also demonstrates setting the `FirstName` and `LastName` properties to change the name of `customer1`.
+    Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code demonstrates setting the `FirstName` and `LastName` properties to change the name of `customer1`.
 
     You may also notice the commented code line that assigns a value to the `CustomerId` field directly. The `CustomerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, the code will not compile.
 
@@ -311,8 +331,8 @@ Use the following steps to complete this section of the exercise:
     public class BankCustomer
     {
         private static int s_nextCustomerId;
-        private string FirstName = "Tim";
-        private string LastName = "Shao";
+        private string _firstName = "Tim";
+        private string _lastName = "Shao";
         public readonly string CustomerId;
     
         static BankCustomer()
@@ -330,14 +350,14 @@ Use the following steps to complete this section of the exercise:
     
         public string FirstName
         {
-            get { return FirstName; }
-            set { FirstName = value; }
+            get { return _firstName; }
+            set { _firstName = value; }
         }
     
         public string LastName
         {
-            get { return LastName; }
-            set { LastName = value; }
+            get { return _lastName; }
+            set { _lastName = value; }
         }
     }
 
@@ -852,8 +872,8 @@ Use the following steps to complete this section of the exercise:
     public class BankCustomer
     {
         private static int s_nextCustomerId;
-        private string FirstName = "Tim";
-        private string LastName = "Shao";
+        private string _firstName = "Tim";
+        private string _lastName = "Shao";
         public readonly string CustomerId;
     
         static BankCustomer()
@@ -871,14 +891,14 @@ Use the following steps to complete this section of the exercise:
     
         public string FirstName
         {
-            get { return FirstName; }
-            set { FirstName = value; }
+            get { return _firstName; }
+            set { _firstName = value; }
         }
     
         public string LastName
         {
-            get { return LastName; }
-            set { LastName = value; }
+            get { return _lastName; }
+            set { _lastName = value; }
         }
     
         // Method to return the full name of the customer

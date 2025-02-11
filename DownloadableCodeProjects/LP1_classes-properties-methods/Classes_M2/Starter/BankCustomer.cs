@@ -7,7 +7,7 @@ public class BankCustomer
     private static int s_nextCustomerId;
     public string FirstName = "Tim";
     public string LastName = "Shao";
-    public readonly string customerId;
+    public readonly string CustomerId;
 
     static BankCustomer()
     {
@@ -19,7 +19,7 @@ public class BankCustomer
     {
         FirstName = firstName;
         LastName = lastName;
-        this.customerId = (s_nextCustomerId++).ToString("D10");
+        this.CustomerId = (s_nextCustomerId++).ToString("D10");
     }
     
 }

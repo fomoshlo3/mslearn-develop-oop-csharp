@@ -5,9 +5,9 @@ namespace Classes_M2;
 public class BankCustomer
 {
     private static int s_nextCustomerId;
-    private string FirstName = "Tim";
-    private string LastName = "Shao";
-    public readonly string customerId;
+    private string _firstName = "Tim";
+    private string _lastName = "Shao";
+    public readonly string CustomerId;
 
     static BankCustomer()
     {
@@ -24,14 +24,14 @@ public class BankCustomer
 
     public string FirstName
     {
-        get { return FirstName; }
-        set { FirstName = value; }
+        get { return _firstName; }
+        set { _firstName = value; }
     }
 
     public string LastName
     {
-        get { return LastName; }
-        set { LastName = value; }
+        get { return _lastName; }
+        set { _lastName = value; }
     }
 
     // Method to return the full name of the customer
@@ -50,6 +50,6 @@ public class BankCustomer
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {customerId}, Name: {ReturnFullName()}";
+        return $"Customer ID: {CustomerId}, Name: {ReturnFullName()}";
     }
 }
