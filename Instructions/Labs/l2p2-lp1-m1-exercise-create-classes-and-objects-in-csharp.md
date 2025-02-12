@@ -17,7 +17,7 @@ This exercise takes approximately **25** minutes to complete.
 
 Before you can start this exercise, you need to:
 
-1. Ensure that you have the latest short term support (STS) version of the .NET SDK installed on your computer. You can download the latest versions of the .NET SDK using the following URL: [Download .NET](https://dotnet.microsoft.com/download/)
+1. Ensure that you have the latest short term support (STS) version of the .NET SDK installed on your computer. You can download the latest versions of the .NET SDK using the following URL: <a href="https://dotnet.microsoft.com/download/" target="_blank">Download .NET</a>
 1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code using the following URL: [Download Visual Studio Code](https://code.visualstudio.com/download/)
 1. Ensure that you have the C# Dev Kit configured in Visual Studio Code.
 
