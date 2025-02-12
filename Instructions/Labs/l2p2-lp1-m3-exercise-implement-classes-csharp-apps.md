@@ -465,7 +465,37 @@ Use the following steps to complete this section of the exercise:
 
     Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property. The `account.Balance` property is updated using `amount` parameter.
 
-1. Repeat this method update process to correct the issues in the remaining `Transactions` class methods.
+1. Notice that `account.Balance` can't be modified from the static method because the setter is private.
+
+    To update the `Balance` property, you need to add an `internal` method to the `BankAccount` class that enabled classes within the assembly to modify the `Balance` property. This keeps the `Balance` property encapsulated within the `BankAccount` class while allowing the `Transactions` class to update the `Balance` property.
+
+1. Add the following `SetBalance` method to the `BankAccount` class:
+
+    ```csharp
+
+    internal void SetBalance(double balance)
+    {
+        Balance = balance;
+    }
+
+    ```
+
+1. To use the `SetBalance` method in the `Transactions` class, update the `Deposit` method using the following code:
+
+    ```csharp
+
+    // Method to deposit money into the account
+    public static void Deposit(BankAccount account, double amount)
+    {
+        if (amount > 0)
+        {
+            account.SetBalance(account.Balance + amount);
+        }
+    }
+
+    ```
+
+1. Repeat the process used to update `Deposit` to correct the issues in the remaining `Transactions` class methods.
 
     Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the required properties and fields.
 

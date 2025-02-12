@@ -7,7 +7,7 @@ public class BankCustomer
     private static int s_nextCustomerId;
     private string _firstName = "Tim";
     private string _lastName = "Shao";
-    public readonly string customerId;
+    public readonly string CustomerId;
 
     static BankCustomer()
     {
@@ -19,7 +19,7 @@ public class BankCustomer
     {
         FirstName = firstName;
         LastName = lastName;
-        this.customerId = (s_nextCustomerId++).ToString("D10");
+        this.CustomerId = (s_nextCustomerId++).ToString("D10");
     }
 
     public string FirstName
@@ -50,7 +50,7 @@ public class BankCustomer
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {customerId}, Name: {ReturnFullName()}";
+        return $"Customer ID: {CustomerId}, Name: {ReturnFullName()}";
     }
 
 }

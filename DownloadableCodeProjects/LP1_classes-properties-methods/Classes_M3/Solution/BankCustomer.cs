@@ -7,7 +7,7 @@ public partial class BankCustomer
     private static int s_nextCustomerId;
     private string _firstName = "Tim";
     private string _lastName = "Shao";
-    public readonly string customerId;
+    public readonly string CustomerId;
 
     static BankCustomer()
     {
@@ -19,13 +19,13 @@ public partial class BankCustomer
     {
         FirstName = firstName;
         LastName = lastName;
-        this.customerId = (s_nextCustomerId++).ToString("D10");
+        this.CustomerId = (s_nextCustomerId++).ToString("D10");
     }
 
     // Copy constructor with unique customerId
     public BankCustomer(BankCustomer existingCustomer)
     {
-        this.customerId = (s_nextCustomerId++).ToString("D10");
+        this.CustomerId = (s_nextCustomerId++).ToString("D10");
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
     }

@@ -7,7 +7,7 @@ public static class BankCustomerExtensions
     // Extension method to check if the customer ID is valid
     public static bool IsValidCustomerId(this BankCustomer customer)
     {
-        return customer.customerId.Length == 10;
+        return customer.CustomerId.Length == 10;
     }
 
     // Extension method to greet the customer

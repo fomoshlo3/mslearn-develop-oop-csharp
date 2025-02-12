@@ -20,22 +20,6 @@ public partial class BankCustomer
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {customerId}, Name: {FullName()}";
-    }
-
-    // Override Equals method to compare customers by customerId
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        BankCustomer other = (BankCustomer)obj;
-        return customerId == other.customerId;
-    }
-
-    // Override GetHashCode method
-    public override int GetHashCode()
-    {
-        return customerId.GetHashCode();
+        return $"Customer ID: {CustomerId}, Name: {FullName()}";
     }
 }

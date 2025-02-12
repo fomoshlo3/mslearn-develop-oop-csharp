@@ -35,6 +35,12 @@ public class BankAccount
         this.AccountType = existingAccount.AccountType;
     }
 
+    // Method to deposit money into the account. Only accessible within the assembly
+    internal void SetBalance(double amount)
+    {
+        Balance = amount;
+    }
+
     // Method to display account information
     public string DisplayAccountInfo()
     {
