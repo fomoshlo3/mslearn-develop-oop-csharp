@@ -463,9 +463,9 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
-    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property. The `account.Balance` property is updated using `amount` parameter.
+    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property. All good so far.
 
-    However, the `Balance` property can't be modified from the static method because the setter is private. To update the `Balance` property, you need to change access control of the setter to `internal`.
+    However, when the code attempts to update the `account.Balance` property using the `amount` parameter, it finds that the `Balance` property isn't accessible. This is because the setter is private. To update the `Balance` property in the static method, you need to change access control of the setter to `internal`. This will allow the `Transactions` class to modify the `Balance` property while keeping the property encapsulated within the `BankAccount` class.
 
 1. Open the BankAccount.cs file.
 
@@ -476,8 +476,6 @@ Use the following steps to complete this section of the exercise:
     public double Balance { get; internal set; } = 0;
 
     ```
-
-    The `internal` access modifier allows the `Transactions` class to modify the `Balance` property while keeping the property encapsulated within the `BankAccount` class.
 
 1. Switch back to the Transactions.cs file.
 
