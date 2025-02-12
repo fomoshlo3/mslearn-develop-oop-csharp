@@ -447,7 +447,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Balance` and `AccountType` properties are automatically implemented properties that encapsulate anonymous backing fields that store the property values. The anonymous backing fields (`Balance` and `AccountType`) are created automatically by the C# compiler, so they're not explicitly defined in the code.
+    The `Balance` and `AccountType` properties are automatically implemented properties that encapsulate anonymous backing fields that store the property values. The anonymous backing fields (`_balance` and `_accountType`) are created automatically by the C# compiler, so they're not explicitly defined in the code.
 
     The `public` keyword indicates that the properties are accessible from outside the class, meaning other classes and code can read and write property values.
 
@@ -629,11 +629,11 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The instance constructors use the `AccountNumber` and `CustomerId` properties to set the values of the private fields `_accountNumber` and `_customerId`.
+    The instance constructors use the properties to assign values to the private backing fields.
 
 1. Open the Program.cs file.
 
-1. Notice that the `Console.WriteLine` statements that display the account information are still using the `AccountNumber` and `CustomerId` fields.
+1. Notice that the `Console.WriteLine` statements using properties to display the data for the bank account objects.
 
     ```csharp
 
@@ -643,17 +643,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To update the `Console.WriteLine` statements, replace the code identified in the previous step with the following code snippet:
-
-    ```csharp
-
-    Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.InterestRate}, customer ID {account1.CustomerId}");
-    Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.InterestRate}, customer ID {account2.CustomerId}");
-    Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.InterestRate}, customer ID {account3.CustomerId}");
-
-    ```
-
-    Your code now uses the `AccountNumber` and `CustomerId` properties of the `BankAccount` class to access the account number and customer ID of each account.
+    The `InterestRate` field is accessed using the `BankAccount` class because it's a static (and public) field.
 
 1. Run the app and review the output in the terminal window.
 
@@ -730,7 +720,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-    The `BankAccount` class has a `Balance` property and `InterestRate` field. These two class members can be used to create methods to deposit and withdraw money from the account, transfer money to another account, display account information, and apply interest to the account balance. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field.
+    Account balances are affected by deposits, withdrawal, and transfers. The interest rate for an account can also affect the balance. You can create methods for each of these these behaviors. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field. This ensures that the account balance can only be updated through the methods.
 
 1. Create a blank code line below the last constructor.
 
@@ -811,7 +801,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Balance` property currently uses auto-implemented property syntax, which defines the property without explicitly declaring a backing field. The `{ get; set; }` syntax automatically creates a private backing field for the value, which is initialized to `0`. Since `Balance` is declared `public`, the value of the `Balance` property can be modified directly from outside the class. Public access to the property setter allows the balance to be updated directly without going through the `Deposit`, `Withdraw`, and `Transfer` methods. This can lead to inconsistent account balances and make it difficult to track changes to the balance.
+    The `Balance` property currently uses auto-implemented property syntax. The `{ get; set; }` syntax automatically creates a private backing field for the value, which is initialized to `0`. Since `Balance` is declared `public`, the `Balance` property can be modified directly from outside the class, without going through the `Deposit`, `Withdraw`, or `Transfer` methods. This can lead to inconsistent account balances and make it difficult to track changes to the account balance.
 
     You can convert the `Balance` property to a read-only property with a private backing field to prevent direct modification of the balance value from outside the class. This ensures that the balance can only be updated through the `Deposit`, `Withdraw`, and `Transfer` methods.
 
@@ -839,7 +829,7 @@ Use the following steps to complete this section of the exercise:
 
     The `DisplayAccountInfo` method returns a string that includes the account number, account type, balance, interest rate, and customer ID.
 
-1. Take a minute to verify your updated `BankCustomer` and `BankAccount` classes.
+1. Take a minute to review your updated `BankCustomer` and `BankAccount` classes.
 
     BankCustomer.cs
 
@@ -851,6 +841,18 @@ Use the following steps to complete this section of the exercise:
         private string _firstName = "Tim";
         private string _lastName = "Shao";
         public readonly string CustomerId;
+        
+        public string FirstName
+        {
+            get { return _firstName; }
+            set { _firstName = value; }
+        }
+    
+        public string LastName
+        {
+            get { return _lastName; }
+            set { _lastName = value; }
+        }
     
         static BankCustomer()
         {
@@ -863,18 +865,6 @@ Use the following steps to complete this section of the exercise:
             FirstName = firstName;
             LastName = lastName;
             this.CustomerId = (s_nextCustomerId++).ToString("D10");
-        }
-    
-        public string FirstName
-        {
-            get { return _firstName; }
-            set { _firstName = value; }
-        }
-    
-        public string LastName
-        {
-            get { return _lastName; }
-            set { _lastName = value; }
         }
     
         // Method to return the full name of the customer
@@ -907,6 +897,7 @@ Use the following steps to complete this section of the exercise:
     {
         private static int s_nextAccountNumber;
         public static double InterestRate;
+
         public int AccountNumber { get; }
         public string CustomerId { get; }
         public double Balance { get; private set; } = 0;
