@@ -104,9 +104,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `BankCustomer` class includes fields for `fname` (first name), `LastName` (last name), `CustomerId` (customer ID), and a static field `s_nextCustomerId`. The `s_nextCustomerId` field is used to generate a unique customer ID for each customer.
+    The `BankCustomer` class includes fields for `FirstName`, `LastName`, `CustomerId`, and a static field `s_nextCustomerId`. The `s_nextCustomerId` field is used to generate a unique customer ID for each customer.
 
-    The `BankCustomer` class also includes two constructors. The first constructor is a static constructor that initializes the `s_nextCustomerId` field with a random number eight-digit integer. The second constructor takes two parameters, `firstName` and `lastName`, and initializes the `fname` and `LastName` fields with the values of the parameters. The constructor also increments `s_nextCustomerId` and uses the value to assign a unique value to `CustomerId`.
+    The `BankCustomer` class also includes two constructors. The first constructor is a static constructor that initializes the `s_nextCustomerId` field with a random number eight-digit integer. The second constructor takes two parameters, `firstName` and `lastName`, and initializes the `FirstName` and `LastName` fields with the values of the parameters. The constructor also increments `s_nextCustomerId` and uses the incremented value to assign a unique value to `CustomerId`.
 
     > [!NOTE]
     > The `this` keyword refers to the current instance of the class. It's used to access fields, properties, and methods of the current instance. In the `BankCustomer` class, the `this` keyword is used to access the read-only `CustomerId` field. The `this` keyword is not required in this context, but it's used for clarity. The `this` keyword is not available in a static constructor.
@@ -193,7 +193,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Top-level statements provide an implicit entry point for the app. The code in Program.cs demonstrates how to create and use `BankCustomer` and `BankAccount` objects. the code initializes customer details, creates three `BankCustomer` objects, and prints their information. Then, it creates three `BankAccount` objects for these customers, specifying different balances and account types, and prints the account details, including account number, type, balance, interest rate, and customer ID.
+    Your console app uses top-level statements as an implicit entry point for the app (rather than using a `Main` method). The code in Program.cs demonstrates how to create and use `BankCustomer` and `BankAccount` objects. the code initializes customer details, creates three `BankCustomer` objects, and prints their information. Then, it creates three `BankAccount` objects for these customers, specifying different balances and account types, and prints the account details, including account number, type, balance, interest rate, and customer ID.
 
 1. Run the app and review the output in the terminal window.
 
@@ -245,7 +245,7 @@ Use the following steps to complete this section of the exercise:
 
     The `_firstName` and `_lastName` fields are now private, meaning they can only be accessed from within the `BankCustomer` class. This is a common practice in object-oriented programming to encapsulate data and prevent direct access to fields from outside the class.
 
-1. To create a `FirstName` property that accesses the private `_firstName` field, add the following code below the field declaration in the `BankCustomer` class:
+1. To create a `FirstName` property that accesses the private `_firstName` field, add the following code below the field declarations in the `BankCustomer` class:
 
     ```csharp
 
@@ -296,7 +296,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. To implement the new `BankCustomer` properties, replace the code statements identified in the previous step with the following code snippet:
+1. To demonstrate the new `BankCustomer` properties, replace the code statements identified in the previous step with the following code snippet:
 
     ```csharp
 
@@ -318,9 +318,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code demonstrates setting the `FirstName` and `LastName` properties to change the name of `customer1`.
+    Notice that your code now uses the `FirstName` and `LastName` properties of the `BankCustomer` class to access the first name and last name of each customer. The code uses `customer1` to demonstrate changing a customer's first and last name, and then displays the updated customer data.
 
-    You may also notice the commented code line that assigns a value to the `CustomerId` field directly. The `CustomerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, the code will not compile.
+    You may also notice the commented code line that assigns a value to the `CustomerId` field directly. The `CustomerId` field is read-only and cannot be changed after it's initialized in the constructor. If you uncomment this code line, your app won't compile.
 
 1. Take a minute to review your code.
 
@@ -460,7 +460,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Notice that the final constructor is now assigning values to the `Balance` and `AccountType` properties.
 
-    Your updated constructor uses the `balance` and `accountType` parameters to assign values to the `Balance` and `AccountType` properties. The new properties reuse the identifiers previously defined for the public fields.
+    Your updated constructor uses the `balance` and `accountType` parameters to assign values to the `Balance` and `AccountType` properties.
 
 1. Open the Program.cs file.
 
@@ -671,9 +671,9 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankCustomer.cs file.
 
-    The `BankCustomer` class has two properties: `FirstName` and `LastName`. Methods can be used to perform operations on these properties. For example, you can create a method to return the full name of the customer by combining the first and last names. You can also create methods to update the customer's name and display customer information.
+    The `BankCustomer` class has two properties: `FirstName` and `LastName`. You can create methods that perform operations on these properties. For example, you can create a method to return the full name of the customer by combining the first and last names. You can also create methods to update the customer's name and display customer information.
 
-1. Create a blank code line below the `LastName` property.
+1. Create a blank code line below the final constructor.
 
 1. To create a method that returns the full name of the customer, add the following code:
 
@@ -720,9 +720,9 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the BankAccount.cs file.
 
-    Account balances are affected by deposits, withdrawal, and transfers. The interest rate for an account can also affect the balance. You can create methods for each of these these behaviors. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field. This ensures that the account balance can only be updated through the methods.
+    Account balances are affected by deposits, withdrawals, and transfers. The interest rate for an account can also affect the balance. You can create methods for each of these these behaviors. Once the deposit and withdrawal methods are implemented, the `Balance` property can be converted from an auto-implemented property to a property with a private backing field. This ensures that the account balance can only be updated through the methods.
 
-1. Create a blank code line below the last constructor.
+1. Create a blank code line below the final constructor.
 
 1. To create a method that deposits money into the account, add the following code:
 
@@ -777,7 +777,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Transfer` method takes a `BankAccount` object and an `amount` variable as parameters. It uses the `Withdraw` method to withdraw the `amount` value from the current account and the `Deposit` method to deposit it into the `targetAccount` account. The method returns `true` if the transfer is successful and `false` otherwise.
+    The `Transfer` method takes a `BankAccount` object and an `amount` variable as parameters. It uses the `Withdraw` method to withdraw the `amount` value from the current account. It uses the target account's `Deposit` method (`targetAccount.Deposit`) to deposit the `amount` value into the target account. The method returns `true` if the transfer is successful and `false` otherwise.
 
 1. To create a method that applies interest to the account balance, add the following code:
 
