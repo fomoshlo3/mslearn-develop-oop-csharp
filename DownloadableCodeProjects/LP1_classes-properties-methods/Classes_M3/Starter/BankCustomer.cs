@@ -9,6 +9,18 @@ public class BankCustomer
     private string _lastName = "Shao";
     public readonly string CustomerId;
 
+    public string FirstName
+    {
+        get { return _firstName; }
+        set { _firstName = value; }
+    }
+
+    public string LastName
+    {
+        get { return _lastName; }
+        set { _lastName = value; }
+    }
+
     static BankCustomer()
     {
         Random random = new Random();
@@ -20,18 +32,6 @@ public class BankCustomer
         FirstName = firstName;
         LastName = lastName;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
-    }
-
-    public string FirstName
-    {
-        get { return _firstName; }
-        set { _firstName = value; }
-    }
-
-    public string LastName
-    {
-        get { return _lastName; }
-        set { _lastName = value; }
     }
 
     // Method to return the full name of the customer

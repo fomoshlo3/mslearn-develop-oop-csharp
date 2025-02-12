@@ -74,7 +74,7 @@ Use the following steps to complete this section of the exercise:
 
     The `BankAccount` class represents a bank account with properties and methods to manage account operations.
 
-    Notice that the class includes static fields `s_nextAccountNumber` and `InterestRate`, which track the next account number and the interest rate applied to accounts, respectively. Each `BankAccount` instance has properties such as `AccountNumber`, `CustomerId`, `Balance`, and `AccountType`, with default values for balance and account type. The class includes constructors for initializing accounts with or without an initial balance and account type. Methods provided by the class include `Deposit` for adding funds, `Withdraw` for removing funds, `Transfer` for transferring funds between accounts, `ApplyInterest` for applying interest to the balance, and `DisplayAccountInfo` for displaying account details. The class also features a static constructor to initialize static fields.
+    Notice that the class includes static fields `s_nextAccountNumber` and `InterestRate`, which track the next account number and the interest rate applied to accounts, respectively. In addition to the static fields, the `BankAccount` class defines the following properties: `AccountNumber`, `CustomerId`, `Balance`, and `AccountType`. The class also includes constructors for initializing accounts with or without an initial balance and account type. Methods provided by the class include `Deposit` for adding funds, `Withdraw` for removing funds, `Transfer` for transferring funds between accounts, `ApplyInterest` for applying interest to the balance, and `DisplayAccountInfo` for displaying account details. The class also features a static constructor to initialize static fields.
 
     The `this` keyword is used to access the properties of the current class instance. For example, `this.AccountNumber` refers to the `AccountNumber` property of the current `BankAccount` instance.
 
@@ -82,7 +82,7 @@ Use the following steps to complete this section of the exercise:
 
     The BankCustomer class represents a bank customer with properties and methods to manage customer information.
 
-    Notice that the class includes a static field `nextCustomerId` to track the next customer ID, and instance fields `FirstName` and `LastName` for storing the customer's first and last names, respectively. Each `BankCustomer` instance has a read-only `CustomerId` property, which is initialized using a static constructor that generates a random starting ID. The class provides properties `FirstName` and `LastName` for accessing and modifying the customer's name. Methods in the class include `ReturnFullName` to return the customer's full name, `UpdateName` to update the customer's name, and `DisplayCustomerInfo` to display customer details. The class also features a constructor for initializing a new customer with a first and last name.
+    Notice that the class includes a static field `nextCustomerId` to track the next customer ID, and private backing fields `_firstName` and `_lastName` for storing the customer's first and last names, respectively. Each `BankCustomer` instance has a read-only `CustomerId` property, which is initialized using a static constructor that generates a random starting ID. The class provides properties `FirstName` and `LastName` for accessing and modifying the customer's name. Methods in the class include `ReturnFullName` to return the customer's full name, `UpdateName` to update the customer's name, and `DisplayCustomerInfo` to display customer details. The class also features a constructor for initializing a new customer with a first and last name.
 
 1. Open the Extensions.cs file and take a minute to review the BankCustomerExtensions and BankAccountExtensions classes.
 
@@ -431,7 +431,7 @@ Use the following steps to complete this section of the exercise:
     - The methods in a static class must be static, so you need to update the method signatures to include the `static` keyword.
     - The properties and fields defined by the `BankAccount` class are not directly accessible in the `Transactions` class. You need to update the method signatures to accept a `BankAccount` parameter and use the `BankAccount` instance to access properties within the static methods.
 
-1. Take a moment to consider the `Deposit` method.
+1. Take a moment to consider how you'll update the `Deposit` method.
 
     ```csharp
 
@@ -448,7 +448,7 @@ Use the following steps to complete this section of the exercise:
 
     The `Deposit` method came from the `BankAccount` class, where it could access the `Balance` property directly. However, the `Balance` property is no longer available in the `Transactions` class. To update the `Deposit` method, you need to update the method signature to accept a `BankAccount` parameter, and then use the `BankAccount` instance to access the `Balance` property.
 
-1. To include a `BankAccount` parameter to the signature and then reference the account object within the method, update the `Deposit` method to match the following code snippet:
+1. To add a `BankAccount` parameter to the signature and then reference the account object within the method, update the `Deposit` method to match the following code snippet:
 
     ```csharp
 
@@ -465,35 +465,23 @@ Use the following steps to complete this section of the exercise:
 
     Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property. The `account.Balance` property is updated using `amount` parameter.
 
-1. Notice that `account.Balance` can't be modified from the static method because the setter is private.
+    However, the `Balance` property can't be modified from the static method because the setter is private. To update the `Balance` property, you need to change access control of the setter to `internal`.
 
-    To update the `Balance` property, you need to add an `internal` method to the `BankAccount` class that enabled classes within the assembly to modify the `Balance` property. This keeps the `Balance` property encapsulated within the `BankAccount` class while allowing the `Transactions` class to update the `Balance` property.
+1. Open the BankAccount.cs file.
 
-1. Add the following `SetBalance` method to the `BankAccount` class:
-
-    ```csharp
-
-    internal void SetBalance(double balance)
-    {
-        Balance = balance;
-    }
-
-    ```
-
-1. To use the `SetBalance` method in the `Transactions` class, update the `Deposit` method using the following code:
+1. Change the access modifier of the `Balance` property setter to `internal`.
 
     ```csharp
 
-    // Method to deposit money into the account
-    public static void Deposit(BankAccount account, double amount)
-    {
-        if (amount > 0)
-        {
-            account.SetBalance(account.Balance + amount);
-        }
-    }
+    public double Balance { get; internal set; } = 0;
 
     ```
+
+    The `internal` access modifier allows the `Transactions` class to modify the `Balance` property while keeping the property encapsulated within the `BankAccount` class.
+
+1. Switch back to the Transactions.cs file.
+
+1. Notice that the `Deposit` method now has access to the `Balance` property of the `BankAccount` instance.
 
 1. Repeat the process used to update `Deposit` to correct the issues in the remaining `Transactions` class methods.
 

@@ -6,6 +6,7 @@ public class BankAccount
 {
     private static int s_nextAccountNumber;
     public static double InterestRate;
+
     public int AccountNumber { get; }
     public string CustomerId { get; }
     public double Balance { get; private set; } = 0;
@@ -31,8 +32,6 @@ public class BankAccount
         this.Balance = balance;
         this.AccountType = accountType;
     }
-
-
 
     // Method to deposit money into the account
     public void Deposit(double amount)
