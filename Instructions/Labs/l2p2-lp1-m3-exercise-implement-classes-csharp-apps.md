@@ -17,11 +17,11 @@ This exercise takes approximately **30** minutes to complete.
 
 Before you can start this exercise, you need to:
 
-1. Ensure that you have the latest short term support (STS) version of the .NET SDK installed on your computer. You can download the latest versions of the .NET SDK using the following URL: [Download .NET](https://dotnet.microsoft.com/download/?azure-portal=true)
-1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code using the following URL: [Download Visual Studio Code](https://code.visualstudio.com/download/?azure-portal=true)
+1. Ensure that you have the latest short term support (STS) version of the .NET SDK installed on your computer. You can download the latest versions of the .NET SDK using the following URL: [Download .NET](https://dotnet.microsoft.com/download/){:target="_blank"}
+1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code using the following URL: [Download Visual Studio Code](https://code.visualstudio.com/download/){:target="_blank"}
 1. Ensure that you have the C# Dev Kit configured in Visual Studio Code.
 
-For additional help configuring the Visual Studio Code environment, see [Install and configure Visual Studio Code for C# development](https://learn.microsoft.com/training/modules/install-configure-visual-studio-code/?azure-portal=true)
+For additional help configuring the Visual Studio Code environment, see [Install and configure Visual Studio Code for C# development](https://learn.microsoft.com/training/modules/install-configure-visual-studio-code/){:target="_blank"}
 
 ## Exercise scenario
 
