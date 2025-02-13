@@ -9,7 +9,7 @@ public static class Transactions
     {
         if (amount > 0)
         {
-            account.SetBalance(account.Balance + amount);
+            account.Balance += amount;
         }
     }
 
@@ -18,7 +18,7 @@ public static class Transactions
     {
         if (amount > 0 && account.Balance >= amount)
         {
-            account.SetBalance(account.Balance - amount);
+            account.Balance -= amount;
             return true;
         }
         return false;
@@ -38,6 +38,6 @@ public static class Transactions
     // Method to apply interest to the account balance
     public static void ApplyInterest(BankAccount account)
     {
-        account.SetBalance(account.Balance + account.Balance * BankAccount.InterestRate);
+        account.Balance += account.Balance * BankAccount.InterestRate;
     }
 }

@@ -426,7 +426,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Notice that the Visual Studio Code environment uses red squiggly lines to indicate errors in your code.
 
-    There are two issues that you need to address:
+    There are two primary issues that you need to address:
 
     - The methods in a static class must be static, so you need to update the method signatures to include the `static` keyword.
     - The properties and fields defined by the `BankAccount` class are not directly accessible in the `Transactions` class. You need to update the method signatures to accept a `BankAccount` parameter and use the `BankAccount` instance to access properties within the static methods.
@@ -446,9 +446,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `Deposit` method came from the `BankAccount` class, where it could access the `Balance` property directly. However, the `Balance` property is no longer available in the `Transactions` class. To update the `Deposit` method, you need to update the method signature to accept a `BankAccount` parameter, and then use the `BankAccount` instance to access the `Balance` property.
+    The `Deposit` method came from the `BankAccount` class, where it could access the `Balance` property directly. However, the `Balance` property is no longer available in the `Transactions` class. To update the `Deposit` method, you need to update the method signature to accept a `BankAccount` parameter, and then use the `BankAccount` instance to access the `Balance` property. Also, you need to add `static` to the method signature to make it a static method.
 
-1. To add a `BankAccount` parameter to the signature and then reference the account object within the method, update the `Deposit` method to match the following code snippet:
+1. To add a `static` modifier and `BankAccount` parameter to the signature, and then reference the account object within the method, update the `Deposit` method to match the following code snippet:
 
     ```csharp
 
@@ -463,9 +463,11 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
-    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property. All good so far.
+    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property.
 
-    However, when the code attempts to update the `account.Balance` property using the `amount` parameter, it finds that the `Balance` property isn't accessible. This is because the setter is private. To update the `Balance` property in the static method, you need to change access control of the setter to `internal`. This will allow the `Transactions` class to modify the `Balance` property while keeping the property encapsulated within the `BankAccount` class.
+    However, when the code attempts to update the `account.Balance` property using the `amount` parameter, it finds that the set accessor is inaccessible. You can hover the mouse pointer over the `Balance` property to see the error message.
+
+    The `Balance` property is inaccessible in `Transactions` because the setter is defined as `private` in `BankAccount`. To update the `Balance` property in your static methods, you need to change access control of the setter to `internal` in the `BankAccount` class. This update will allow the `Transactions` class to modify the `Balance` property while keeping the property encapsulated within the `BankAccount` class.
 
 1. Open the BankAccount.cs file.
 
@@ -479,7 +481,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Switch back to the Transactions.cs file.
 
-1. Notice that the `Deposit` method now has access to the `Balance` property of the `BankAccount` instance.
+1. Notice that the `Deposit` method is now able to set the `account.Balance` property.
 
 1. Repeat the process used to update `Deposit` to correct the issues in the remaining `Transactions` class methods.
 
@@ -635,7 +637,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Run the app to ensure that your static class updates didn't introduce any bugs.
 
-    By moving the transactional methods to a static class, you can organize your code more effectively and improve the readability and maintainability of your code. The BankAccount class should still work as expected, and you should see the same output in the terminal window.
+    By moving the transactional methods to a static class, your code is more efficiently organized and the maintainability of your code is improved. The BankAccount class should still work as expected, and you should see the same output in the terminal window.
 
     Your app should produce output that's similar to the following example:
 
@@ -849,7 +851,7 @@ Use the following steps to complete this section of the exercise:
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
         //this.CustomerId = existingCustomer.CustomerId;
-        this.CustomerId = (nextCustomerId++).ToString("D10");
+        this.CustomerId = (s_nextCustomerId++).ToString("D10");
 
     }
 

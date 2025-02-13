@@ -13,7 +13,7 @@ public static class BankCustomerExtensions
     // Extension method to greet the customer
     public static string GreetCustomer(this BankCustomer customer)
     {
-        return $"Hello, {customer.FirstName} {customer.LastName}!";
+        return $"Hello, {customer.ReturnFullName()}!";
     }
 }
 

@@ -5,7 +5,7 @@ namespace Classes_M3;
 public partial class BankCustomer
 {
     // Method to return the full name of the customer
-    public string FullName()
+    public string ReturnFullName()
     {
         return $"{FirstName} {LastName}";
     }
@@ -20,6 +20,6 @@ public partial class BankCustomer
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {CustomerId}, Name: {FullName()}";
+        return $"Customer ID: {CustomerId}, Name: {ReturnFullName()}";
     }
 }

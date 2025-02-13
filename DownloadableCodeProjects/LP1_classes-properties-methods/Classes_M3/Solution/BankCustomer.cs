@@ -9,6 +9,18 @@ public partial class BankCustomer
     private string _lastName = "Shao";
     public readonly string CustomerId;
 
+    public string FirstName
+    {
+        get { return _firstName; }
+        set { _firstName = value; }
+    }
+
+    public string LastName
+    {
+        get { return _lastName; }
+        set { _lastName = value; }
+    }
+
     static BankCustomer()
     {
         Random random = new Random();
@@ -22,23 +34,14 @@ public partial class BankCustomer
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
     }
 
-    // Copy constructor with unique customerId
+    // Copy constructor for BankCustomer
     public BankCustomer(BankCustomer existingCustomer)
     {
-        this.CustomerId = (s_nextCustomerId++).ToString("D10");
+
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
-    }
+        //this.CustomerId = existingCustomer.CustomerId;
+        this.CustomerId = (s_nextCustomerId++).ToString("D10");
 
-    public string FirstName
-    {
-        get { return _firstName; }
-        set { _firstName = value; }
-    }
-
-    public string LastName
-    {
-        get { return _lastName; }
-        set { _lastName = value; }
     }
 }
