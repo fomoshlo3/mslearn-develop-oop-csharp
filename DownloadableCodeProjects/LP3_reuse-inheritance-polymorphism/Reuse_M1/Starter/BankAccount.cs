@@ -6,9 +6,10 @@ public class BankAccount
 {
     private static int s_nextAccountNumber;
     public static double InterestRate;
+
     public int AccountNumber { get; }
     public string CustomerId { get; }
-    public double Balance { get; private set; } = 0;
+    public double Balance { get; internal set; } = 0;
     public string AccountType { get; set; } = "Checking";
 
     static BankAccount()
@@ -26,7 +27,7 @@ public class BankAccount
         this.AccountType = accountType;
     }
 
-    // Add a copy constructor here
+    // Copy constructor for BankAccount
     public BankAccount(BankAccount existingAccount)
     {
         this.AccountNumber = s_nextAccountNumber++;

@@ -38,6 +38,6 @@ public static class Transactions
     // Method to apply interest to the account balance
     public static void ApplyInterest(BankAccount account)
     {
-        account.Balance += account.Balance * BankAccount.interestRate;
+        account.Balance += account.Balance * BankAccount.InterestRate;
     }
 }

@@ -5,7 +5,7 @@ namespace Reuse_M1;
 public partial class BankCustomer
 {
     // Method to return the full name of the customer
-    public string FullName()
+    public string ReturnFullName()
     {
         return $"{FirstName} {LastName}";
     }
@@ -20,22 +20,6 @@ public partial class BankCustomer
     // Method to display customer information
     public string DisplayCustomerInfo()
     {
-        return $"Customer ID: {customerId}, Name: {FullName()}";
-    }
-
-    // Override Equals method to compare customers by customerId
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-            return false;
-
-        BankCustomer other = (BankCustomer)obj;
-        return customerId == other.customerId;
-    }
-
-    // Override GetHashCode method
-    public override int GetHashCode()
-    {
-        return customerId.GetHashCode();
+        return $"Customer ID: {CustomerId}, Name: {ReturnFullName()}";
     }
 }
