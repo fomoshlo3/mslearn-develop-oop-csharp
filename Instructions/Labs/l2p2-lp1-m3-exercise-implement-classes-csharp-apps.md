@@ -7,7 +7,7 @@ lab:
 
 # Manage class implementations
 
-The term code quality refers to the overall readability, maintainability, efficiency, reusability, reliability, and testability of your code. By improving code quality, you can make your code easier to understand, modify, and extend. Object-oriented programming (OOP) provides several features that can help you improve code quality, such as static and partial classes, nested classes, optional and named parameters, copy constructors, and object initializers. These features can help you organize your code more effectively, reduce redundancy, and make your code more flexible and concise.
+The term code quality refers to the overall readability, maintainability, efficiency, reusability, reliability, and testability of your code. By improving code quality, you can make your code easier to understand, manage, and extend. Object-oriented programming (OOP) provides several features that can help you improve code quality, such as static and partial classes, nested classes, optional and named parameters, copy constructors, and object initializers. These features can help you organize your code more effectively, reduce redundancy, and make your code more flexible and concise.
 
 In this exercise, you improve an existing application's code quality by implementing static and partial classes, and by using optional parameters in class constructors. You also improve object management in your application code by implementing copy constructors and object initializers.
 
@@ -335,15 +335,17 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-## Create a static class for transactional BankAccount methods
+## Create a static class for BankAccount methods
 
-Static classes are used to organize methods that don't require an instance of a class to be created. Static classes can't be instantiated, and their methods can be called directly without creating an instance of the class. Static classes are useful for grouping related methods together and providing a convenient way to access them. In this task, you create a static class named Transactions that holds methods for the BankAccount class. The Transactions class includes methods for depositing, withdrawing, transferring funds, and applying interest to a bank account.
+Static classes are often used to organize methods that don't require an instance of a class. Static classes can't be instantiated, and their methods can be called directly without creating an instance of a class. Static classes are useful for grouping related methods together and providing a convenient way to access them.
+
+In this task, you add new capabilities to the `BankAccount` class and create helper methods in a static class to support the new features.
 
 Use the following steps to complete this section of the exercise:
 
-1. Create a new file in the `Classes_M3` project for a class named **Transactions**.
+1. Create a new file in the `Classes_M3` project for a class named **AccountCalculations**.
 
-    Your Transactions.cs file should look similar to the following code:
+    Your AccountCalculations.cs file should look similar to the following code:
 
     ```csharp
 
@@ -351,7 +353,7 @@ Use the following steps to complete this section of the exercise:
     
     namespace Classes_M3;
     
-    public class Transactions
+    public class AccountCalculations
     {
 
     }
@@ -366,180 +368,163 @@ Use the following steps to complete this section of the exercise:
     
     namespace Classes_M3;
     
-    public static class Transactions
+    public static class AccountCalculations
     {
 
     }
 
     ```
+
+    You'll be adding helper methods to the `AccountCalculations` class to support new features in the `BankAccount` class.
 
 1. Open the BankAccount.cs file.
 
-1. Move the `Deposit`, `Withdraw`, `Transfer`, and `ApplyInterest` methods from the `BankAccount` class to the `Transactions` class.
+    You're going to add the following capabilities the BankAccount class:
 
-    Your updated Transactions.cs file should look like this:
+    - Calculate and apply compound interest to an account.
+    - Issue cashier's checks from an account.
+    - Enable support for an overdraft feature for accounts.
+    - Enable refunds to an account.
+
+1. Replace the `InterestRate` field with the following static properties:
 
     ```csharp
 
-    public static class Transactions
-    {
-        // Method to deposit money into the account
-        public void Deposit(double amount)
-        {
-            if (amount > 0)
-            {
-                Balance += amount;
-            }
-        }
-    
-        // Method to withdraw money from the account
-        public bool Withdraw(double amount)
-        {
-            if (amount > 0 && Balance >= amount)
-            {
-                Balance -= amount;
-                return true;
-            }
-            return false;
-        }
-    
-        // Method to transfer money to another account
-        public bool Transfer(BankAccount targetAccount, double amount)
-        {
-            if (Withdraw(amount))
-            {
-                targetAccount.Deposit(amount);
-                return true;
-            }
-            return false;
-        }
-    
-        // Method to apply interest to the account
-        public void ApplyInterest()
-        {
-            Balance += Balance * InterestRate;
-        }
+    // Public read-only static properties
+    public static double InterestRate { get; private set; }
+    public static double TransactionRate { get; private set; }
+    public static double MaxTransactionFee { get; private set; }
+    public static double OverdraftRate { get; private set; }
+    public static double MaxOverdraftFee { get; private set; }
 
+    ```
+
+    These properties are used to store the interest rate, transaction rate, maximum transaction fee, overdraft rate, and maximum overdraft fee for accounts. They are static properties, so they can be accessed using the class name, `BankAccount`, rather than an instance of the class. The `private set` accessor restricts the properties to read-only access.
+
+1. Replace the static and instance constructors with the following code snippet:
+
+    ```csharp
+
+    static BankAccount()
+    {
+        Random random = new Random();
+        s_nextAccountNumber = random.Next(10000000, 20000000);
+        InterestRate = 0.00; // Default interest rate for checking accounts
+        TransactionRate = 0.01; // Default transaction rate for wire transfers and cashier's checks
+        MaxTransactionFee = 10; // Maximum transaction fee for wire transfers and cashier's checks
+        OverdraftRate = 0.05; // Default penalty rate for an overdrawn checking account (negative balance)
+        MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
+    }
+
+    public BankAccount(string customerIdNumber, double balance, string accountType)
+    {
+        this.AccountNumber = s_nextAccountNumber++;
+        this.CustomerId = customerIdNumber; // required for the constructor
+        this.Balance = balance;             // required for the constructor
+        this.AccountType = accountType;     // required for the constructor
     }
 
     ```
 
-1. Notice that the Visual Studio Code environment uses red squiggly lines to indicate errors in your code.
+    The static constructor initializes the static field `s_nextAccountNumber`, and the static properties `InterestRate`, `TransactionRate`, `MaxTransactionFee`, `OverdraftRate`, and `MaxOverdraftFee`. 
 
-    There are two primary issues that you need to address:
+    The single instance constructor now requires the `customerIdNumber`, `balance`, and `accountType` parameters in order to instantiate an account. The instance constructor uses the parameters to initialize the `CustomerId`, `Balance`, and `AccountType` properties of a `BankAccount` instance. The `AccountNumber` property is initialized using the `s_nextAccountNumber` field.
 
-    - The methods in a static class must be static, so you need to update the method signatures to include the `static` keyword.
-    - The properties and fields defined by the `BankAccount` class are not directly accessible in the `Transactions` class. You need to update the method signatures to accept a `BankAccount` parameter and use the `BankAccount` instance to access properties within the static methods.
-
-1. Take a moment to consider how you'll update the `Deposit` method.
+1. Replace the existing `ApplyInterest` method with the following code snippet:
 
     ```csharp
 
-    // Method to deposit money into the account
-    public void Deposit(double amount)
+    // Method to apply interest
+    public void ApplyInterest(double years)
     {
-        if (amount > 0)
+        Balance += AccountCalculations.CalculateCompoundInterest(Balance, InterestRate, years);
+    }
+
+    // Method to issue a cashier's check
+    public bool IssueCashiersCheck(double amount)
+    {
+        if (amount > 0 && Balance >= amount + BankAccount.MaxTransactionFee)
         {
-            Balance += amount;
+            Balance -= amount;
+            Balance -= AccountCalculations.CalculateTransactionFee(amount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
+            return true;
         }
+        return false;
+    }
+
+    // Method to apply a refund
+    public void ApplyRefund(double refund)
+    {
+        Balance += refund;
     }
 
     ```
 
-    The `Deposit` method came from the `BankAccount` class, where it could access the `Balance` property directly. However, the `Balance` property is no longer available in the `Transactions` class. To update the `Deposit` method, you need to update the method signature to accept a `BankAccount` parameter, and then use the `BankAccount` instance to access the `Balance` property. Also, you need to add `static` to the method signature to make it a static method.
+1. Take a minute to review the new methods.
 
-1. To add a `static` modifier and `BankAccount` parameter to the signature, and then reference the account object within the method, update the `Deposit` method to match the following code snippet:
+    Notice that the `ApplyInterest` and `IssueCashiersCheck` methods rely on helper methods in the `AccountCalculations` class to perform calculations.
+
+1. Open the AccountCalculations.cs file.
+
+1. Add the following methods to the AccountCalculations class:
 
     ```csharp
 
-    // Method to deposit money into the account
-    public static void Deposit(BankAccount account, double amount)
+    // Method to calculate compound interest
+    public static double CalculateCompoundInterest(double principal, double annualRate, double years)
     {
-        if (amount > 0)
-        {
-            account.Balance += amount;
-        }
+        return principal * Math.Pow(1 + annualRate, years) - principal;
     }
-    
-    ```
 
-    Notice that the `Deposit` method now accepts a `BankAccount` parameter named `account`, and that it uses the `account` object to access the `Balance` property.
-
-    However, when the code attempts to update the `account.Balance` property using the `amount` parameter, it finds that the set accessor is inaccessible. You can hover the mouse pointer over the `Balance` property to see the error message.
-
-    The `Balance` property is inaccessible in `Transactions` because the setter is defined as `private` in `BankAccount`. To update the `Balance` property in your static methods, you need to change access control of the setter to `internal` in the `BankAccount` class. This update will allow the `Transactions` class to modify the `Balance` property while keeping the property encapsulated within the `BankAccount` class.
-
-1. Open the BankAccount.cs file.
-
-1. Change the access modifier of the `Balance` property setter to `internal`.
-
-    ```csharp
-
-    public double Balance { get; internal set; } = 0;
-
-    ```
-
-1. Switch back to the Transactions.cs file.
-
-1. Notice that the `Deposit` method is now able to set the `account.Balance` property.
-
-1. Repeat the process used to update `Deposit` to correct the issues in the remaining `Transactions` class methods.
-
-    Ensure that each of the Transaction methods accepts a `BankAccount` parameter and uses the `BankAccount` instance to access the required properties and fields.
-
-    > [!IMPORTANT]
-    > Remember that static fields are accessed using the class name, not an instance of the class. For example, to access the `InterestRate` field, you use `BankAccount.InterestRate`. Also, keep in mind that the `Transfer` method uses the updates `Deposit` and `Withdraw` methods in the `Transactions` class, not the old methods from the `BankAccount` class. Ensure that you update the `Withdraw` and `Deposit` method signatures within the `Transfer` method to accept `BankAccount` and `amount` parameters. For example, the `Withdraw` method should be updated to `Withdraw(sourceAccount, amount)` and the `Deposit` method should be updated to `Deposit(targetAccount, amount)`.
-
-1. Take a minute to review your updated Transactions class.
-
-    Your updated Transactions class should look similar to the following code snippet:
-
-    ```csharp
-
-    public static class Transactions
+    // Method to validate account number
+    public static bool ValidateAccountNumber(int accountNumber)
     {
+        return accountNumber.ToString().Length == 8;
+    }
 
-        // Method to deposit money into the account
-        public static void Deposit(BankAccount account, double amount)
-        {
-            if (amount > 0)
-            {
-                account.Balance += amount;
-            }
-        }
-    
-        // Method to withdraw money from the account
-        public static bool Withdraw(BankAccount account, double amount)
-        {
-            if (amount > 0 && account.Balance >= amount)
-            {
-                account.Balance -= amount;
-                return true;
-            }
-            return false;
-        }
-    
-        // Method to transfer money to another account
-        public static bool Transfer(BankAccount sourceAccount, BankAccount targetAccount, double amount)
-        {
-            if (Withdraw(sourceAccount, amount))
-            {
-                Deposit(targetAccount, amount);
-                return true;
-            }
-            return false;
-        }
-    
-        // Method to apply interest to the account balance
-        public static void ApplyInterest(BankAccount account)
-        {
-            account.Balance += account.Balance * BankAccount.InterestRate;
-        }
+    // Method to calculate transaction fee, for things like bank checks or wire transfers
+    public static double CalculateTransactionFee(double amount, double transactionRate, double maxTransactionFee)
+    {
+        // calculate the fee based on the transaction rate
+        double fee = amount * transactionRate;
+
+        // Return the lesser of the calculated fee or the maximum fee for transactions
+        return Math.Min(fee, maxTransactionFee);
+    }
+
+    // Method to calculate overdraft fee
+    public static double CalculateOverdraftFee(double amountOverdrawn, double overdraftRate, double maxOverdraftFee)
+    {
+        // Calculate the fee based on the overdraft rate
+        double fee = amountOverdrawn * overdraftRate;
+
+        // Return the lesser of the calculated fee or the maximum fee of $10
+        return Math.Min(fee, maxOverdraftFee);
+    }
+
+    // Method to calculate the value of currency after foreign exchange 
+    public static double ReturnForeignCurrency(double amount, double exchangeRate)
+    {
+        return amount * exchangeRate;
     }
 
     ```
+
+1. Take a minute to review the methods that you just added.
+
+    The `AccountCalculations` class provides helper methods that perform calculations for the BankAccount class. For instance, the `ApplyInterest` method in `BankAccount` uses `AccountCalculations.CalculateCompoundInterest` to compute the interest to be added to the account balance. Similarly, the `IssueCashiersCheck` method relies on `AccountCalculations.CalculateTransactionFee` to determine the transaction fee that needs to be deducted from the balance when issuing a cashier's check. By utilizing these methods from `AccountCalculations`, the `BankAccount` class can perform accurate and consistent financial computations, ensuring modularity and maintainability in the code.
 
 1. Open the Program.cs file.
+
+1. Add the following `using` directive to the top of the file:
+
+    ```csharp
+
+    using System.Globalization;
+
+    ```
+
+    This `using` directive allows you to use the `CultureInfo` class to format currency values.
 
 1. Locate the code that demonstrates the use of BankAccount methods.
 
@@ -571,69 +556,86 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-1. Notice that the code in the Program.cs file uses `BankAccount` objects to access the `Deposit`, `Withdraw`, `Transfer`, and `ApplyInterest` methods.
-
-    For example:
+1. Replace the existing "Step 4" code with the following code snippet:
 
     ```csharp
-
-    // Deposit
-    Console.WriteLine("Depositing 500 into Account 1...");
-    account1.Deposit(500);
-    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
-
-    ```
-
-1. To use the `Transactions.Deposit()` static method for the deposit into `account1`, update your code to match the following code snippet:
-
-    ```csharp
-
-    // Deposit
-    Console.WriteLine("Depositing 500 into Account 1...");
-    Transactions.Deposit(account1, 500);
-    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
-
-    ```
-
-1. Use the same approach to implement the `Withdraw`, `Transfer`, and `ApplyInterest` methods.
-
-    For the `Transfer` method, the account used to access the old method becomes the first parameter in the new method. The account that was passed as a parameter to the old method becomes the second parameter in the new method. The amount parameter remains as the final parameter.
-
-1. Ensure that your code uses the `Transactions` class for all transactional methods in the Program.cs file.
-
-    Your updated Program.cs file should look similar to the following code snippet:
-
-    ```csharp
-
-    // code removed for brevity
 
     // Step 4: Demonstrate the use of BankAccount methods
     Console.WriteLine("\nDemonstrating BankAccount methods...");
     
     // Deposit
-    Console.WriteLine("Depositing 500 into Account 1...");
-    Transactions.Deposit(account1, 500);
-    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
+    double depositAmount = 500;
+    Console.WriteLine($"Depositing {depositAmount.ToString("C", CultureInfo.CurrentCulture)} into Account 1...");
+    account1.Deposit(depositAmount);
+    Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
     
     // Withdraw
-    Console.WriteLine("Withdrawing 200 from Account 2...");
-    bool withdrawSuccess = Transactions.Withdraw(account2, 200);
-    Console.WriteLine($"Account 2 after withdrawal: Balance = {account2.Balance}, Withdrawal successful: {withdrawSuccess}");
+    double withdrawalAmount = 200;
+    Console.WriteLine($"Withdrawing {withdrawalAmount.ToString("C", CultureInfo.CurrentCulture)} from Account 2...");
+    bool withdrawSuccess = account2.Withdraw(withdrawalAmount);
+    Console.WriteLine($"Account 2 after withdrawal: Balance = {account2.Balance.ToString("C", CultureInfo.CurrentCulture)}, Withdrawal successful: {withdrawSuccess}");
     
     // Transfer
-    Console.WriteLine("Transferring 300 from Account 3 to Account 1...");
-    bool transferSuccess = Transactions.Transfer(account3, account1, 300);
-    Console.WriteLine($"Account 3 after transfer: Balance = {account3.Balance}, Transfer successful: {transferSuccess}");
-    Console.WriteLine($"Account 1 after receiving transfer: Balance = {account1.Balance}");
+    double transferAmount = 300;
+    Console.WriteLine($"Transferring {transferAmount.ToString("C", CultureInfo.CurrentCulture)} from Account 3 to Account 1...");
+    bool transferSuccess = account3.Transfer(account1, transferAmount);
+    Console.WriteLine($"Account 3 after transfer: Balance = {account3.Balance.ToString("C", CultureInfo.CurrentCulture)}, Transfer successful: {transferSuccess}");
+    Console.WriteLine($"Account 1 after receiving transfer: Balance = {account1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+    
+    // Demonstrate the use of utility methods in AccountCalculations
+    Console.WriteLine("\nDemonstrating utility methods in AccountCalculations...");
+    
+    // Calculate compound interest for account1
+    double principal = account1.Balance;
+    double rate = BankAccount.InterestRate;
+    double time = 1; // 1 year
+    double compoundInterest = AccountCalculations.CalculateCompoundInterest(principal, rate, time);
+    Console.WriteLine($"Compound interest on account1 balance of {principal.ToString("C", CultureInfo.CurrentCulture)} at {rate * 100:F2}% for {time} year: {compoundInterest.ToString("C", CultureInfo.CurrentCulture)}");
+    
+    // Validate account number for account1
+    int accountNumber = account1.AccountNumber;
+    bool isValidAccountNumber = AccountCalculations.ValidateAccountNumber(accountNumber);
+    Console.WriteLine($"Is account number {accountNumber} valid? {isValidAccountNumber}");
+    
+    // Calculate transaction fee using rates and max fee values from the bank account class
+    double transactionAmount = 800;
+    double transactionFee = AccountCalculations.CalculateTransactionFee(transactionAmount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
+    Console.WriteLine($"Transaction fee for a {transactionAmount.ToString("C", CultureInfo.CurrentCulture)} wire transfer at a {BankAccount.TransactionRate * 100:F2}% rate and a max fee of {BankAccount.MaxTransactionFee.ToString("C", CultureInfo.CurrentCulture)} is: {transactionFee.ToString("C", CultureInfo.CurrentCulture)}");
+    
+    // Calculate overdraft fee using rates and max fee values from the bank account class
+    double overdrawnAmount = 500;
+    double overdraftFee = AccountCalculations.CalculateOverdraftFee(overdrawnAmount, BankAccount.OverdraftRate, BankAccount.MaxOverdraftFee);
+    Console.WriteLine($"Overdraft fee for an account that's {overdrawnAmount.ToString("C", CultureInfo.CurrentCulture)} overdrawn, using a penalty rate of {BankAccount.OverdraftRate * 100:F2}% and a max fee of {BankAccount.MaxOverdraftFee.ToString("C", CultureInfo.CurrentCulture)} is: {overdraftFee.ToString("C", CultureInfo.CurrentCulture)}");
+    
+    // Exchange currency
+    double originalCurrencyProvided = 100;
+    double currentExchangeRate = 1.2;
+    double foreignCurrencyReceived = AccountCalculations.ReturnForeignCurrency(originalCurrencyProvided, currentExchangeRate);
+    Console.WriteLine($"The foreign currency received after exchanging {originalCurrencyProvided.ToString("C", CultureInfo.CurrentCulture)} at an exchange rate of {currentExchangeRate:F2} is: {foreignCurrencyReceived.ToString("C", CultureInfo.CurrentCulture)}");
     
     // Apply interest
-    Console.WriteLine("Applying interest to Account 1...");
-    Transactions.ApplyInterest(account1);
-    Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
-
-    // code removed for brevity
+    Console.WriteLine("\nApplying interest to Account 1...");
+    double timePeriodYears = 30 / 365.0;    // calculate the interest accrued during the past 30 days
+    account1.ApplyInterest(timePeriodYears);
+    Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance.ToString("C", CultureInfo.CurrentCulture)}, Interest Rate = {BankAccount.InterestRate:P2}, Time Period = {timePeriodYears:F2} years");
+    
+    // Issue cashier's check
+    Console.WriteLine("Issue cashier's check from account 2...");
+    double checkAmount = 500;
+    bool receivedCashiersCheck = account2.IssueCashiersCheck(checkAmount);
+    Console.WriteLine($"Account 2 after requesting cashier's check: Received cashier's check: {receivedCashiersCheck}, Balance = {account2.Balance.ToString("C", CultureInfo.CurrentCulture)}, Transaction Amount = {checkAmount.ToString("C", CultureInfo.CurrentCulture)}, Transaction Fee Rate = {BankAccount.TransactionRate:P2}, Max Transaction Fee = {BankAccount.MaxTransactionFee.ToString("C", CultureInfo.CurrentCulture)}");
+    
+    // Apply refund
+    Console.WriteLine("Applying refund to Account 3...");
+    double refundAmount = 50;
+    account3.ApplyRefund(refundAmount);
+    Console.WriteLine($"Account 3 after applying refund: Balance = {account3.Balance.ToString("C", CultureInfo.CurrentCulture)}, Refund Amount = {refundAmount.ToString("C", CultureInfo.CurrentCulture)}");
 
     ```
+
+1. Take a minute to review the updated code in "Step 4" of the Program.cs file.
+
+    The updated code demonstrates the use of the new `BankAccount` methods and the utility methods in the `AccountCalculations` class. The `ApplyInterest` method applies compound interest to an account balance, the `IssueCashiersCheck` method issues a cashier's check from an account, and the `ApplyRefund` method applies a refund to an account balance. The utility methods in the `AccountCalculations` class are used to calculate compound interest, validate account numbers, calculate transaction fees, calculate overdraft fees, and help with foreign currency exchanges.
 
 1. Run the app to ensure that your static class updates didn't introduce any bugs.
 
@@ -644,28 +646,40 @@ Use the following steps to complete this section of the exercise:
     ```plaintext
 
     Creating BankCustomer objects...
-    BankCustomer 1: Tim Shao 0016320839
-    BankCustomer 2: Lisa Shao 0016320840
-    BankCustomer 3: Sandy Zoeng 0016320841
+    BankCustomer 1: Tim Shao 0016201844
+    BankCustomer 2: Lisa Shao 0016201845
+    BankCustomer 3: Sandy Zoeng 0016201846
     
     Creating BankAccount objects for customers...
-    Account 1: Account # 12848501, type Checking, balance 0, rate 0, customer ID 0016320839
-    Account 2: Account # 12848502, type Checking, balance 1500, rate 0, customer ID 0016320840
-    Account 3: Account # 12848503, type Checking, balance 2500, rate 0, customer ID 0016320841
+    Account 1: Account # 18378304, type Checking, balance 0, rate 0, customer ID 0016201844
+    Account 2: Account # 18378305, type Checking, balance 1500, rate 0, customer ID 0016201845
+    Account 3: Account # 18378306, type Checking, balance 2500, rate 0, customer ID 0016201846
     
     Updating BankCustomer 1's name...
-    Updated BankCustomer 1: Thomas Margand 0016320839
+    Updated BankCustomer 1: Thomas Margand 0016201844
     
     Demonstrating BankAccount methods...
-    Depositing 500 into Account 1...
-    Account 1 after deposit: Balance = 500
-    Withdrawing 200 from Account 2...
-    Account 2 after withdrawal: Balance = 1300, Withdrawal successful: True
-    Transferring 300 from Account 3 to Account 1...
-    Account 3 after transfer: Balance = 2200, Transfer successful: True
-    Account 1 after receiving transfer: Balance = 800
+    Depositing $500.00 into Account 1...
+    Account 1 after deposit: Balance = $500.00
+    Withdrawing $200.00 from Account 2...
+    Account 2 after withdrawal: Balance = $1,300.00, Withdrawal successful: True
+    Transferring $300.00 from Account 3 to Account 1...
+    Account 3 after transfer: Balance = $2,200.00, Transfer successful: True
+    Account 1 after receiving transfer: Balance = $800.00
+    
+    Demonstrating utility methods in AccountCalculations...
+    Compound interest on account1 balance of $800.00 at 0.00% for 1 year: $0.00
+    Is account number 18378304 valid? True
+    Transaction fee for a $800.00 wire transfer at a 0.00% rate and a max fee of $0.00 is: $0.00
+    Overdraft fee for an account that's $500.00 overdrawn, using a penalty rate of 0.00% and a max fee of $0.00 is: $0.00
+    The foreign currency received after exchanging $100.00 at an exchange rate of 1.20 is: $120.00
+    
     Applying interest to Account 1...
-    Account 1 after applying interest: Balance = 800
+    Account 1 after applying interest: Balance = $800.00, Interest Rate = 0.00%, Time Period = 0.08 years
+    Issue cashier's check from account 2...
+    Account 2 after requesting cashier's check: Received cashier's check: True, Balance = $800.00, Transaction Amount = $500.00, Transaction Fee Rate = 0.00%, Max Transaction Fee = $0.00
+    Applying refund to Account 3...
+    Account 3 after applying refund: Balance = $2,250.00, Refund Amount = $50.00
     
     Demonstrating extension methods...
     Hello, Thomas Margand!
@@ -674,14 +688,14 @@ Use the following steps to complete this section of the exercise:
     Is account3 overdrawn? False
     
     Displaying customer and account information...
-    Customer ID: 0016320839, Name: Thomas Margand
-    Account Number: 12848501, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0016320839
+    Customer ID: 0016201844, Name: Thomas Margand
+    Account Number: 18378304, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0016201844
 
     ```
 
 ## Use optional parameters to improve constructor flexibility
 
-Using named and optional parameters can improve code readability and flexibility, especially in constructors and methods with multiple parameters. In this workspace, the files that would benefit the most from named and optional parameters are BankAccount.cs and Transactions.cs.
+Using named and optional parameters can improve code readability and flexibility, especially in constructors and methods with multiple parameters. In your banking app, the files that would benefit the most from named and optional parameters are BankAccount.cs and AccountCalculations.cs.
 
 In this task, you update a constructor in the BankAccount class using optional parameters.
 
@@ -693,32 +707,30 @@ In this task, you update a constructor in the BankAccount class using optional p
     {
         Random random = new Random();
         s_nextAccountNumber = random.Next(10000000, 20000000);
-        InterestRate = 0;
+        InterestRate = 0.00; // Default interest rate for checking accounts
+        TransactionRate = 0.01; // Default transaction rate for wire transfers and cashier's checks
+        MaxTransactionFee = 10; // Maximum transaction fee for wire transfers and cashier's checks
+        OverdraftRate = 0.05; // Default penalty rate for an overdrawn checking account (negative balance)
+        MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
     }
-    
-    public BankAccount(string customerIdNumber)
-    {
-        this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = customerIdNumber;
-    }
-    
+
     public BankAccount(string customerIdNumber, double balance, string accountType)
     {
         this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = customerIdNumber;
-        this.Balance = balance;
-        this.AccountType = accountType;
+        this.CustomerId = customerIdNumber; // required for the constructor
+        this.Balance = balance;             // required for the constructor
+        this.AccountType = accountType;     // required for the constructor
     }
     
     ```
 
-    The constructors in the BankAccount class can be improved by using optional parameters to provide default values, reducing the need for multiple constructor overloads.
+    You can improve the flexibility of the instance constructor by implementing optional parameters that specify common values for `balance` and `accountType`. This way, you can create `BankAccount` objects with varying levels of parameter detail, making class instantiation more flexible.
 
-1. Replace the two instance constructors with the following constructor that uses optional parameters:
+1. Replace your instance constructor with the following constructor that specifies optional `balance` and `accountType` parameters:
 
     ```csharp
     
-    public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
+    public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking")
     {
         this.AccountNumber = s_nextAccountNumber++;
         this.CustomerId = customerIdNumber;
@@ -728,16 +740,24 @@ In this task, you update a constructor in the BankAccount class using optional p
     
     ```
 
-    By using optional parameters in the BankAccount constructor, you can create instances of `BankAccount` with varying levels of parameter detail, making class instantiation more flexible and reducing the need for multiple constructor overloads. For example, you can create a `BankAccount` object with only a `customerIdNumber`, or you can specify combinations of `Balance` and `accountType` as well:
+    By using optional parameters in the `BankAccount` constructor, you can create instances of `BankAccount` with varying levels of parameter detail, making class instantiation more flexible and reducing the need for constructor overloads. For example, you can create a `BankAccount` object with only a `customerIdNumber`, or you can add combinations of `Balance` and `accountType`:
 
     ```csharp
+    string customerId = customer1.CustomerId;
+    double openingBalance = 1500;
 
-    BankAccount account1 = new BankAccount("1234567890");
-    BankAccount account2 = new BankAccount("2345678901", 1500);
-    BankAccount account3 = new BankAccount("3456789012", 2500, "Checking");
-    BankAccount account4 = new BankAccount("4567890123", accountType: "Checking");
-    BankAccount account5 = new BankAccount("5678901234", accountType: "Checking", balance: 5000);
-        
+    // specify a customer ID and use the default optional parameters (balance and accountType)
+    BankAccount account6 = new BankAccount(customerId);
+
+    // specify the customer ID and opening balance and use default account type
+    BankAccount account7 = new BankAccount(customer2.CustomerId, openingBalance);
+
+    // specify the customer ID and use a named parameter to specify account type
+    BankAccount account8 = new BankAccount(customer4.CustomerId, accountType: "Checking");
+    
+    // use named parameters to specify all parameters
+    BankAccount account9 = new BankAccount(accountType: "Checking", balance: 5000, customerIdNumber: customer5.CustomerId);
+
     ```
 
     > [!NOTE]
@@ -767,7 +787,7 @@ In this task, you update a constructor in the BankAccount class using optional p
             InterestRate = 0;
         }
     
-        public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
+        public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking")
         {
             this.AccountNumber = s_nextAccountNumber++;
             this.CustomerId = customerIdNumber;
@@ -880,11 +900,32 @@ Use the following steps to complete this section of the exercise:
 
 1. Open the Program.cs file.
 
-1. Add the following Step 7 code to the end of the Program.cs file
+1. Add the following Step 7 and Step 8 code to the end of the Program.cs file
 
     ```csharp
 
-    // Step 7: Demonstrate using object initializers and copy constructors
+    // Step 7: Demonstrate the use of named and optional parameters
+    Console.WriteLine("\nDemonstrating named and optional parameters...");
+    string customerId = customer1.CustomerId;
+    double openingBalance = 1500;
+    
+    // specify a customer ID and use the default optional parameters (balance and accountType)
+    BankAccount account4 = new BankAccount(customerId);
+    Console.WriteLine(account4.DisplayAccountInfo());
+    
+    // specify the customer ID and opening balance and use default account type
+    BankAccount account5 = new BankAccount(customer1.CustomerId, openingBalance);
+    Console.WriteLine(account5.DisplayAccountInfo());
+    
+    // specify the customer ID and use a named parameter to specify account type
+    BankAccount account6 = new BankAccount(customer2.CustomerId, accountType: "Checking");
+    Console.WriteLine(account6.DisplayAccountInfo());
+    
+    // use named parameters to specify all parameters
+    BankAccount account7 = new BankAccount(accountType: "Checking", balance: 5000, customerIdNumber: customer2.CustomerId);
+    Console.WriteLine(account7.DisplayAccountInfo());
+    
+    // Step 8: Demonstrate using object initializers and copy constructors
     Console.WriteLine("\nDemonstrating object initializers and copy constructors...");
     
     // Using object initializer
@@ -895,19 +936,27 @@ Use the following steps to complete this section of the exercise:
     BankCustomer customer5 = new BankCustomer(customer4);
     Console.WriteLine($"BankCustomer 5 (copy of customer4): {customer5.FirstName} {customer5.LastName} {customer5.CustomerId}");
     
-    BankAccount account4 = new BankAccount(customer4.CustomerId, 3000, "Savings");
-    BankAccount account5 = new BankAccount(account4);
-    Console.WriteLine($"Account 4: Account # {account4.AccountNumber}, type {account4.AccountType}, balance {account4.Balance}, rate {BankAccount.InterestRate}, customer ID {account4.CustomerId}");
-    Console.WriteLine($"Account 5 (copy of account4): Account # {account5.AccountNumber}, type {account5.AccountType}, balance {account5.Balance}, rate {BankAccount.InterestRate}, customer ID {account5.CustomerId}");
+    // Using object initializer
+    BankAccount account8 = new BankAccount(customer4.CustomerId) {AccountType = "Savings"};
+    Console.WriteLine($"Account 4: Account # {account8.AccountNumber}, type {account8.AccountType}, balance {account8.Balance}, rate {BankAccount.InterestRate}, customer ID {account8.CustomerId}");
+    
+    // Using copy constructor
+    BankAccount account9 = new BankAccount(account4);
+    Console.WriteLine($"Account 5 (copy of account4): Account # {account9.AccountNumber}, type {account9.AccountType}, balance {account9.Balance}, rate {BankAccount.InterestRate}, customer ID {account9.CustomerId}");
 
     ```
 
-    Notice the following:
+    Notice the following about Step 7:
+
+    - Optional parameters are used to create `BankAccount` objects with varying levels of parameter detail.
+    - Named parameters allow you to specify parameters by name, with less regard to their order in the constructor.
+
+    Notice the following about Step 8:
 
     - The `customer4` object is created using an object initializer. The `FirstName` and `LastName` properties are set using the object initializer syntax.
     - The `customer5` object is created using a copy constructor. The `customer5` object is a copy of the `customer4` object.
-    - The `account4` object is created using an object initializer. The `Balance` and `AccountType` properties are set using the object initializer syntax.
-    - The `account5` object is created using a copy constructor. The `account5` object is a copy of the `account4` object.
+    - The `account8` object is created using an object initializer. The `AccountType` property is set using the object initializer syntax. However, the `Balance` property has a private set accessor, so it can't be set using an object initializer.
+    - The `account9` object is created using a copy constructor. The `account5` object is a copy of the `account4` object.
 
 1. Run the app and review the output in the terminal window.
 
@@ -916,28 +965,40 @@ Use the following steps to complete this section of the exercise:
     ```plaintext
 
     Creating BankCustomer objects...
-    BankCustomer 1: Tim Shao 0011223008
-    BankCustomer 2: Lisa Shao 0011223009
-    BankCustomer 3: Sandy Zoeng 0011223010
+    BankCustomer 1: Tim Shao 0016484785
+    BankCustomer 2: Lisa Shao 0016484786
+    BankCustomer 3: Sandy Zoeng 0016484787
     
     Creating BankAccount objects for customers...
-    Account 1: Account # 12475143, type Checking, balance 0, rate 0, customer ID 0011223008
-    Account 2: Account # 12475144, type Checking, balance 1500, rate 0, customer ID 0011223009
-    Account 3: Account # 12475145, type Checking, balance 2500, rate 0, customer ID 0011223010
+    Account 1: Account # 16017880, type Checking, balance 200, rate 0, customer ID 0016484785
+    Account 2: Account # 16017881, type Checking, balance 1500, rate 0, customer ID 0016484786
+    Account 3: Account # 16017882, type Checking, balance 2500, rate 0, customer ID 0016484787
     
     Updating BankCustomer 1's name...
-    Updated BankCustomer 1: Thomas Margand 0011223008
+    Updated BankCustomer 1: Thomas Margand 0016484785
     
     Demonstrating BankAccount methods...
-    Depositing 500 into Account 1...
-    Account 1 after deposit: Balance = 500
-    Withdrawing 200 from Account 2...
-    Account 2 after withdrawal: Balance = 1300, Withdrawal successful: True
-    Transferring 300 from Account 3 to Account 1...
-    Account 3 after transfer: Balance = 2200, Transfer successful: True
-    Account 1 after receiving transfer: Balance = 800
+    Depositing $500.00 into Account 1...
+    Account 1 after deposit: Balance = $700.00
+    Withdrawing $200.00 from Account 2...
+    Account 2 after withdrawal: Balance = $1,300.00, Withdrawal successful: True
+    Transferring $300.00 from Account 3 to Account 1...
+    Account 3 after transfer: Balance = $2,200.00, Transfer successful: True
+    Account 1 after receiving transfer: Balance = $1,000.00
+    
+    Demonstrating utility methods in AccountCalculations...
+    Compound interest on account1 balance of $1,000.00 at 0.00% for 1 year: $0.00
+    Is account number 16017880 valid? True
+    Transaction fee for a $800.00 wire transfer at a 1.00% rate and a max fee of $10.00 is: $8.00
+    Overdraft fee for an account that's $500.00 overdrawn, using a penalty rate of 5.00% and a max fee of $10.00 is: $10.00
+    The foreign currency received after exchanging $100.00 at an exchange rate of 1.20 is: $120.00
+    
     Applying interest to Account 1...
-    Account 1 after applying interest: Balance = 800
+    Account 1 after applying interest: Balance = $1,000.00, Interest Rate = 0.00%, Time Period = 0.08 years
+    Issue cashier's check from account 2...
+    Account 2 after requesting cashier's check: Received cashier's check: True, Balance = $795.00, Transaction Amount = $500.00, Transaction Fee Rate = 1.00%, Max Transaction Fee = $10.00
+    Applying refund to Account 3...
+    Account 3 after applying refund: Balance = $2,250.00, Refund Amount = $50.00
     
     Demonstrating extension methods...
     Hello, Thomas Margand!
@@ -946,14 +1007,20 @@ Use the following steps to complete this section of the exercise:
     Is account3 overdrawn? False
     
     Displaying customer and account information...
-    Customer ID: 0011223008, Name: Thomas Margand
-    Account Number: 12475143, Type: Checking, Balance: 800, Interest Rate: 0, Customer ID: 0011223008
+    Customer ID: 0016484785, Name: Thomas Margand
+    Account Number: 16017880, Type: Checking, Balance: 1000, Interest Rate: 0, Customer ID: 0016484785
+    
+    Demonstrating named and optional parameters...
+    Account Number: 16017883, Type: Checking, Balance: 200, Interest Rate: 0, Customer ID: 0016484785
+    Account Number: 16017884, Type: Checking, Balance: 1500, Interest Rate: 0, Customer ID: 0016484785
+    Account Number: 16017885, Type: Checking, Balance: 200, Interest Rate: 0, Customer ID: 0016484786
+    Account Number: 16017886, Type: Checking, Balance: 5000, Interest Rate: 0, Customer ID: 0016484786
     
     Demonstrating object initializers and copy constructors...
-    BankCustomer 4: Mikaela Lee 0011223011
-    BankCustomer 5 (copy of customer4): Mikaela Lee 0011223012
-    Account 4: Account # 12475146, type Savings, balance 3000, rate 0, customer ID 0011223011
-    Account 5 (copy of account4): Account # 12475147, type Savings, balance 3000, rate 0, customer ID 0011223011
+    BankCustomer 4: Mikaela Lee 0016484788
+    BankCustomer 5 (copy of customer4): Mikaela Lee 0016484789
+    Account 8: Account # 16017887, type Savings, balance 200, rate 0, customer ID 0016484788
+    Account 9 (copy of account8): Account # 16017888, type Savings, balance 200, rate 0, customer ID 0016484788
 
     ```
 

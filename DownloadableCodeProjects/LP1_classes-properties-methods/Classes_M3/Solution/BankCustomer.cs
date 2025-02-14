@@ -1,4 +1,4 @@
-using System;
+sing System;
 
 namespace Classes_M3;
 
@@ -33,8 +33,7 @@ public partial class BankCustomer
         LastName = lastName;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
     }
-
-    // Copy constructor for BankCustomer
+        // Copy constructor for BankCustomer
     public BankCustomer(BankCustomer existingCustomer)
     {
 
