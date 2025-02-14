@@ -2,7 +2,7 @@ using System;
 
 namespace Reuse_M1;
 
-public partial class BankCustomer
+public partial class BankCustomer : IBankCustomer
 {
     // Method to return the full name of the customer
     public string ReturnFullName()

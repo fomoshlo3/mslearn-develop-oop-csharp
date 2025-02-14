@@ -7,7 +7,7 @@ public partial class BankCustomer
     private static int s_nextCustomerId;
     private string _firstName = "Tim";
     private string _lastName = "Shao";
-    public readonly string CustomerId;
+    public string CustomerId { get; }
 
     public string FirstName
     {
@@ -37,11 +37,8 @@ public partial class BankCustomer
     // Copy constructor for BankCustomer
     public BankCustomer(BankCustomer existingCustomer)
     {
-
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
-        //this.CustomerId = existingCustomer.CustomerId;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
-
     }
 }
