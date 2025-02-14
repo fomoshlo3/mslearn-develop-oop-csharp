@@ -13,10 +13,10 @@ public class BankAccount : IBankAccount
     public static double OverdraftRate { get; private set; }
     public static double MaxOverdraftFee { get; private set; }
 
-    public string AccountType { get; }
     public int AccountNumber { get; }
     public string CustomerId { get; }
     public double Balance { get; internal set; } = 0;
+    public string AccountType { get; set; } = "Checking";
 
 
     static BankAccount()

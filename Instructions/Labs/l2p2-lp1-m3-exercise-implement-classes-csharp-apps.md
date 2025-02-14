@@ -787,7 +787,7 @@ In this task, you update a constructor in the BankAccount class using optional p
             InterestRate = 0;
         }
     
-        public BankAccount(string customerIdNumber, double balance = 0, string accountType = "Checking")
+        public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking")
         {
             this.AccountNumber = s_nextAccountNumber++;
             this.CustomerId = customerIdNumber;
