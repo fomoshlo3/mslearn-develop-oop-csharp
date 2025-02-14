@@ -106,15 +106,13 @@ Now, you will create a class that implements the `IPerson` interface. This class
 
 
 > **Note:**
-> In C#, the code `public string Name { get; set; } = string.Empty;` and `public int Age { get; set; } = 0;` sets default values for the properties (`Name` starts as an empty string, and `Age` starts as 0). This helps avoid warnings from the compiler about "nullable" issues.
->
->If you don’t set these default values (e.g., just use `public string Name { get; set; }`), your code will still work, but the compiler will warn you that these properties might not be initialized before being used.
+> In C#, the code `public string Name { get; set; } = string.Empty;` and `public int Age { get; set; } = 0;` sets default values for the properties (`Name` starts as an empty string, and `Age` starts as 0). This helps avoid warnings from the compiler about "nullable" issues. If you don’t set these default values (e.g., just use `public string Name { get; set; }`), your code will still work, but the compiler will warn you that these properties might not be initialized before being used.
 
 ### Check your work: Implement the defined interface
 
 Ensure that the `Student` class correctly implements the `IPerson` interface by checking the `Student.cs` file. The class should provide implementations for the `Name` and `Age` properties, as well as the `DisplayInfo` method.
 
-## Task 4: Create another class that implements the same interface with different behavior
+## Task 4: Create another class that implements different behavior
 
 You will now create another class that implements the `IPerson` interface but with different behavior.
 
@@ -140,7 +138,7 @@ In the teacher class the `DisplayInfo` method differs from the version in the st
 
 Verify that the `Teacher` class correctly implements the `IPerson` interface by checking the `Teacher.cs` file. The class should provide implementations for the `Name` and `Age` properties, as well as the `DisplayInfo` method.
 
-## Task 5: Demonstrate interface implementation by creating a class that implements the interface in a class along with other non-interface code
+## Task 5: Demonstrate interface implementation
 
 In this task, you will demonstrate the use of the interface by creating instances of the `Student` and `Teacher` classes and calling their methods.
 
@@ -170,7 +168,7 @@ In this task, you will demonstrate the use of the interface by creating instance
 
 You should see the `dotnet run` output displaying the information for both the student and the teacher, demonstrating the interface implementation.
 
-## Task 6: Test the implemented interfaces and their implementations to ensure they work as expected
+## Task 6: Test the implemented interfaces
 
 Finally, you will test the implemented interfaces and their respective classes to ensure they function correctly.
 
