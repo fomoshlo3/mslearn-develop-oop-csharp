@@ -30,12 +30,12 @@ public class BankAccount : IBankAccount
         MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
     }
 
-    public BankAccount(string customerIdNumber, double balance, string accountType)
+    public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking")
     {
         this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = customerIdNumber; // required for the constructor
-        this.Balance = balance;             // required for the constructor
-        this.AccountType = accountType;     // required for the constructor
+        this.CustomerId = customerIdNumber;
+        this.Balance = balance;
+        this.AccountType = accountType;
     }
 
     // Copy constructor for BankAccount

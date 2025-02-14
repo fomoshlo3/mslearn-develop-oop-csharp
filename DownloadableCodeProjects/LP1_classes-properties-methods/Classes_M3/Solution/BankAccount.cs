@@ -13,11 +13,10 @@ public class BankAccount
     public static double OverdraftRate { get; private set; }
     public static double MaxOverdraftFee { get; private set; }
 
-    public string AccountType { get; }
     public int AccountNumber { get; }
     public string CustomerId { get; }
-    public double Balance { get; internal set; } = 0;
-
+    public double Balance { get; private set; } = 0;
+    public string AccountType { get; set; } = "Checking";
 
     static BankAccount()
     {
@@ -30,12 +29,12 @@ public class BankAccount
         MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
     }
 
-    public BankAccount(string customerIdNumber, double balance, string accountType)
+    public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking")
     {
         this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = customerIdNumber; // required for the constructor
-        this.Balance = balance;             // required for the constructor
-        this.AccountType = accountType;     // required for the constructor
+        this.CustomerId = customerIdNumber;
+        this.Balance = balance;
+        this.AccountType = accountType;
     }
 
     // Copy constructor for BankAccount
@@ -46,7 +45,7 @@ public class BankAccount
         this.Balance = existingAccount.Balance;
         this.AccountType = existingAccount.AccountType;
     }
-
+    
     // Method to deposit money into the account
     public void Deposit(double amount)
     {
@@ -68,7 +67,7 @@ public class BankAccount
     }
 
     // Method to transfer money to another account
-    public bool Transfer(IBankAccount targetAccount, double amount)
+    public bool Transfer(BankAccount targetAccount, double amount)
     {
         if (Withdraw(amount))
         {
@@ -107,4 +106,5 @@ public class BankAccount
     {
         return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
     }
+
 }
