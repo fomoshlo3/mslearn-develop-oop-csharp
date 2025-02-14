@@ -4,6 +4,8 @@ lab:
     description: 'Create flexible and maintainable code by refactoring tightly coupled code to use interfaces in C#.'
 ---
 
+# Create Flexible Code Using Interfaces
+
 In object-oriented programming, interfaces define a contract that classes can implement. They specify method signatures and properties that implementing classes must provide. This allows for consistent behavior across different types while enabling flexibility in implementation. In C#, interfaces are defined using the `interface` keyword, and classes implement them using the `: InterfaceName` syntax.
 
 In this exercise, you will refactor a tightly coupled console application to use interfaces. By introducing interfaces and dependency injection, you will decouple the application logic from specific implementations, making the code more flexible and easier to maintain.
