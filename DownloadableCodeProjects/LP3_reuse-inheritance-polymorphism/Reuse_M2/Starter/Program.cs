@@ -1,71 +1,78 @@
-﻿using Classes_M2;
+﻿using Reuse_M1;
+using System.Globalization;
 
-// Step 1: Create BankCustomer objects
-Console.WriteLine("Creating BankCustomer objects...");
-string firstName = "Tim";
-string lastName = "Shao";
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create a BankCustomer object and various account types
+        // Step 1: Create BankCustomer objects
+        Console.WriteLine("Creating BankCustomer objects...");
+        string firstName = "Tim";
+        string lastName = "Shao";
 
-BankCustomer customer1 = new BankCustomer(firstName, lastName);
+        BankCustomer customer1 = new BankCustomer(firstName, lastName);
 
-firstName = "Lisa";
-BankCustomer customer2 = new BankCustomer(firstName, lastName);
+        BankCustomer customer2 = new BankCustomer(firstName, lastName);
+        
+        // Create accounts for customer1
+        Console.WriteLine("Creating BankAccount objects for customer1...");
+        BankAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500);
+        BankAccount savingsAccount1 = new SavingsAccount(customer1.CustomerId, 1000);
+        BankAccount moneyMarketAccount1 = new MoneyMarketAccount(customer1.CustomerId, 2000);
+        BankAccount certificateOfDeposit1 = new CertificateOfDeposit(customer1.CustomerId, 5000, 6);
 
-firstName = "Sandy";
-lastName = "Zoeng";
-BankCustomer customer3 = new BankCustomer(firstName, lastName);
+        // Demonstrate inheritance of the DisplayAccountInfo method in the base class
+        Console.WriteLine(checkingAccount1.DisplayAccountInfo());
+        Console.WriteLine(savingsAccount1.DisplayAccountInfo());
+        Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
+        Console.WriteLine(certificateOfDeposit1.DisplayAccountInfo());
 
-Console.WriteLine($"BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
-Console.WriteLine($"BankCustomer 2: {customer2.FirstName} {customer2.LastName} {customer2.customerId}");
-Console.WriteLine($"BankCustomer 3: {customer3.FirstName} {customer3.LastName} {customer3.customerId}");
+        // Demonstrate the special behavior implemented by the Withdraw method of the derived classes
+        Console.WriteLine("\nDemonstrating specialized Withdraw behavior:");
 
-// Step 2: Create BankAccount objects for customers
-Console.WriteLine("\nCreating BankAccount objects for customers...");
-BankAccount account1 = new BankAccount(customer1.customerId);
-BankAccount account2 = new BankAccount(customer2.customerId, 1500, "Checking");
-BankAccount account3 = new BankAccount(customer3.customerId, 2500, "Checking");
+        // CheckingAccount: Withdraw within overdraft limit
+        Console.WriteLine("\nCheckingAccount: Attempting to withdraw $600 (within overdraft limit)...");
+        checkingAccount1.Withdraw(600);
+        Console.WriteLine(checkingAccount1.DisplayAccountInfo());
 
-Console.WriteLine($"Account 1: Account # {account1.AccountNumber}, type {account1.AccountType}, balance {account1.Balance}, rate {BankAccount.interestRate}, customer ID {account1.CustomerId}");
-Console.WriteLine($"Account 2: Account # {account2.AccountNumber}, type {account2.AccountType}, balance {account2.Balance}, rate {BankAccount.interestRate}, customer ID {account2.CustomerId}");
-Console.WriteLine($"Account 3: Account # {account3.AccountNumber}, type {account3.AccountType}, balance {account3.Balance}, rate {BankAccount.interestRate}, customer ID {account3.CustomerId}");
+        // CheckingAccount: Withdraw exceeding overdraft limit
+        Console.WriteLine("\nCheckingAccount: Attempting to withdraw $1000 (exceeding overdraft limit)...");
+        checkingAccount1.Withdraw(1000);
+        Console.WriteLine(checkingAccount1.DisplayAccountInfo());
 
-// Step 3: Demonstrate the use of BankCustomer properties
-Console.WriteLine("\nUpdating BankCustomer 1's name...");
-customer1.FirstName = "Thomas";
-customer1.LastName = "Margand";
-Console.WriteLine($"Updated BankCustomer 1: {customer1.FirstName} {customer1.LastName} {customer1.customerId}");
+        // SavingsAccount: Withdraw within limit
+        Console.WriteLine("\nSavingsAccount: Attempting to withdraw $200 (within withdrawal limit)...");
+        savingsAccount1.Withdraw(200);
+        Console.WriteLine(savingsAccount1.DisplayAccountInfo());
 
-// Step 4: Demonstrate the use of BankAccount methods
-Console.WriteLine("\nDemonstrating BankAccount methods...");
+        // SavingsAccount: Withdraw exceeding limit
+        Console.WriteLine("\nSavingsAccount: Attempting to withdraw $900 (exceeding withdrawal limit)...");
+        savingsAccount1.Withdraw(900);
+        Console.WriteLine(savingsAccount1.DisplayAccountInfo());
 
-// Deposit
-Console.WriteLine("Depositing 500 into Account 1...");
-account1.Deposit(500);
-Console.WriteLine($"Account 1 after deposit: Balance = {account1.Balance}");
+        // SavingsAccount: Exceeding maximum number of withdrawals per month
+        Console.WriteLine("\nSavingsAccount: Exceeding maximum number of withdrawals per month...");
+        for (int i = 0; i < 7; i++)
+        {
+            Console.WriteLine($"Attempting to withdraw $50 (withdrawal {i + 1})...");
+            savingsAccount1.Withdraw(50);
+            Console.WriteLine(savingsAccount1.DisplayAccountInfo());
+        }
 
-// Withdraw
-Console.WriteLine("Withdrawing 200 from Account 2...");
-bool withdrawSuccess = account2.Withdraw(200);
-Console.WriteLine($"Account 2 after withdrawal: Balance = {account2.Balance}, Withdrawal successful: {withdrawSuccess}");
+        // MoneyMarketAccount: Withdraw within minimum balance
+        Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1000 (maintaining minimum balance)...");
+        moneyMarketAccount1.Withdraw(1000);
+        Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
 
-// Transfer
-Console.WriteLine("Transferring 300 from Account 3 to Account 1...");
-bool transferSuccess = account3.Transfer(account1, 300);
-Console.WriteLine($"Account 3 after transfer: Balance = {account3.Balance}, Transfer successful: {transferSuccess}");
-Console.WriteLine($"Account 1 after receiving transfer: Balance = {account1.Balance}");
+        // MoneyMarketAccount: Withdraw exceeding minimum balance
+        Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1900 (exceeding minimum balance)...");
+        moneyMarketAccount1.Withdraw(1900);
+        Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
 
-// Apply interest
-Console.WriteLine("Applying interest to Account 1...");
-account1.ApplyInterest();
-Console.WriteLine($"Account 1 after applying interest: Balance = {account1.Balance}");
-
-// Step 5: Demonstrate the use of extension methods
-Console.WriteLine("\nDemonstrating extension methods...");
-Console.WriteLine(customer1.GreetCustomer());
-Console.WriteLine($"Is customer1 ID valid? {customer1.IsValidCustomerId()}");
-Console.WriteLine($"Can account2 withdraw 2000? {account2.CanWithdraw(2000)}");
-Console.WriteLine($"Is account3 overdrawn? {account3.IsOverdrawn()}");
-
-// Step 6: Display customer and account information
-Console.WriteLine("\nDisplaying customer and account information...");
-Console.WriteLine(customer1.DisplayCustomerInfo());
-Console.WriteLine(account1.DisplayAccountInfo());
+        // CertificateOfDeposit: Withdraw before maturity with penalty
+        Console.WriteLine("\nCertificateOfDeposit: Attempting to withdraw $1000 before maturity (with penalty)...");
+        certificateOfDeposit1.Withdraw(1000);
+        Console.WriteLine(certificateOfDeposit1.DisplayAccountInfo());
+    }
+}
