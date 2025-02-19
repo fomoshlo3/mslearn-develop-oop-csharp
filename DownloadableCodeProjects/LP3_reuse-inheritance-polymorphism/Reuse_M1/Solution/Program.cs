@@ -12,15 +12,14 @@ class Program
         string lastName = "Shao";
 
         BankCustomer customer1 = new BankCustomer(firstName, lastName);
-
-        BankCustomer customer2 = new BankCustomer(firstName, lastName);
         
         // Create accounts for customer1
         Console.WriteLine("Creating BankAccount objects for customer1...");
-        BankAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500);
-        BankAccount savingsAccount1 = new SavingsAccount(customer1.CustomerId, 1000);
-        BankAccount moneyMarketAccount1 = new MoneyMarketAccount(customer1.CustomerId, 2000);
-        BankAccount certificateOfDeposit1 = new CertificateOfDeposit(customer1.CustomerId, 5000, 6);
+        CheckingAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500);
+        SavingsAccount savingsAccount1 = new SavingsAccount(customer1.CustomerId, 1000);
+        MoneyMarketAccount moneyMarketAccount1 = new MoneyMarketAccount(customer1.CustomerId, 2000);
+        CertificateOfDeposit certificateOfDeposit1 = new CertificateOfDeposit(customer1.CustomerId, 5000, 6);
+        //BankAccount bankAccount1 = new BankAccount(customer1.CustomerId, 10000);  // generates an error because BankAccount is abstract
 
         // Demonstrate inheritance of the DisplayAccountInfo method in the base class
         Console.WriteLine(checkingAccount1.DisplayAccountInfo());

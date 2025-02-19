@@ -1,4 +1,4 @@
-namespace Reuse_M1;
+namespace Reuse_M2;
 
 public interface IBankAccount
 {
