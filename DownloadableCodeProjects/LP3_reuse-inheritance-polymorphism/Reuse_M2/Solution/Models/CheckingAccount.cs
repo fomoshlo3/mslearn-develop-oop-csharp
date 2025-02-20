@@ -19,7 +19,6 @@ public class CheckingAccount : BankAccount
         : base(customerIdNumber, balance, "Checking")
     {
         OverdraftLimit = overdraftLimit;
-        //InterestRate = DefaultInterestRate; // Set the interest rate to the default value
     }
 
     public override double InterestRate
@@ -32,17 +31,18 @@ public class CheckingAccount : BankAccount
     {
         if (amount > 0 && Balance + OverdraftLimit >= amount)
         {
-            Balance -= amount;
+            // Call the base class Withdraw method
+            bool result = base.Withdraw(amount);
 
-            // Check if the account is overdrawn
-            if (Balance < 0)
+            // Additional logic for CheckingAccount
+            if (result && Balance < 0)
             {
                 double overdraftFee = AccountCalculations.CalculateOverdraftFee(Math.Abs(Balance), BankAccount.OverdraftRate, BankAccount.MaxOverdraftFee);
                 Balance -= overdraftFee;
                 Console.WriteLine($"Overdraft fee of ${overdraftFee} applied.");
             }
 
-            return true;
+            return result;
         }
         return false;
     }

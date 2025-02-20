@@ -2,7 +2,7 @@ using System;
 
 namespace Reuse_M2;
 
-public abstract class BankAccount : IBankAccount
+public class BankAccount : IBankAccount
 {
     private static int s_nextAccountNumber;
 
@@ -108,3 +108,17 @@ public abstract class BankAccount : IBankAccount
         return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
     }
 }
+
+// Summary of Changes:
+//
+// - Marked BankAccount as abstract.
+// - Made methods virtual: Deposit, Withdraw, Transfer, ApplyInterest, ApplyRefund, IssueCashiersCheck, and DisplayAccountInfo.
+//
+// These changes allow derived classes to override these methods and provide specific implementations. Now you can create derived classes like CheckingAccount, SavingsAccount, MoneyMarketAccount, and CertificateOfDeposit with their specific behaviors.
+
+
+// Step 3: Demonstrate the derived classes in Program.cs
+
+
+
+

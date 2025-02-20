@@ -27,7 +27,6 @@ public class MoneyMarketAccount : BankAccount
         }
 
         MinimumBalance = minimumBalance;
-        //InterestRate = DefaultInterestRate; // Set the interest rate to the default value
         MinimumOpeningBalance = DefaultMinimumOpeningBalance; // Set the minimum opening balance to the default value
     }
 

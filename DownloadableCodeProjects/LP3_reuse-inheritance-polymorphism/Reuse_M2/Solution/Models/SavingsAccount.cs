@@ -29,7 +29,6 @@ public class SavingsAccount : BankAccount
 
         WithdrawalLimit = withdrawalLimit;
         _withdrawalsThisMonth = 0;
-        //InterestRate = DefaultInterestRate; // Set the interest rate to the default value
         MinimumOpeningBalance = DefaultMinimumOpeningBalance; // Set the minimum opening balance to the default value
     }
 

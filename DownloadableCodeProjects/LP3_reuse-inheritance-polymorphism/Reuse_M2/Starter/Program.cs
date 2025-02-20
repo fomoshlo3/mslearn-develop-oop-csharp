@@ -15,7 +15,7 @@ class Program
         
         // Create accounts for customer1
         Console.WriteLine("Creating BankAccount objects for customer1...");
-        CheckingAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500);
+        CheckingAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500, 400);
         SavingsAccount savingsAccount1 = new SavingsAccount(customer1.CustomerId, 1000);
         MoneyMarketAccount moneyMarketAccount1 = new MoneyMarketAccount(customer1.CustomerId, 2000);
         CertificateOfDeposit certificateOfDeposit1 = new CertificateOfDeposit(customer1.CustomerId, 5000, 6);
