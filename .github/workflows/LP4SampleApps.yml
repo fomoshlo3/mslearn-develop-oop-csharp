@@ -28,14 +28,14 @@
 # This workflow is useful for automatically packaging and versioning sample applications whenever changes 
 # are made to them.
 #
-name: CreateLP2SamplesZip
+name: CreateLP4SamplesZip
 on:
   workflow_dispatch:
   push:
     branches:
       - 'main'
     paths:
-      - DownloadableCodeProjects/LP2_implement-interfaces/**
+      - DownloadableCodeProjects/LP4_manage-app-data/**
 
 defaults:
   run:
@@ -47,14 +47,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Create LP2 SampleApps zip
+    - name: Create LP4 SampleApps zip
       run: | 
-        cd ./DownloadableCodeProjects/LP2_implement-interfaces
-        rm -f ../Downloads/LP2SampleApps.zip
-        zip -r -q ../Downloads/LP2SampleApps.zip $(git ls-files)
+        cd ./DownloadableCodeProjects/LP4_manage-app-data
+        rm -f ../Downloads/LP4SampleApps.zip
+        zip -r -q ../Downloads/LP4SampleApps.zip $(git ls-files)
     - name: Commit and push
       uses: Endbug/add-and-commit@v7
       with:
-        add: '["DownloadableCodeProjects/Downloads/LP2SampleApps.zip"]'
+        add: '["DownloadableCodeProjects/Downloads/LP4SampleApps.zip"]'
         message: 'Updating Zip with sample app source files'
         push: true

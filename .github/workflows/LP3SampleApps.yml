@@ -47,7 +47,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Create LP1 SampleApps zip
+    - name: Create LP3 SampleApps zip
       run: | 
         cd ./DownloadableCodeProjects/LP3_reuse-inheritance-polymorphism
         rm -f ../Downloads/LP3SampleApps.zip
