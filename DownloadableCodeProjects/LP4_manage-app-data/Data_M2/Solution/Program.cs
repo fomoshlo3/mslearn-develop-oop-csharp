@@ -6,9 +6,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Task 1: Review the app code - Interfaces, Models, and Services
-
-
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Task 2: Create date and time values using DateTime, DateOnly, TimeOnly, CultureInfo, Calendar, CalendarWeekRule, DayOfWeek, and TimeZoneInfo classes
 
@@ -259,5 +256,57 @@ class Program
 
         // Display the number of transactions processed
         Console.WriteLine($"\nNumber of transactions processed: {transactionCount}");
+
+
+
+
+
+
+
+
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+        // MOVE TO MODULE 2: Generate BankCustomer and BankAccount reports for monthly, quarterly, and yearly periods. Reporting makes more senses using collections.
+
+        // Generate two years of transactions based on current date
+        Console.WriteLine("\nGenerating two years of transactions based on current date...");
+        DateTime currentDate = DateTime.Now;
+        DateOnly startDate2Years = DateOnly.FromDateTime(currentDate.AddYears(-2));
+        DateOnly endDate2Years = DateOnly.FromDateTime(currentDate);
+        Transaction[] transactions2Years = SimulateTransactions.SimulateTransactionsDateRange(startDate2Years, endDate2Years, account1, account2);
+
+        // Call the AccountReportGenerator class to generate reports
+        Console.WriteLine("\nGenerating reports for BankCustomer and BankAccount objects...");
+
+        DateOnly reportDate = DateOnly.FromDateTime(currentDate);
+
+        AccountReportGenerator reportGenerator = new AccountReportGenerator(account1);
+
+        reportGenerator.GenerateMonthlyReport(transactions2Years, reportDate);
+        reportGenerator.GenerateCurrentMonthToDateReport(transactions2Years, reportDate);
+        reportGenerator.GeneratePrevious30DayReport(transactions2Years, reportDate);
+        reportGenerator.GenerateQuarterlyReport(transactions2Years, reportDate);
+        reportGenerator.GeneratePreviousYearReport(transactions2Years, reportDate);
+        reportGenerator.GenerateCurrentYearToDateReport(transactions2Years, reportDate);
+        reportGenerator.GenerateLast365DaysReport(transactions2Years, reportDate);
+
+        // Call the CustomerReportGenerator class to generate reports
+        Console.WriteLine("\nGenerating reports for BankCustomer objects...");
+        CustomerReportGenerator customerReportGenerator = new CustomerReportGenerator(customer1);
+        customerReportGenerator.GenerateMonthlyReport(account1: account1, transactions1: transactions2Years, reportDate: reportDate, account2: account2);
+        customerReportGenerator.GenerateCurrentMonthToDateReport();
+        customerReportGenerator.GeneratePrevious30DayReport();
+        customerReportGenerator.GenerateQuarterlyReport();
+        customerReportGenerator.GeneratePreviousYearReport();
+        customerReportGenerator.GenerateCurrentYearToDateReport();
+        customerReportGenerator.GenerateLast365DaysReport();
+
+
+
     }
+
 }
