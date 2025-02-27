@@ -1,6 +1,6 @@
 using System;
 
-namespace Data_M2;
+namespace Data_M3;
 
 public class StandardCustomer : BankCustomer
 {

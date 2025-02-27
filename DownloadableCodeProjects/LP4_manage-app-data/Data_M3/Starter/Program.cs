@@ -1,4 +1,4 @@
-﻿using Data_M2;
+﻿using Data_M3;
 using System.Globalization;
 using System.Collections.ObjectModel;
 
@@ -11,7 +11,7 @@ class Program
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // Task 2: Create a Bank class that includes a collection of BankCustomer objects
 
-        // Step 1: Add a new class file named Bank to the Data_M2 project
+        // Step 1: Add a new class file named Bank to the Data_M3 project
         // Step 2: Add constructors, properties, and methods to the Bank class definition 
         //  - Include a read-only Customers property that provides access to a collection of BankCustomer objects (IReadOnlyList<BankCustomer> Customers)
         //  - Include a method that adds a BankCustomer object to the collection

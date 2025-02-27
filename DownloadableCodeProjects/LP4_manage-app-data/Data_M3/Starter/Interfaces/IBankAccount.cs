@@ -1,4 +1,4 @@
-namespace Data_M2;
+namespace Data_M3;
 
 public interface IBankAccount
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Data_M2;
+namespace Data_M3;
 
 public class BankAccount : IBankAccount
 {
