@@ -15,7 +15,7 @@ public class CustomerReportGenerator //: IMonthlyReportGenerator, IQuarterlyRepo
     {
         Console.WriteLine($"\nGenerating the {reportDate.ToString("MMMM")} {reportDate.Year} report for customer: {_customer.ReturnFullName()}");
         // Logic for generating monthly report based on transaction history}
-
+    }
     public void GenerateCurrentMonthToDateReport()
     {
         Console.WriteLine($"\nGenerating current month-to-date report for customer: {_customer.ReturnFullName()}");
