@@ -2,9 +2,6 @@ using System;
 
 namespace Data_M2;
 
-// Step 1: Create derived classes
-
-
 public class CertificateOfDeposit : BankAccount
 {
     public DateTime MaturityDate { get; set; }
@@ -60,11 +57,3 @@ public class CertificateOfDeposit : BankAccount
         return base.DisplayAccountInfo() + $", Maturity Date: {MaturityDate.ToShortDateString()}, Early Withdrawal Penalty: {EarlyWithdrawalPenalty * 100}%, Interest Rate: {InterestRate * 100}%";
     }
 }
-
-
-
-// Step 2: Update the base class
-
-
-
-// Step 3: Create a new instance of the derived class
