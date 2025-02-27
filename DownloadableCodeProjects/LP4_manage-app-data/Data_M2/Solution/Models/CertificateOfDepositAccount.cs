@@ -1,6 +1,6 @@
 using System;
 
-namespace Data_M1;
+namespace Data_M2;
 
 // Step 1: Create derived classes
 
@@ -21,8 +21,8 @@ public class CertificateOfDeposit : BankAccount
         DefaultTermInMonths = 6; // Default term of 6 months
     }
 
-    public CertificateOfDeposit(string customerIdNumber, double balance = 1000, int termInMonths = 6, double earlyWithdrawalPenalty = 0.1)
-        : base(customerIdNumber, balance, "Certificate of Deposit")
+    public CertificateOfDeposit(BankCustomer owner, string customerIdNumber, double balance = 1000, int termInMonths = 6, double earlyWithdrawalPenalty = 0.1)
+        : base(owner, customerIdNumber, balance, "Certificate of Deposit")
     {
         if (termInMonths != 6 && termInMonths != 12)
         {
@@ -40,7 +40,7 @@ public class CertificateOfDeposit : BankAccount
         protected set { DefaultInterestRate = value; }
     }
 
-    public override bool Withdraw(double amount)
+    public override bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
         if (DateTime.Now < MaturityDate)
         {

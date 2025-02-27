@@ -1,19 +1,20 @@
 using System;
 
-namespace Data_M1;
+namespace Data_M2;
 
 // Represents a financial transaction with details such as date, time, amount, source and target accounts, type, and description.
 public class Transaction
 {
     // private fields
     private readonly Guid transactionId;
-    private string transactionType;
-    private DateOnly transactionDate;
-    private TimeOnly transactionTime;
-    private double transactionAmount;
-    private int sourceAccountNumber;
-    private int targetAccountNumber;
-    private string description;
+    private readonly string transactionType;
+    private readonly DateOnly transactionDate;
+    private readonly TimeOnly transactionTime;
+    private readonly double priorBalance;
+    private readonly double transactionAmount;
+    private readonly int sourceAccountNumber;
+    private readonly int targetAccountNumber;
+    private readonly string description;
 
     // Gets the unique identifier for the transaction.
     public Guid TransactionId => transactionId;
@@ -27,6 +28,9 @@ public class Transaction
      // Gets or sets the time of the transaction.
     public TimeOnly TransactionTime => transactionTime;
 
+    // Gets the prior balance of the account before the transaction.
+    public double PriorBalance => priorBalance;
+    
     // Gets or sets the amount of the transaction.
     public double TransactionAmount => transactionAmount;
 
@@ -40,16 +44,17 @@ public class Transaction
     public string Description => description;
 
     // constructors
-    public Transaction(DateOnly date, TimeOnly time, double amount, int sourceAccountNum, int targetAccountNum, string type, string description = "")
+    public Transaction(DateOnly date, TimeOnly time, double balance, double amount, int sourceAccountNum, int targetAccountNum, string typeOfTransaction, string descriptionMessage = "")
     {
         transactionId = Guid.NewGuid();
         transactionDate = date;
         transactionTime = time;
+        priorBalance = balance;
         transactionAmount = amount;
         sourceAccountNumber = sourceAccountNum;
         targetAccountNumber = targetAccountNum;
-        transactionType = type;
-        this.description = description;
+        transactionType = typeOfTransaction;
+        description = descriptionMessage;
     }
 
     // Determines whether the transaction is valid based on its type and details.
@@ -86,6 +91,6 @@ public class Transaction
     // Returns a formatted string with transaction details for logging.
     public string ReturnTransaction()
     {
-        return $"Transaction ID: {transactionId}, Type: {transactionType}, Date: {transactionDate}, Time: {transactionTime}, Amount: {transactionAmount}, Source Account: {sourceAccountNumber}, Target Account: {targetAccountNumber}, Description: {description}";
+        return $"Transaction ID: {transactionId}, Type: {transactionType}, Date: {transactionDate}, Time: {transactionTime}, Prior Balance: {PriorBalance:C} Amount: {transactionAmount:C}, Source Account: {sourceAccountNumber}, Target Account: {targetAccountNumber}, Description: {description}";
     }
 }

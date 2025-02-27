@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
 
-namespace Data_M1;
+namespace Data_M2;
 
-public abstract partial class BankCustomer : IBankCustomer
+public partial class BankCustomer : IBankCustomer
 {
     private static int s_nextCustomerId;
     private string _firstName = "Tim";
     private string _lastName = "Shao";
+    private readonly List<IBankAccount> _accounts;
 
     public string CustomerId { get; }
 
@@ -22,6 +24,8 @@ public abstract partial class BankCustomer : IBankCustomer
         set { _lastName = value; }
     }
 
+    public IReadOnlyList<IBankAccount> Accounts => _accounts.AsReadOnly();
+
     static BankCustomer()
     {
         Random random = new Random();
@@ -33,6 +37,7 @@ public abstract partial class BankCustomer : IBankCustomer
         FirstName = firstName;
         LastName = lastName;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
+        _accounts = new List<IBankAccount>();
     }
 
     // Copy constructor for BankCustomer
@@ -41,5 +46,6 @@ public abstract partial class BankCustomer : IBankCustomer
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
+        _accounts = new List<IBankAccount>(existingCustomer._accounts);
     }
 }

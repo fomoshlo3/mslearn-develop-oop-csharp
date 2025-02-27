@@ -1,6 +1,6 @@
 using System;
 
-namespace Data_M1;
+namespace Data_M2;
 
 public class CheckingAccount : BankAccount
 {
@@ -15,8 +15,8 @@ public class CheckingAccount : BankAccount
         DefaultInterestRate = 0.00;
     }
 
-    public CheckingAccount(string customerIdNumber, double balance = 200, double overdraftLimit = 500)
-        : base(customerIdNumber, balance, "Checking")
+    public CheckingAccount(BankCustomer owner, string customerIdNumber, double balance = 200, double overdraftLimit = 500)
+        : base(owner, customerIdNumber, balance, "Checking")
     {
         OverdraftLimit = overdraftLimit;
     }
@@ -27,25 +27,61 @@ public class CheckingAccount : BankAccount
         protected set { DefaultInterestRate = value; }
     }
 
-    public override bool Withdraw(double amount)
+    public override bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
-        if (amount > 0 && Balance + OverdraftLimit >= amount)
+        // try the base class Withdraw method
+        bool result = base.Withdraw(amount, transactionDate, transactionTime, description);
+
+        if (result == false && !description.Contains("-(TRANSFER)"))
         {
-            // Call the base class Withdraw method
-            bool result = base.Withdraw(amount);
+            // if the base class Withdraw method failed and the transaction isn't an attempted transfer, check premium status of the customer
 
-            // Additional logic for CheckingAccount
-            if (result && Balance < 0)
+            if (Owner.IsPremiumCustomer() == true)
             {
-                double overdraftFee = AccountCalculations.CalculateOverdraftFee(Math.Abs(Balance), BankAccount.OverdraftRate, BankAccount.MaxOverdraftFee);
-                Balance -= overdraftFee;
-                Console.WriteLine($"Overdraft fee of ${overdraftFee} applied.");
-            }
+                // If the customer is a premium customer, allow the withdrawal and transfer money from savings
+                priorBalance = Balance;
+                Balance -= amount;
+                string transactionType = "Withdraw";
+                AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
 
-            return result;
+                // Transfer money from savings to checking
+                BankAccount savingsAccount = (SavingsAccount)Owner.Accounts[1];
+                BankAccount checkingAccount = (CheckingAccount)Owner.Accounts[0];
+
+                string transferDescription = "free overdraft protection-(TRANSFER)";
+                savingsAccount.Transfer(checkingAccount, amount + 1000.00, transactionDate, transactionTime, transferDescription);
+
+                return true;
+            }
+            else
+            {
+                // If the customer is not a premium customer:
+                //  - calculate the overdraft fee
+                //  - check the overdraft limit with the fee applied 
+                //  - charge an overdraft fee
+                double overdraftFee = AccountCalculations.CalculateOverdraftFee(Math.Abs(Balance), BankAccount.OverdraftRate, BankAccount.MaxOverdraftFee);
+
+                if (Balance + OverdraftLimit + overdraftFee >= amount)
+                {
+                    priorBalance = Balance;
+                    Balance -= amount;
+                    string transactionType = "Withdraw";
+                    AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
+
+                    priorBalance = Balance;
+                    Balance -= overdraftFee;
+                    transactionType = "Bank Fee";
+                    string overdraftDescription = "Overdraft fee applied";
+                    AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, overdraftFee, AccountNumber, AccountNumber, transactionType, overdraftDescription));
+
+                    return true;
+                }
+            }
         }
-        return false;
+
+        return result;
     }
+
 
     public override string DisplayAccountInfo()
     {

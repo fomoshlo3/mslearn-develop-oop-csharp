@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 
-namespace Data_M1;
+namespace Data_M2;
 
 public class BankAccount : IBankAccount
 {
     private static int s_nextAccountNumber;
+    private readonly List<Transaction> _transactions;
+    protected double priorBalance;
 
     // Public read-only static properties
     public static double TransactionRate { get; protected set; }
@@ -16,6 +19,9 @@ public class BankAccount : IBankAccount
     public string CustomerId { get; }
     public double Balance { get; internal set; } = 0;
     public string AccountType { get; set; } = "Checking";
+    public IReadOnlyList<Transaction> Transactions => _transactions.AsReadOnly();
+
+    public BankCustomer Owner { get; }
 
     public virtual double InterestRate { get; protected set; } // Virtual property to allow overriding in derived classes
 
@@ -29,74 +35,110 @@ public class BankAccount : IBankAccount
         MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
     }
 
-    public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking")
+    public BankAccount(BankCustomer owner, string customerIdNumber, double balance = 200, string accountType = "Checking")
     {
-        this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = customerIdNumber;
-        this.Balance = balance;
-        this.AccountType = accountType;
-
+        Owner = owner;
+        AccountNumber = s_nextAccountNumber++;
+        CustomerId = customerIdNumber;
+        Balance = balance;
+        AccountType = accountType;
+        _transactions = new List<Transaction>();
     }
 
     // Copy constructor for BankAccount
     public BankAccount(BankAccount existingAccount)
     {
-        this.AccountNumber = s_nextAccountNumber++;
-        this.CustomerId = existingAccount.CustomerId;
-        this.Balance = existingAccount.Balance;
-        this.AccountType = existingAccount.AccountType;
+        Owner = existingAccount.Owner;
+        AccountNumber = s_nextAccountNumber++;
+        CustomerId = existingAccount.CustomerId;
+        Balance = existingAccount.Balance;
+        AccountType = existingAccount.AccountType;
+        _transactions = new List<Transaction>(existingAccount._transactions);
     }
 
     // Method to deposit money into the account
-    public virtual void Deposit(double amount)
+    public virtual void Deposit(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
         if (amount > 0)
         {
+            priorBalance = Balance;
             Balance += amount;
+            string transactionType = "Deposit";
+            if (description.Contains("-(TRANSFER)"))
+            {
+                transactionType = "Transfer";
+            }
+            else if(description.Contains("-(BANK REFUND)"))
+            {
+                transactionType = "Bank Refund";
+            }
+
+            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
         }
     }
 
     // Method to withdraw money from the account
-    public virtual bool Withdraw(double amount)
+    public virtual bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
         if (amount > 0 && Balance >= amount)
         {
+            priorBalance = Balance;
             Balance -= amount;
+            string transactionType = "Withdraw";
+            if (description.Contains("-(TRANSFER)"))
+            {
+                transactionType = "Transfer";
+            }
+            else if (description.Contains("-(BANK FEE)"))
+            {
+                transactionType = "Bank Fee";
+            }
+            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
             return true;
         }
         return false;
     }
 
     // Method to transfer money to another account
-    public virtual bool Transfer(IBankAccount targetAccount, double amount)
+    public virtual bool Transfer(IBankAccount targetAccount, double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
-        if (Withdraw(amount))
+        description += "-(TRANSFER)";
+        if (Withdraw(amount, transactionDate, transactionTime, description))
         {
-            targetAccount.Deposit(amount);
+            targetAccount.Deposit(amount, transactionDate, transactionTime, description);
             return true;
         }
         return false;
     }
 
     // Method to apply interest
-    public virtual void ApplyInterest(double years)
+    public virtual void ApplyInterest(double years, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
-        Balance += AccountCalculations.CalculateCompoundInterest(Balance, InterestRate, years);
+        priorBalance = Balance;
+        double interest = AccountCalculations.CalculateCompoundInterest(Balance, InterestRate, years);
+        Balance += interest;
+        AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, interest, AccountNumber, AccountNumber, AccountType, "Interest"));
     }
 
     // Method to apply refund
-    public virtual void ApplyRefund(double refund)
+    public virtual void ApplyRefund(double refund, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
+        priorBalance = Balance;
         Balance += refund;
+        AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, refund, AccountNumber, AccountNumber, AccountType, "Refund"));
     }
 
     // Method to issue a cashier's check
-    public virtual bool IssueCashiersCheck(double amount)
+    public virtual bool IssueCashiersCheck(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
         if (amount > 0 && Balance >= amount + BankAccount.MaxTransactionFee)
         {
+            priorBalance = Balance;
             Balance -= amount;
-            Balance -= AccountCalculations.CalculateTransactionFee(amount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
+            double fee = AccountCalculations.CalculateTransactionFee(amount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
+            Balance -= fee;
+            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, AccountType, "Cashier's Check"));
+            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, fee, AccountNumber, AccountNumber, AccountType, "Transaction Fee"));
             return true;
         }
         return false;
@@ -105,20 +147,24 @@ public class BankAccount : IBankAccount
     // Method to display account information
     public virtual string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance.ToString("C")}, Interest Rate: {InterestRate.ToString("P")}, Customer ID: {CustomerId}";
+    }
+
+    // Method to add a transaction to the account
+    public void AddTransaction(Transaction transaction)
+    {
+        _transactions.Add(transaction);
+    }
+
+    // Method to remove a transaction from the account
+    public void RemoveTransaction(Transaction transaction)
+    {
+        _transactions.Remove(transaction);
+    }
+
+    // Method to return all transactions for the account
+    public List<Transaction> GetAllTransactions()
+    {
+        return _transactions;
     }
 }
-
-// Summary of Changes:
-//
-// - Marked BankAccount as abstract.
-// - Made methods virtual: Deposit, Withdraw, Transfer, ApplyInterest, ApplyRefund, IssueCashiersCheck, and DisplayAccountInfo.
-//
-// These changes allow derived classes to override these methods and provide specific implementations. Now you can create derived classes like CheckingAccount, SavingsAccount, MoneyMarketAccount, and CertificateOfDeposit with their specific behaviors.
-
-
-// Step 3: Demonstrate the derived classes in Program.cs
-
-
-
-

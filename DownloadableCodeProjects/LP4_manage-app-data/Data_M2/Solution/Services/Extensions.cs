@@ -1,6 +1,6 @@
 using System;
 
-namespace Data_M1;
+namespace Data_M2;
 
 public static class BankCustomerExtensions
 {

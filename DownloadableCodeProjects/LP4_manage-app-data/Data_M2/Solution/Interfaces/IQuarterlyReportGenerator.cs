@@ -1,8 +1,8 @@
 using System;
 
-namespace Data_M1;
+namespace Data_M2;
 
 public interface IQuarterlyReportGenerator
 {
-    void GenerateQuarterlyReport(Transaction[] transactions, DateOnly reportDate);
+    void GenerateQuarterlyReport(BankCustomer bankCustomer, int accountNumber, DateOnly reportDate);
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Data_M1;
+namespace Data_M2;
 
 public class SavingsAccount : BankAccount
 {
@@ -19,8 +19,8 @@ public class SavingsAccount : BankAccount
         DefaultInterestRate = 0.02; // 2 percent interest rate
     }
 
-    public SavingsAccount(string customerIdNumber, double balance = 500, int withdrawalLimit = 6)
-        : base(customerIdNumber, balance, "Savings")
+    public SavingsAccount(BankCustomer owner, string customerIdNumber, double balance = 500, int withdrawalLimit = 6)
+        : base(owner, customerIdNumber, balance, "Savings")
     {
         if (balance < DefaultMinimumOpeningBalance)
         {
@@ -38,13 +38,15 @@ public class SavingsAccount : BankAccount
         protected set { DefaultInterestRate = value; }
     }
 
-    public override bool Withdraw(double amount)
+    public override bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
     {
         if (amount > 0 && Balance >= amount && _withdrawalsThisMonth < WithdrawalLimit)
         {
-            Balance -= amount;
+            // Call the base class Withdraw method
+            bool result = base.Withdraw(amount, transactionDate, transactionTime, description);
+
             _withdrawalsThisMonth++;
-            return true;
+            return result;
         }
         return false;
     }
