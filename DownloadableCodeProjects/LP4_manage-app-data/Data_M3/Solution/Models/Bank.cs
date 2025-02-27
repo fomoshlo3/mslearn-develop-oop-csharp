@@ -41,7 +41,7 @@ public class Bank
     }
 
     // get customer based on Customer ID
-    internal BankCustomer GetCustomerById(string customerId)
+    internal BankCustomer? GetCustomerById(string customerId)
     {
         foreach (var customer in _customers)
         {

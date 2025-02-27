@@ -315,11 +315,12 @@ public class TransactionInfo : IComparable<TransactionInfo>
     public DateOnly Date { get; set; }
     public TimeOnly Time { get; set; }
     public double Amount { get; set; }
-    public string Description { get; set; }
-    public string TransactionType { get; set; }
+    public string Description { get; set; } = string.Empty;
+    public string TransactionType { get; set; } = string.Empty;
 
-    public int CompareTo(TransactionInfo other)
+    public int CompareTo(TransactionInfo? other)
     {
+        if (other == null) return 1;
         int dateComparison = Date.CompareTo(other.Date);
         if (dateComparison == 0)
         {
