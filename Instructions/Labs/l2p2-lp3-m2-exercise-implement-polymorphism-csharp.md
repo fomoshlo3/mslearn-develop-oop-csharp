@@ -1,14 +1,14 @@
 ---
 lab:
     title: 'Exercise - Implement polymorphism in a C# app'
-    description: 'Learn the principles of polymorphism and how to implement polymorphic behavior in a C# app using interface-based and inheritance-based approaches.'
+    description: 'Learn the principles of polymorphism and how to implement polymorphic behavior in C# apps using interface-based and inheritance-based approaches.'
 ---
 
 # Implement polymorphism in a C# app
 
 Polymorphism is a fundamental concept in object-oriented programming that allows you to treat derived classes as instances of their base class. In C#, you can implement polymorphic behavior using interface implementation and class inheritance.
 
-In this exercise, you update the banking app to demonstrate polymorphic behavior using interface implementation and class inheritance.
+In this exercise, you update an existing app to demonstrate interface-based and inheritance-based polymorphic behavior.
 
 This exercise takes approximately **30** minutes to complete.
 
@@ -26,7 +26,7 @@ For additional help configuring the Visual Studio Code environment, see <a href=
 
 ## Exercise scenario
 
-Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a simple banking app. You've developed an initial version of the app that includes the following files:
+Suppose you're helping a non-profit company with a software project. You've decided to sharpen your object-oriented programming skills by creating a banking app. You've developed an initial version of the app that includes the following files:
 
 - AccountCalculations.cs: This file contains static utility methods for various financial calculations, such as compound interest, transaction fees, overdraft fees, and currency exchange.
 
@@ -36,13 +36,19 @@ Suppose you're helping a non-profit company with a software project. You've deci
 
 - BankCustomerMethods.cs: This file implements the methods defined in the IBankCustomer interface for the BankCustomer class, including methods to return full name, update name, and display customer information.
 
+- CheckingAccount.cs: This file defines the CheckingAccount class, which inherits from the BankAccount class and includes properties and methods specific to checking accounts, such as an overdraft limit.
+
 - Extensions.cs: This file contains extension methods for IBankCustomer and IBankAccount interfaces, providing additional functionality such as validation and greeting. For BankCustomer, it includes methods to check if the customer ID is valid and to greet the customer. For BankAccount, it includes methods to check if the account is overdrawn and if a specified amount can be withdrawn.
 
 - IBankAccount.cs: This file defines the IBankAccount interface, specifying the properties and methods that a bank account class must implement.
 
 - IBankCustomer.cs: This file defines the IBankCustomer interface, specifying the properties and methods that a bank customer class must implement.
 
-- Program.cs: This file contains the main entry point of the application, demonstrating the creation and manipulation of BankCustomer and BankAccount objects, as well as various operations like deposits, withdrawals, and transfers. 
+- MoneyMarketAccount.cs: This file defines the MoneyMarketAccount class, which inherits from the BankAccount class and includes properties and methods specific to money market accounts, such as a minimum balance requirement.
+
+- Program.cs: This file contains the main entry point of the application, demonstrating the creation and manipulation of objects created using base and derived classes, as well as various operations like deposits, withdrawals, and transfers.
+
+- SavingsAccount.cs: This file defines the SavingsAccount class, which inherits from the BankAccount class and includes properties and methods specific to savings accounts, such as a withdrawal limit.
 
 This exercise includes the following tasks:
 
