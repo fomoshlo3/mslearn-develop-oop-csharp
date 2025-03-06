@@ -3,31 +3,61 @@ using System.Globalization;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        // Create a BankCustomer object and various account types
-        // Step 1: Create BankCustomer objects
-        Console.WriteLine("Creating BankCustomer objects...");
+        // Create BankCustomer objects
         string firstName = "Tim";
         string lastName = "Shao";
 
+        Console.WriteLine($"Creating a BankCustomer object for customer {firstName} {lastName}...");
         BankCustomer customer1 = new BankCustomer(firstName, lastName);
-        
-        // Create accounts for customer1
-        Console.WriteLine("Creating BankAccount objects for customer1...");
-        CheckingAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500, 400);
+
+        // Task 1: Review the code files in the Starter project
+        // Task 2: Create derived classes (CheckingAccount, SavingsAccount, and MoneyMarketAccount)
+
+        // Step 1 - Create account objects using the base and derived classes - BankAccount, CheckingAccount, SavingsAccount, and MoneyMarketAccount
+        Console.WriteLine($"\nUsing derived classes to create bank account objects for {customer1.ReturnFullName()}...");
+        //BankAccount bankAccount1 = new BankAccount(customer1.CustomerId, 1000, "Checking");
+        CheckingAccount checkingAccount1 = new CheckingAccount(customer1.CustomerId, 500);
         SavingsAccount savingsAccount1 = new SavingsAccount(customer1.CustomerId, 1000);
         MoneyMarketAccount moneyMarketAccount1 = new MoneyMarketAccount(customer1.CustomerId, 2000);
-        CertificateOfDeposit certificateOfDeposit1 = new CertificateOfDeposit(customer1.CustomerId, 5000, 6);
-        //BankAccount bankAccount1 = new BankAccount(customer1.CustomerId, 10000);  // generates an error because BankAccount is abstract
 
-        // Demonstrate inheritance of the DisplayAccountInfo method in the base class
-        Console.WriteLine(checkingAccount1.DisplayAccountInfo());
-        Console.WriteLine(savingsAccount1.DisplayAccountInfo());
-        Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
-        Console.WriteLine(certificateOfDeposit1.DisplayAccountInfo());
+        // Step 2 - Demonstrate using inherited properties to display account information
+        Console.WriteLine($"\nUsing inherited properties to display {customer1.ReturnFullName()}'s account information...");
+        //Console.WriteLine($" - {bankAccount1.AccountType} account #{bankAccount1.AccountNumber} has a balance of {bankAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+        Console.WriteLine($" - {checkingAccount1.AccountType} account #{checkingAccount1.AccountNumber} has a balance of {checkingAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+        Console.WriteLine($" - {savingsAccount1.AccountType} account #{savingsAccount1.AccountNumber} has a balance of {savingsAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+        Console.WriteLine($" - {moneyMarketAccount1.AccountType} account #{moneyMarketAccount1.AccountNumber} has a balance of {moneyMarketAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
 
-        // Demonstrate the special behavior implemented by the Withdraw method of the derived classes
+        // Step 3 - Demonstrate using inherited methods to withdraw, transfer, and deposit funds
+        Console.WriteLine("\nDemonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...");
+
+        // define a transaction amount
+        double transactionAmount = 200;
+
+        // Withdraw from checking account, transfer from savings account to checking account, and deposit into money market account
+        Console.WriteLine($" - Withdraw {transactionAmount} from {checkingAccount1.AccountType} account");
+        checkingAccount1.Withdraw(transactionAmount);
+
+        Console.WriteLine($" - Transfer {transactionAmount.ToString("C", CultureInfo.CurrentCulture)} from {savingsAccount1.AccountType} account into {checkingAccount1.AccountType} account");
+        savingsAccount1.Transfer(checkingAccount1, transactionAmount);
+
+        Console.WriteLine($" - Deposit {transactionAmount.ToString("C", CultureInfo.CurrentCulture)} into {moneyMarketAccount1.AccountType} account");
+        moneyMarketAccount1.Deposit(transactionAmount);
+
+        Console.WriteLine($" - {checkingAccount1.AccountType} account #{checkingAccount1.AccountNumber} has a balance of {checkingAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+        Console.WriteLine($" - {savingsAccount1.AccountType} account #{savingsAccount1.AccountNumber} has a balance of {savingsAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+        Console.WriteLine($" - {moneyMarketAccount1.AccountType} account #{moneyMarketAccount1.AccountNumber} has a balance of {moneyMarketAccount1.Balance.ToString("C", CultureInfo.CurrentCulture)}");
+
+        // Step 4 - Demonstrate using the 'new' keyword to hide a base class method
+        Console.WriteLine("\nDemonstrating the use of the 'new' keyword to override a base class method...");
+
+        // Display account information for each account
+        Console.WriteLine($" - {checkingAccount1.DisplayAccountInfo()}");
+        Console.WriteLine($" - {savingsAccount1.DisplayAccountInfo()}");
+        Console.WriteLine($" - {moneyMarketAccount1.DisplayAccountInfo()}");
+
+        //Step 5: Demonstrate the overridden properties and methods in the derived classes
         Console.WriteLine("\nDemonstrating specialized Withdraw behavior:");
 
         // CheckingAccount: Withdraw within overdraft limit
@@ -52,6 +82,9 @@ class Program
 
         // SavingsAccount: Exceeding maximum number of withdrawals per month
         Console.WriteLine("\nSavingsAccount: Exceeding maximum number of withdrawals per month...");
+        
+        savingsAccount1.ResetWithdrawalLimit();
+
         for (int i = 0; i < 7; i++)
         {
             Console.WriteLine($"Attempting to withdraw $50 (withdrawal {i + 1})...");
@@ -68,10 +101,5 @@ class Program
         Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1900 (exceeding minimum balance)...");
         moneyMarketAccount1.Withdraw(1900);
         Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
-
-        // CertificateOfDeposit: Withdraw before maturity with penalty
-        Console.WriteLine("\nCertificateOfDeposit: Attempting to withdraw $1000 before maturity (with penalty)...");
-        certificateOfDeposit1.Withdraw(1000);
-        Console.WriteLine(certificateOfDeposit1.DisplayAccountInfo());
     }
 }
