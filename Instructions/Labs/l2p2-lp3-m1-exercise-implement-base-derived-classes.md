@@ -55,15 +55,11 @@ This exercise includes the following tasks:
 
 1. Implement specialized features in derived classes using properties and constructors.
 
-1. Compare the use of `new` and `override` keywords in derived classes.
+1. Use the `new` keyword to hide base class methods in derived classes.
 
 1. Override methods and properties in derived classes.
 
 1. Use the `base` keyword in overridden methods to access base class members.
-
-1. Override the `ToString` method of a derived class.
-
-1. Compare derived class objects using the `Equals` method.
 
 ## Review the current version of your banking app
 
@@ -734,63 +730,89 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-## Compare the use of new and override keywords in derived classes
+## Use the new keyword to hide base class methods in derived classes
 
-In this task, you compare the use of the `new` and `override` keywords when extending the behavior of a base class method. To explore the difference between `new` and `override`, you apply the keywords to the `DisplayAccountInfo` method in the `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` derived classes, and then use the Program.cs file to observe the results.
+In this task, you examine the use of the `new` keyword when extending the behavior of a base class method. To demonstrate the effect of the `new` keyword, duplicate the base class's `DisplayAccountInfo` method in the derived classes with and without the `new` keyword, and then use the Program.cs file to observe the results.
 
 Use the following steps to complete this section of the exercise:
 
 1. Open the CheckingAccount.cs file.
 
-1. To create a `DisplayAccountInfo` method in the derived classes that duplicates the base class method, add the following code to the end of the CheckingAccount class:
+1. To duplicate the base class's `DisplayAccountInfo` method in the derived class, add the following code to the end of the `CheckingAccount` class:
 
     ```csharp
 
     public string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId} - from the CheckingAccount class";
     }
 
     ```
 
-    If you hover the mouse pointer over the `DisplayAccountInfo` method, you'll see a warning that indicates the method hides the inherited member `BankAccount.DisplayAccountInfo()`. This is because the method has the same name and signature as the base class method.
+1. Hover the mouse pointer over the `DisplayAccountInfo` method in `CheckingAccount`.
 
-1. Update the `DisplayAccountInfo` method with the `new` keyword:
+    When you hover the mouse pointer over the `DisplayAccountInfo` method, you see a warning that indicates the method hides the inherited member `BankAccount.DisplayAccountInfo()`. This warning is generated because the method has the same name and signature as the base class method.
+
+1. Use the following code to add the `new` keyword and to customize the method's return value with information specific to the `CheckingAccount` class:
 
     ```csharp
 
     public new string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance:C}, Interest Rate: {InterestRate}, Customer ID: {CustomerId} - Checking Accounts have an overdraft limit of {DefaultOverdraftLimit:C}";
     }
 
     ```
 
-    The `new` keyword is used to hide the base class method and create a new method with the same name and signature in the derived class.
+    The `DisplayAccountInfo` method in `CheckingAccount` now provides information specific to the `CheckingAccount` class. Currency values are formatted using the `C` format specifier.
 
-1. Follow the same process to update the SavingsAccount.cs file with a `DisplayAccountInfo` method that uses the `new` keyword.
-
-1. Open the MoneyMarketAccount.cs file.
-
-1. To create a `DisplayAccountInfo` method that uses the `override` keyword, add the following code to the end of the `MoneyMarketAccount` class:
-
-    ```csharp
-
-    public override string DisplayAccountInfo()
-    {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
-    }
-
-    ```
+    The `new` keyword clarifies your intension to hide the base class method. Since your intension is clear, the warning message about hiding the base class method is gone.
 
 1. Open the Program.cs file.
 
+1. Add the following code to the bottom of the `Main` method:
 
+    ```csharp
 
+    // Step 4 - Demonstrate using the 'new' keyword to override a base class method
+    Console.WriteLine("\nDemonstrating the use of the 'new' keyword to override a base class method...");
 
-1. Update the method in the derived classes using new keyword
+    // Display account information for each account
+    Console.WriteLine($" - {checkingAccount1.DisplayAccountInfo()}");
+    Console.WriteLine($" - {savingsAccount1.DisplayAccountInfo()}");
+    Console.WriteLine($" - {moneyMarketAccount1.DisplayAccountInfo()}");
 
-1. Demonstrate code behavior
+    ```
+
+    Notice that the `DisplayAccountInfo` method is called on each of the derived classes. The `CheckingAccount` classes uses the new `DisplayAccountInfo` method that hides the base class method, while the `SavingsAccount` and `MoneyMarketAccount` classes are still using the base class method.
+
+1. Run the app and verify that the following output is generated:
+
+    ```plaintext
+
+    Creating a BankCustomer object for customer Tim Shao...
+    
+    Using derived classes to create bank account objects for Tim Shao...
+    
+    Using inherited properties to display Tim Shao's account information...
+     - Checking account #10866248 has a balance of $500.00
+     - Savings account #10866249 has a balance of $1,000.00
+     - Money Market account #10866250 has a balance of $2,000.00
+    
+    Demonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...
+     - Withdraw 200 from Checking account
+     - Transfer $200.00 from Savings account into Checking account
+     - Deposit $200.00 into Money Market account
+     - Checking account #10866248 has a balance of $500.00
+     - Savings account #10866249 has a balance of $800.00
+     - Money Market account #10866250 has a balance of $2,200.00
+    
+    Demonstrating the use of the 'new' keyword to override a base class method...
+     - Account Number: 10866248, Type: Checking, Balance: $500.00, Interest Rate: 0, Customer ID: 0010986337 - Checking Accounts have an overdraft limit of $500.00
+     - Account Number: 10866249, Type: Savings, Balance: 800, Interest Rate: 0, Customer ID: 0010986337
+     - Account Number: 10866250, Type: Money Market, Balance: 2200, Interest Rate: 0, Customer ID: 0010986337
+
+    ```
 
 ## Override methods and properties in derived classes
 
@@ -798,29 +820,287 @@ In this task, you override methods and properties in the derived classes to prov
 
 Use the following steps to complete this section of the exercise:
 
-1. Change the InterestRate property in the base class: remove static, add virtual.
+1. Open the BankAccount.cs file.
 
-1. Change the Withdraw method in the base class: add virtual.
+1. Use the following code to change the `InterestRate` property from `static` to `virtual`:
 
-1. Create the overridden Withdraw methods in the derived classes.
+    ```csharp
 
-1. Checking – implement an overdraft limit and apply overdraft fee
+    public virtual double InterestRate { get; protected set; } // Virtual property to allow overriding in derived classes
 
-1. Savings – implement a limit on number of withdrawals per month
+    ```
 
-1. MoneyMarket – implement a limit on minimum balance
+    The `virtual` keyword allows the `InterestRate` property to be overridden in derived classes. The `protected` access modifier allows the property to be `set` within the derived classes.
 
-1. Implement the overridden InterestRate property in the all derived classes
+1. To remove the code that initializes the `InterestRate` property in the base class, update the static constructor as follows:
+
+    ```csharp
+
+    static BankAccount()
+    {
+        Random random = new Random();
+        s_nextAccountNumber = random.Next(10000000, 20000000);
+        TransactionRate = 0.01; // Default transaction rate for wire transfers and cashier's checks
+        MaxTransactionFee = 10; // Maximum transaction fee for wire transfers and cashier's checks
+        OverdraftRate = 0.05; // Default penalty rate for an overdrawn checking account (negative balance)
+        MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
+    }
+
+    ```
+
+1. Use the following code to the make the `Withdraw` method `virtual`:
+
+    ```csharp
+
+    public virtual bool Withdraw(double amount)
+    {
+        if (amount > 0 && Balance >= amount)
+        {
+            Balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    ```
+
+    The `virtual` keyword allows the `Withdraw` method to be overridden in derived classes.
+
+1. Use the following code to make the `DisplayAccountInfo` method `virtual`:
+
+    ```csharp
+
+    public virtual string DisplayAccountInfo()
+    {
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+    }
+
+    ```
+
+1. Open the CheckingAccount.cs file.
+
+1. Use the following code to override the `Withdraw` method:
+
+    ```csharp
+
+    public override bool Withdraw(double amount)
+    {
+        if (amount > 0 && Balance + OverdraftLimit >= amount)
+        {
+            Balance -= amount;
+
+            // Check if the account is overdrawn
+            if (Balance < 0)
+            {
+                double overdraftFee = AccountCalculations.CalculateOverdraftFee(Math.Abs(Balance), BankAccount.OverdraftRate, BankAccount.MaxOverdraftFee);
+                Balance -= overdraftFee;
+                Console.WriteLine($"Overdraft fee of ${overdraftFee} applied.");
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    ```
+
+    Notice that the `Withdraw` method in the `CheckingAccount` class uses the `OverdraftLimit` property to determine how far below zero the account can be overdrawn. If the account is withdrawal is allowed and the account is overdrawn, an overdraft fee is applied to the balance.
+
+1. Open the SavingsAccount.cs file.
+
+1. Use the following code to override the `Withdraw` method:
+
+    ```csharp
+
+    public override bool Withdraw(double amount)
+    {
+        if (amount > 0 && Balance >= amount && _withdrawalsThisMonth < WithdrawalLimit)
+        {
+            Balance -= amount;
+            _withdrawalsThisMonth++;
+            return true;
+        }
+        return false;
+    }
+
+    ```
+
+    Notice that the `Withdraw` method in the `SavingsAccount` class uses the `_withdrawalsThisMonth` field to track the number of withdrawals made from the account in the current month. If the number of withdrawals exceeds the `WithdrawalLimit`, the method returns `false`.
+
+1. Use the following code to add a method that resets the `_withdrawalsThisMonth` field:
+
+    ```csharp
+
+    public void ResetWithdrawalLimit()
+    {
+        _withdrawalsThisMonth = 0;
+    }
+
+    ```
+
+    This method can be used to reset the `_withdrawalsThisMonth` field to zero. For example, the method can be called at the beginning of each month to reset the withdrawal count.
+
+1. Open the MoneyMarketAccount.cs file.
+
+1. Use the following code to override the `Withdraw` method:
+
+    ```csharp
+
+    public override bool Withdraw(double amount)
+    {
+        if (amount > 0 && Balance - amount >= MinimumBalance)
+        {
+            Balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    ```
+
+    Notice that the `Withdraw` method in the `MoneyMarketAccount` class enforces a minimum balance requirement.
+
+1. Use the following code to override the `InterestRate` property in each of the derived classes:
+
+    ```csharp
+
+    public override double InterestRate
+    {
+        get { return DefaultInterestRate; }
+        protected set { DefaultInterestRate = value; }
+    }
+
+    ```
+
+    Each of the derived classes initializes a static `DefaultInterestRate` value that's used by the overridden `InterestRate` property.
 
     - Checking – interest rate is 0.0%
-
     - Savings – interest rate is 2.0%
-
     - MoneyMarket - interest rate is 4.0%
 
-1. Change the DisplayAccountInfo method in the base class: add virtual
+1. Open the Program.cs file.
 
-1. Demonstrate the overridden properties and methods.
+1. To demonstrate the overridden properties and methods, add the following code to the bottom of the `Main` method:
+
+    ```csharp
+
+    //Step 5: Demonstrate the overridden properties and methods in the derived classes
+    Console.WriteLine("\nDemonstrating specialized Withdraw behavior:");
+
+    // CheckingAccount: Withdraw within overdraft limit
+    Console.WriteLine("\nCheckingAccount: Attempting to withdraw $600 (within overdraft limit)...");
+    checkingAccount1.Withdraw(600);
+    Console.WriteLine(checkingAccount1.DisplayAccountInfo());
+
+    // CheckingAccount: Withdraw exceeding overdraft limit
+    Console.WriteLine("\nCheckingAccount: Attempting to withdraw $1000 (exceeding overdraft limit)...");
+    checkingAccount1.Withdraw(1000);
+    Console.WriteLine(checkingAccount1.DisplayAccountInfo());
+
+    // SavingsAccount: Withdraw within limit
+    Console.WriteLine("\nSavingsAccount: Attempting to withdraw $200 (within withdrawal limit)...");
+    savingsAccount1.Withdraw(200);
+    Console.WriteLine(savingsAccount1.DisplayAccountInfo());
+
+    // SavingsAccount: Withdraw exceeding limit
+    Console.WriteLine("\nSavingsAccount: Attempting to withdraw $900 (exceeding withdrawal limit)...");
+    savingsAccount1.Withdraw(900);
+    Console.WriteLine(savingsAccount1.DisplayAccountInfo());
+
+    // SavingsAccount: Exceeding maximum number of withdrawals per month
+    Console.WriteLine("\nSavingsAccount: Exceeding maximum number of withdrawals per month...");
+    
+    savingsAccount1.ResetWithdrawalLimit();
+
+    for (int i = 0; i < 7; i++)
+    {
+        Console.WriteLine($"Attempting to withdraw $50 (withdrawal {i + 1})...");
+        savingsAccount1.Withdraw(50);
+        Console.WriteLine(savingsAccount1.DisplayAccountInfo());
+    }
+
+    // MoneyMarketAccount: Withdraw within minimum balance
+    Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1000 (maintaining minimum balance)...");
+    moneyMarketAccount1.Withdraw(1000);
+    Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
+
+    // MoneyMarketAccount: Withdraw exceeding minimum balance
+    Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1900 (exceeding minimum balance)...");
+    moneyMarketAccount1.Withdraw(1900);
+    Console.WriteLine(moneyMarketAccount1.DisplayAccountInfo());
+
+    ```
+
+    Notice that this code tests the overridden `Withdraw` method in each of the derived classes:
+
+    - The `CheckingAccount` class demonstrates overdraft behavior and fees.
+    - The `SavingsAccount` class enforces a positive balance and demonstrates the limited number of monthly withdrawals
+    - The `MoneyMarketAccount` class demonstrates the minimum balance requirements.
+
+1. Run the app and verify that the following output is generated:
+
+    ```plaintext
+
+    Creating a BankCustomer object for customer Tim Shao...
+    
+    Using derived classes to create bank account objects for Tim Shao...
+    
+    Using inherited properties to display Tim Shao's account information...
+     - Checking account #12406201 has a balance of $500.00
+     - Savings account #12406202 has a balance of $1,000.00
+     - Money Market account #12406203 has a balance of $2,000.00
+    
+    Demonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...
+     - Withdraw 200 from Checking account
+     - Transfer $200.00 from Savings account into Checking account
+     - Deposit $200.00 into Money Market account
+     - Checking account #12406201 has a balance of $500.00
+     - Savings account #12406202 has a balance of $800.00
+     - Money Market account #12406203 has a balance of $2,200.00
+    
+    Demonstrating the use of the 'new' keyword to override a base class method...
+     - Account Number: 12406201, Type: Checking, Balance: $500.00, Interest Rate: 0, Customer ID: 0010876989 - Checking Accounts have an overdraft limit of $500.00
+     - Account Number: 12406202, Type: Savings, Balance: 800, Interest Rate: 0.02, Customer ID: 0010876989
+     - Account Number: 12406203, Type: Money Market, Balance: 2200, Interest Rate: 0.04, Customer ID: 0010876989
+    
+    Demonstrating specialized Withdraw behavior:
+    
+    CheckingAccount: Attempting to withdraw $600 (within overdraft limit)...
+    Overdraft fee of $5 applied.
+    Account Number: 12406201, Type: Checking, Balance: ($105.00), Interest Rate: 0, Customer ID: 0010876989 - Checking Accounts have an overdraft limit of $500.00
+    
+    CheckingAccount: Attempting to withdraw $1000 (exceeding overdraft limit)...
+    Account Number: 12406201, Type: Checking, Balance: ($105.00), Interest Rate: 0, Customer ID: 0010876989 - Checking Accounts have an overdraft limit of $500.00
+    
+    SavingsAccount: Attempting to withdraw $200 (within withdrawal limit)...
+    Account Number: 12406202, Type: Savings, Balance: 600, Interest Rate: 0.02, Customer ID: 0010876989
+    
+    SavingsAccount: Attempting to withdraw $900 (exceeding withdrawal limit)...
+    Account Number: 12406202, Type: Savings, Balance: 600, Interest Rate: 0.02, Customer ID: 0010876989
+    
+    SavingsAccount: Exceeding maximum number of withdrawals per month...
+    Attempting to withdraw $50 (withdrawal 1)...
+    Account Number: 12406202, Type: Savings, Balance: 550, Interest Rate: 0.02, Customer ID: 0010876989
+    Attempting to withdraw $50 (withdrawal 2)...
+    Account Number: 12406202, Type: Savings, Balance: 500, Interest Rate: 0.02, Customer ID: 0010876989
+    Attempting to withdraw $50 (withdrawal 3)...
+    Account Number: 12406202, Type: Savings, Balance: 450, Interest Rate: 0.02, Customer ID: 0010876989
+    Attempting to withdraw $50 (withdrawal 4)...
+    Account Number: 12406202, Type: Savings, Balance: 400, Interest Rate: 0.02, Customer ID: 0010876989
+    Attempting to withdraw $50 (withdrawal 5)...
+    Account Number: 12406202, Type: Savings, Balance: 350, Interest Rate: 0.02, Customer ID: 0010876989
+    Attempting to withdraw $50 (withdrawal 6)...
+    Account Number: 12406202, Type: Savings, Balance: 300, Interest Rate: 0.02, Customer ID: 0010876989
+    Attempting to withdraw $50 (withdrawal 7)...
+    Account Number: 12406202, Type: Savings, Balance: 300, Interest Rate: 0.02, Customer ID: 0010876989
+    
+    MoneyMarketAccount: Attempting to withdraw $1000 (maintaining minimum balance)...
+    Account Number: 12406203, Type: Money Market, Balance: 1200, Interest Rate: 0.04, Customer ID: 0010876989
+    
+    MoneyMarketAccount: Attempting to withdraw $1900 (exceeding minimum balance)...
+    Account Number: 12406203, Type: Money Market, Balance: 1200, Interest Rate: 0.04, Customer ID: 0010876989
+
+    ```
 
 ## Use the base keyword in overridden methods to access base class members
 
@@ -828,22 +1108,127 @@ In this task, you use the `base` keyword in overridden methods to access base cl
 
 Use the following steps to complete this section of the exercise:
 
-1. Access the DisplayAccountInfo method of the base class in each of the derived classes.
+1. Open the BankAccount.cs file.
 
-1. Access the Withdraw method of the base class in each of the derived classes.
+1. Use the following code to update the `DisplayAccountInfo` method with the `virtual` keyword:
 
-## Override the ToString method of a derived class
+    ```csharp
 
-In this task, you override the ToString method in the derived classes to provide a custom string representation of the object.
+    public virtual string DisplayAccountInfo()
+    {
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance:C}, Interest Rate: {InterestRate:P}, Customer ID: {CustomerId}";
+    }
 
-Use the following steps to complete this section of the exercise:
+    ```
 
-1. Implement the ToString method in the derived classes.
+    The `virtual` keyword allows the `DisplayAccountInfo` method to be overridden in derived classes. Currency and percentage values are formatted using the `C` and `P` format specifiers.
 
-## Compare derived class objects using the Equals method
+1. Open the CheckingAccount.cs file.
 
-In this task, you compare derived class objects using the Equals method.
+1. Use the following code to override the `DisplayAccountInfo` method and use `base` keyword to access the base class's `DisplayAccountInfo` method:
 
-Use the following steps to complete this section of the exercise:
+    ```csharp
 
-1. Implement the Equals method in the derived classes.
+    public override string DisplayAccountInfo()
+    {
+        return base.DisplayAccountInfo() + $", Overdraft Limit: {OverdraftLimit}";
+    }
+
+    ```
+
+    Using the `base` keyword enables you to reuse the base class's `DisplayAccountInfo` method, which is a best practice. The method appends information specific to the `CheckingAccount` class to the string returned by the base class method.
+
+1. Open the SavingsAccount.cs file.
+
+1. Use the following code to override and extend the base class's `DisplayAccountInfo` method inside the `SavingsAccount` class:
+
+    ```csharp
+
+    public override string DisplayAccountInfo()
+    {
+        return base.DisplayAccountInfo() + $", Withdrawal Limit: {WithdrawalLimit}, Withdrawals This Month: {_withdrawalsThisMonth}";
+    }
+
+    ```
+
+    The `DisplayAccountInfo` method in the `SavingsAccount` class uses the `base` keyword to access the base class's `DisplayAccountInfo` method. The method then appends information specific to the `SavingsAccount` class.
+
+1. Open the MoneyMarketAccount.cs file.
+
+1. Use the following code to override and extend the base class's `DisplayAccountInfo` method inside the `MoneyMarketAccount` class:
+
+    ```csharp
+
+    public override string DisplayAccountInfo()
+    {
+        return base.DisplayAccountInfo() + $", Minimum Balance: {MinimumBalance}, Minimum Opening Balance: {MinimumOpeningBalance}";
+    }
+
+    ```
+
+    The `DisplayAccountInfo` method in the `MoneyMarketAccount` class uses the `base` keyword to access the base class's `DisplayAccountInfo` method. The method then appends information specific to the `MoneyMarketAccount` class.
+
+1. Run the app and verify that the following output is generated:
+
+    ```plaintext
+
+    Creating a BankCustomer object for customer Tim Shao...
+    
+    Using derived classes to create bank account objects for Tim Shao...
+    
+    Using inherited properties to display Tim Shao's account information...
+     - Checking account #12552069 has a balance of $500.00
+     - Savings account #12552070 has a balance of $1,000.00
+     - Money Market account #12552071 has a balance of $2,000.00
+    
+    Demonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...
+     - Withdraw 200 from Checking account
+     - Transfer $200.00 from Savings account into Checking account
+     - Deposit $200.00 into Money Market account
+     - Checking account #12552069 has a balance of $500.00
+     - Savings account #12552070 has a balance of $800.00
+     - Money Market account #12552071 has a balance of $2,200.00
+    
+    Demonstrating the use of the 'new' keyword to override a base class method...
+     - Account Number: 12552069, Type: Checking, Balance: $500.00, Interest Rate: 0.00%, Customer ID: 0013536499, Overdraft Limit: 500
+     - Account Number: 12552070, Type: Savings, Balance: $800.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 1
+     - Account Number: 12552071, Type: Money Market, Balance: $2,200.00, Interest Rate: 4.00%, Customer ID: 0013536499, Minimum Balance: 1000, Minimum Opening Balance: 2000
+    
+    Demonstrating specialized Withdraw behavior:
+    
+    CheckingAccount: Attempting to withdraw $600 (within overdraft limit)...
+    Overdraft fee of $5 applied.
+    Account Number: 12552069, Type: Checking, Balance: ($105.00), Interest Rate: 0.00%, Customer ID: 0013536499, Overdraft Limit: 500
+    
+    CheckingAccount: Attempting to withdraw $1000 (exceeding overdraft limit)...
+    Account Number: 12552069, Type: Checking, Balance: ($105.00), Interest Rate: 0.00%, Customer ID: 0013536499, Overdraft Limit: 500
+    
+    SavingsAccount: Attempting to withdraw $200 (within withdrawal limit)...
+    Account Number: 12552070, Type: Savings, Balance: $600.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 2
+    
+    SavingsAccount: Attempting to withdraw $900 (exceeding withdrawal limit)...
+    Account Number: 12552070, Type: Savings, Balance: $600.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 2
+    
+    SavingsAccount: Exceeding maximum number of withdrawals per month...
+    Attempting to withdraw $50 (withdrawal 1)...
+    Account Number: 12552070, Type: Savings, Balance: $550.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 1
+    Attempting to withdraw $50 (withdrawal 2)...
+    Account Number: 12552070, Type: Savings, Balance: $500.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 2
+    Attempting to withdraw $50 (withdrawal 3)...
+    Account Number: 12552070, Type: Savings, Balance: $450.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 3
+    Attempting to withdraw $50 (withdrawal 4)...
+    Account Number: 12552070, Type: Savings, Balance: $400.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 4
+    Attempting to withdraw $50 (withdrawal 5)...
+    Account Number: 12552070, Type: Savings, Balance: $350.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 5
+    Attempting to withdraw $50 (withdrawal 6)...
+    Account Number: 12552070, Type: Savings, Balance: $300.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 6
+    Attempting to withdraw $50 (withdrawal 7)...
+    Account Number: 12552070, Type: Savings, Balance: $300.00, Interest Rate: 2.00%, Customer ID: 0013536499, Withdrawal Limit: 6, Withdrawals This Month: 6
+    
+    MoneyMarketAccount: Attempting to withdraw $1000 (maintaining minimum balance)...
+    Account Number: 12552071, Type: Money Market, Balance: $1,200.00, Interest Rate: 4.00%, Customer ID: 0013536499, Minimum Balance: 1000, Minimum Opening Balance: 2000
+    
+    MoneyMarketAccount: Attempting to withdraw $1900 (exceeding minimum balance)...
+    Account Number: 12552071, Type: Money Market, Balance: $1,200.00, Interest Rate: 4.00%, Customer ID: 0013536499, Minimum Balance: 1000, Minimum Opening Balance: 2000
+
+    ```
