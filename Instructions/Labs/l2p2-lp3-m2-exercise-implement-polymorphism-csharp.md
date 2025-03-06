@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Implement polymorphism in a C# app'
-    description: 'Learn how to implement polymorphic behavior in a C# app using interface implementation and class inheritance.'
+    description: 'Learn the principles of polymorphism and how to implement polymorphic behavior in a C# app using interface-based and inheritance-based approaches.'
 ---
 
 # Implement polymorphism in a C# app

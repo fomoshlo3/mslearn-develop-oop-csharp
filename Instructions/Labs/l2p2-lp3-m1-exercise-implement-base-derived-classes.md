@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Implement base and derived classes'
-    description: 'Learn how to implement base and derived classes, .'
+    description: 'Learn how to create a class hierarchy that implements base and derived classes, how to use the abstract, virtual, sealed, new, and override keywords to extend the base class behavior in derived classes, and how to access base class members from within a derived class.'
 ---
 
 
@@ -9,19 +9,7 @@ lab:
 
 Class inheritance is a fundamental concept in object-oriented programming that allows you to develop a hierarchy of classes that share common properties and methods. Inheritance enables you to define a base class with common properties and methods that can be shared by derived classes. Derived classes inherit the members of the base class and can extend or modify them to create specialized classes. In this exercise, you create a base class and derived classes to represent different types of bank accounts.
 
-
-
-
-
-
-
-In this exercise, you 
-
-
-
-
-
-
+In this exercise, you create three derived classes that inherit from the `BankAccount` base class: `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount`. Each derived class will have include an instance constructor that accesses the base class constructor. You explore the use of `abstract`, `virtual`, `sealed`, `new`, and `override` keywords to implement specialized behavior in the derived classes. You update the Program.cs file to demonstrate the extended features implemented in the derived classes.
 
 This exercise takes approximately **30** minutes to complete.
 
@@ -59,23 +47,23 @@ Suppose you're helping a non-profit company with a software project. You've deci
 
 This exercise includes the following tasks:
 
-1. Review the current version of your banking app
+1. Review the current version of your banking app,
 
-1. Create the CheckingAccount, SavingsAccount, and MoneyMarketAccount derived classes
+1. Create the `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` derived classes.
 
-1. Update the BankAccount class definition with abstract and sealed keywords
+1. Update the `BankAccount` class definition with `abstract` and `sealed` keywords.
 
-1. Implement specialized features in derived classes using properties and constructors
+1. Implement specialized features in derived classes using properties and constructors.
 
-1. Compare the 'new' and 'override' keywords in derived classes
+1. Compare the use of `new` and `override` keywords in derived classes.
 
-1. Override methods and properties in derived classes
+1. Override methods and properties in derived classes.
 
-1. Use the 'base' keyword in overridden methods to access base class members
+1. Use the `base` keyword in overridden methods to access base class members.
 
-1. Override the ToString method in a derived class
+1. Override the `ToString` method of a derived class.
 
-1. Compare derived class objects using the Equals method
+1. Compare derived class objects using the `Equals` method.
 
 ## Review the current version of your banking app
 
@@ -382,8 +370,8 @@ Use the following steps to complete this section of the exercise:
 
     ```csharp
 
-    // Step 3 - Demonstrate using inherited methods to make a deposit 
-    Console.WriteLine("\nDemonstrating inheritance of the Deposit method from the base class...");
+    // Step 3 - Demonstrate using inherited methods to withdraw, transfer, and deposit funds
+    Console.WriteLine("\nDemonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...");
 
     // define a transaction amount
     double transactionAmount = 200;
@@ -413,25 +401,24 @@ Use the following steps to complete this section of the exercise:
     Using derived classes to create bank account objects for Tim Shao...
     
     Using inherited properties to display Tim Shao's account information...
-     - Checking account #10027975 has a balance of $1,000.00
-     - Checking account #10027976 has a balance of $500.00
-     - Savings account #10027977 has a balance of $1,000.00
-     - Money Market account #10027978 has a balance of $2,000.00
+     - Checking account #13358753 has a balance of $500.00
+     - Savings account #13358754 has a balance of $1,000.00
+     - Money Market account #13358755 has a balance of $2,000.00
     
-    Demonstrating inheritance of the Deposit method from the base class...
+    Demonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...
      - Withdraw 200 from Checking account
      - Transfer $200.00 from Savings account into Checking account
      - Deposit $200.00 into Money Market account
-     - Checking account #10027976 has a balance of $500.00
-     - Savings account #10027977 has a balance of $800.00
-     - Money Market account #10027978 has a balance of $2,200.00
+     - Checking account #13358753 has a balance of $500.00
+     - Savings account #13358754 has a balance of $800.00
+     - Money Market account #13358755 has a balance of $2,200.00
 
     ```
 
     The additional output demonstrates the following:
 
-    - The derived classes inherit the base class methods.
-    - The base class methods can be called from within the derived classes.
+    - Derived classes inherit base class methods.
+    - Base class methods are accessible from instances of a derived class.
 
 ## Update the BankAccount class definition with abstract and sealed keywords
 
@@ -492,17 +479,17 @@ Use the following steps to complete this section of the exercise:
     Using derived classes to create bank account objects for Tim Shao...
     
     Using inherited properties to display Tim Shao's account information...
-     - Checking account #12381267 has a balance of $500.00
-     - Savings account #12381268 has a balance of $1,000.00
-     - Money Market account #12381269 has a balance of $2,000.00
+     - Checking account #13358753 has a balance of $500.00
+     - Savings account #13358754 has a balance of $1,000.00
+     - Money Market account #13358755 has a balance of $2,000.00
     
-    Demonstrating inheritance of the Deposit method from the base class...
+    Demonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...
      - Withdraw 200 from Checking account
      - Transfer $200.00 from Savings account into Checking account
      - Deposit $200.00 into Money Market account
-     - Checking account #12381267 has a balance of $500.00
-     - Savings account #12381268 has a balance of $800.00
-     - Money Market account #12381269 has a balance of $2,200.00
+     - Checking account #13358753 has a balance of $500.00
+     - Savings account #13358754 has a balance of $800.00
+     - Money Market account #13358755 has a balance of $2,200.00
 
     ```
 
@@ -733,35 +720,73 @@ Use the following steps to complete this section of the exercise:
     Using derived classes to create bank account objects for Tim Shao...
     
     Using inherited properties to display Tim Shao's account information...
-     - Checking account #12381267 has a balance of $500.00
-     - Savings account #12381268 has a balance of $1,000.00
-     - Money Market account #12381269 has a balance of $2,000.00
+     - Checking account #13358753 has a balance of $500.00
+     - Savings account #13358754 has a balance of $1,000.00
+     - Money Market account #13358755 has a balance of $2,000.00
     
-    Demonstrating inheritance of the Deposit method from the base class...
+    Demonstrating inheritance of the Withdraw, Transfer, and Deposit methods from the base class...
      - Withdraw 200 from Checking account
      - Transfer $200.00 from Savings account into Checking account
      - Deposit $200.00 into Money Market account
-     - Checking account #12381267 has a balance of $500.00
-     - Savings account #12381268 has a balance of $800.00
-     - Money Market account #12381269 has a balance of $2,200.00
+     - Checking account #13358753 has a balance of $500.00
+     - Savings account #13358754 has a balance of $800.00
+     - Money Market account #13358755 has a balance of $2,200.00
 
     ```
 
-## Compare the 'new' and 'override' keywords in derived classes
+## Compare the use of new and override keywords in derived classes
 
-In this task, you extend the `DisplayAccountInfo` method's base class behavior by using the `new` and `override` keywords in the derived classes.
+In this task, you compare the use of the `new` and `override` keywords when extending the behavior of a base class method. To explore the difference between `new` and `override`, you apply the keywords to the `DisplayAccountInfo` method in the `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` derived classes, and then use the Program.cs file to observe the results.
 
 Use the following steps to complete this section of the exercise:
 
-1. Create a `DisplayAccountInfo` method in the derived classes that duplicates the base class method
+1. Open the CheckingAccount.cs file.
 
-1. Apply the `new` keyword to the `DisplayAccountInfo` method in Checking and Savings
+1. To create a `DisplayAccountInfo` method in the derived classes that duplicates the base class method, add the following code to the end of the CheckingAccount class:
 
-1. Apply the `override` keyword to the `DisplayAccountInfo` method in MoneyMarket
+    ```csharp
 
-1. Update the `DisplayAccountInfo` methods in the derived classes with type specific information
+    public string DisplayAccountInfo()
+    {
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+    }
 
-1. Demonstrate code behavior
+    ```
+
+    If you hover the mouse pointer over the `DisplayAccountInfo` method, you'll see a warning that indicates the method hides the inherited member `BankAccount.DisplayAccountInfo()`. This is because the method has the same name and signature as the base class method.
+
+1. Update the `DisplayAccountInfo` method with the `new` keyword:
+
+    ```csharp
+
+    public new string DisplayAccountInfo()
+    {
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+    }
+
+    ```
+
+    The `new` keyword is used to hide the base class method and create a new method with the same name and signature in the derived class.
+
+1. Follow the same process to update the SavingsAccount.cs file with a `DisplayAccountInfo` method that uses the `new` keyword.
+
+1. Open the MoneyMarketAccount.cs file.
+
+1. To create a `DisplayAccountInfo` method that uses the `override` keyword, add the following code to the end of the `MoneyMarketAccount` class:
+
+    ```csharp
+
+    public override string DisplayAccountInfo()
+    {
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+    }
+
+    ```
+
+1. Open the Program.cs file.
+
+
+
 
 1. Update the method in the derived classes using new keyword
 
@@ -797,7 +822,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Demonstrate the overridden properties and methods.
 
-## Use the 'base' keyword in overridden methods to access base class members
+## Use the base keyword in overridden methods to access base class members
 
 In this task, you use the `base` keyword in overridden methods to access base class members.
 
@@ -807,7 +832,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Access the Withdraw method of the base class in each of the derived classes.
 
-## Override the ToString method in a derived class
+## Override the ToString method of a derived class
 
 In this task, you override the ToString method in the derived classes to provide a custom string representation of the object.
 
