@@ -6,43 +6,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Task 1: Review starter code
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 2: Create a Bank class that includes a collection of BankCustomer objects
-
-        // Step 1: Add a new class file named Bank to the Data_M2 project
-        // Step 2: Add constructors, properties, and methods to the Bank class definition 
-        //  - Include a read-only Customers property that provides access to a collection of BankCustomer objects (IReadOnlyList<BankCustomer> Customers)
-        //  - Include a method that adds a BankCustomer object to the collection
-        //  - Include a method that removes a BankCustomer object from the collection
-        //  - Include a method that returns a collection containing all BankCustomer objects
-        //  - Include a method that returns a BankCustomer objects based on customer name
-        //  - Include a method that returns the total number of transactions
-        //  - Include a method that returns the total amount of money in the bank vault
-        //  - Include a method that returns the total of all deposits for the day
-        //  - Include a method that returns the total of all withdrawals for the day
-
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 3: Update the BankCustomer class to include a collection of BankAccount objects
-        //  - Add a read-only Accounts property that provides access to a collection of BankAccount objects (IReadOnlyList<BankAccount> Accounts)
-        //  - Add a method that adds a BankAccount object to the collection
-        //  - Add a method that removes a BankAccount object from the collection
-        //  - Add a method that returns a collection containing all BankAccount objects
-        //  - Add a method that returns a collection containing all BankAccount objects of a specific account type
-
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 4: Update the BankAccount class to include a collection of Transaction objects
-        //  - Add a read-only Transactions property that provides access to a collection of Transaction objects (IReadOnlyList<Transaction> Transactions)
-        //  - Add a method that adds a Transaction object to the collection
-        //  - Add a method that removes a Transaction object from the collection
-        //  - Add a method that returns a collection containing all Transaction objects
-
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 5: Create collections of BankCustomer and BankAccount objects
 
         Console.WriteLine($"Creating Bank, BankCustomer, and BankAccount objects...");
 
