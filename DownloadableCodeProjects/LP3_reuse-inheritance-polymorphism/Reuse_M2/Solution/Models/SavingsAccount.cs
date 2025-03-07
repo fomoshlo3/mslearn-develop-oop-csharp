@@ -4,13 +4,17 @@ namespace Reuse_M2;
 
 public class SavingsAccount : BankAccount
 {
-    public int WithdrawalLimit { get; set; }
+    // private field to track the number of withdrawals this month
     private int _withdrawalsThisMonth;
-    public double MinimumOpeningBalance { get; set; }
 
+    // public static properties with private setters for default withdrawal limit, default minimum opening balance, and default interest rate
     public static int DefaultWithdrawalLimit { get; private set; }
     public static double DefaultMinimumOpeningBalance { get; private set; }
     public static double DefaultInterestRate { get; private set; }
+
+    // public property for withdrawal limit and minimum opening balance
+    public int WithdrawalLimit { get; set; }
+    public double MinimumOpeningBalance { get; set; }
 
     static SavingsAccount()
     {
@@ -32,12 +36,6 @@ public class SavingsAccount : BankAccount
         MinimumOpeningBalance = DefaultMinimumOpeningBalance; // Set the minimum opening balance to the default value
     }
 
-    public override double InterestRate
-    {
-        get { return DefaultInterestRate; }
-        protected set { DefaultInterestRate = value; }
-    }
-
     public override bool Withdraw(double amount)
     {
         if (amount > 0 && Balance >= amount && _withdrawalsThisMonth < WithdrawalLimit)
@@ -52,6 +50,12 @@ public class SavingsAccount : BankAccount
     public void ResetWithdrawalLimit()
     {
         _withdrawalsThisMonth = 0;
+    }
+
+    public override double InterestRate
+    {
+        get { return DefaultInterestRate; }
+        protected set { DefaultInterestRate = value; }
     }
 
     public override string DisplayAccountInfo()

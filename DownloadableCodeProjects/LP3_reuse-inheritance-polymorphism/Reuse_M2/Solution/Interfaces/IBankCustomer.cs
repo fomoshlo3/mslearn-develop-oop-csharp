@@ -9,6 +9,4 @@ public interface IBankCustomer
     string ReturnFullName();
     void UpdateName(string firstName, string lastName);
     string DisplayCustomerInfo();
-    bool IsPremiumCustomer();
-    void ApplyBenefits();
 }
