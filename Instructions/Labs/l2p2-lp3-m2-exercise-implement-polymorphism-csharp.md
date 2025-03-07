@@ -10,7 +10,7 @@ Polymorphism is a fundamental concept in object-oriented programming that allows
 
 In this exercise, you update an existing app to demonstrate interface-based and inheritance-based polymorphic behavior.
 
-This exercise takes approximately **30** minutes to complete.
+This exercise takes approximately **25** minutes to complete.
 
 ## Before you start
 
@@ -268,7 +268,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Move all of your interface files into the `Interfaces` folder.
 
-    Organizing the interfaces in a separate folder will help you keep your project organized as you add more files. You can drag and drop the `IBankAccount.cs`, `IBankCustomer.cs`, `IMonthlyReportGenerator.cs`, `IQuarterlyReportGenerator.cs`, and `IYearlyReportGenerator.cs` files into the `Interfaces` folder.
+    Placing your interface files in a separate folder will help you keep your project organized. You can drag and drop the `IBankAccount.cs`, `IBankCustomer.cs`, `IMonthlyReportGenerator.cs`, `IQuarterlyReportGenerator.cs`, and `IYearlyReportGenerator.cs` files into the `Interfaces` folder.
 
 ## Create classes that support customer and account reporting
 
@@ -413,7 +413,11 @@ Use the following steps to complete this section of the exercise:
 
 1. Move the `AccountCalculations.cs`, `AccountReportGenerator.cs`, `CustomerReportGenerator.cs`, and `Extensions.cs` files into the `Services` folder.
 
-    Organizing the service/utility classes in a separate folder will help you keep your project organized as you add more files. You can drag and drop the `AccountCalculations.cs`, `AccountReportGenerator.cs`, `CustomerReportGenerator.cs`, and `Extensions.cs` files into the `Services` folder.
+1. Create a folder under the `Reuse_M2` project named `Models`.
+
+1. Move the `BankAccount.cs`, `BankCustomer.cs`, `BankCustomerMethods.cs`, `CheckingAccount.cs`, `MoneyMarketAccount.cs`, and `SavingsAccount.cs` files into the `Models` folder.
+
+Creating folders that help organize project files makes it easier to find and maintain specific files when you need to make changes. You can organize files by type, such as interfaces, services, and models, or by feature, such as customer-related files, account-related files, and report-related files.
 
 ## Implement interface-based polymorphic behavior using the reporting interfaces
 
