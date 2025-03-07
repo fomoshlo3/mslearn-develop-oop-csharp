@@ -47,7 +47,7 @@ Suppose you're helping a non-profit company with a software project. You've deci
 
 This exercise includes the following tasks:
 
-1. Review the current version of your banking app,
+1. Review the current version of your banking app.
 
 1. Create the `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` derived classes.
 
@@ -184,7 +184,7 @@ Use the following steps to complete this section of the exercise:
     The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
     > [!TIP]
-    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Classes_M3 solution, navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
+    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Reuse_M1 solution, navigate to the LP3SampleApps/Reuse_M1/Solution folder and open the Solution project in Visual Studio Code.
 
 ## Create the CheckingAccount, SavingsAccount, and MoneyMarketAccount derived classes
 
@@ -209,7 +209,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    `CheckingAccount` will be a derived class that inherits from `BankAccount`.
+    You'll configure `CheckingAccount` to inherit from `BankAccount`.
 
 1. Update the class definition to specify that `CheckingAccount` inherits from `BankAccount`.
 
@@ -224,7 +224,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The "derived class name : base class name" syntax (`CheckingAccount : BankAccount`) indicates that the `CheckingAccount` class inherits from the `BankAccount` base class.
+    The `CheckingAccount : BankAccount` syntax indicates that `CheckingAccount` inherits from `BankAccount`.
 
 1. Update the `CheckingAccount` class with a constructor that accesses the base class constructor.
 
@@ -242,7 +242,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    Notice that the `CheckingAccount` constructor calls the base class constructor using the `base` keyword. The constructor takes two parameters: `customerId` and `initialBalance`. It passes these parameters to the base class constructor along with the account type, which is "Checking".
+    Notice that the `CheckingAccount` constructor calls the base class constructor using the `base` keyword. The constructor takes two parameters: `customerId` and `initialBalance`. It passes these parameters to the base class constructor along with a string containing the account type, which is "Checking".
 
 1. Create derived classes for `SavingsAccount` and `MoneyMarketAccount`.
 
@@ -306,7 +306,6 @@ Use the following steps to complete this section of the exercise:
             // Task 2: Create derived classes (CheckingAccount, SavingsAccount, and MoneyMarketAccount)
 
 
-
         }
     }
     
@@ -314,7 +313,7 @@ Use the following steps to complete this section of the exercise:
 
     The Program class uses `Main` as the entry point of the application and creates a `BankCustomer` object for a customer named Tim Shao.
 
-1. To demonstrate instantiating the derived classes, add the following code to `Main`:
+1. To demonstrate instantiating the derived classes, add the following code to the end of `Main`:
 
     ```csharp
 
@@ -329,7 +328,7 @@ Use the following steps to complete this section of the exercise:
 
     Notice that objects are created using the base and derived classes.
 
-1. To demonstrate inheritance of base class properties and methods, add the following code to `Main`:
+1. To demonstrate inheritance of base class properties and methods, add the following code to the end of `Main`:
 
     ```csharp
 
@@ -359,8 +358,8 @@ Use the following steps to complete this section of the exercise:
 
     This output demonstrates the following:
 
-    - Bank account objects can be created using derived classes that inherit from the BankAccount base class.
-    - The base class properties can be accesses from within the derived classes.
+    - Bank account objects can be created using base and derived classes.
+    - The base class properties can be accessed from within the derived classes.
 
 1. To demonstrate inheritance of the base class methods, add the following code to `Main`:
 
@@ -413,7 +412,6 @@ Use the following steps to complete this section of the exercise:
 
     The additional output demonstrates the following:
 
-    - Derived classes inherit base class methods.
     - Base class methods are accessible from instances of a derived class.
 
 ## Update the BankAccount class definition with abstract and sealed keywords
@@ -442,7 +440,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The classes you define using the `abstract` keyword can't be instantiated.
+    This error message reminds you that classes defined using the `abstract` keyword can't be directly instantiated.
 
 1. Open the Program.cs file.
 
@@ -525,13 +523,13 @@ Use the following steps to complete this section of the exercise:
 
 ## Implement specialized features in derived classes using properties and constructors
 
-In this task, you extend base class functionality by adding feature specific properties and constructors to the derived classes.
-
-The `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` classes extend `BankAccount` by with features that are specific to their account type:
+Derived classes can extend the functionality of a base class by adding new properties and constructors that are specific to the derived class. For example, the `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` classes extend `BankAccount` by with features that are specific to their account type:
 
 - `CheckingAccount` initializes an InterestRate of 0.0 percent, a limit on the overdraft amount, and an overdraft fee that's applied to the account if the balance drops below zero.
 - `SavingsAccount` initializes an InterestRate of 2.0 percent, a limit on the number of withdrawals per month, and a minimum opening balance requirement.
 - `MoneyMarketAccount` initializes an InterestRate of 4.0 percent, a minimum balance requirement, and a minimum opening balance requirement.
+
+In this task, you extend base class functionality by adding feature specific properties and constructors to the derived classes.
 
 Use the following steps to complete this section of the exercise:
 
@@ -590,6 +588,12 @@ Use the following steps to complete this section of the exercise:
 1. Open the `SavingsAccount` class.
 
     `SavingsAccount` extends the `BankAccount` base class with the following features:
+
+    - A public static property named `DefaultWithdrawalLimit` that's used to set a limit on the number of withdrawals per month.
+    - A public static property named `DefaultMinimumOpeningBalance` that's used to set the minimum opening balance requirement for a savings account.
+    - A public static property named `DefaultInterestRate` that's used to set the interest rate for savings accounts.
+    - A public property named `WithdrawalLimit` that's used to get and set the withdrawal limit for a savings account. The property should be initialized to the default withdrawal limit.
+    - A public property named `MinimumOpeningBalance` that's used to get and set the minimum opening balance requirement for a savings account. The property should be initialized to the default minimum opening balance.
 
 1. Update the `SavingsAccount` class with the following fields and properties:
 
@@ -730,9 +734,13 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
+    You'll update the Program.cs file later in this exercise to demonstrate the use of the new properties and constructors.
+
 ## Use the new keyword to hide base class methods in derived classes
 
-In this task, you examine the use of the `new` keyword when extending the behavior of a base class method. To demonstrate the effect of the `new` keyword, duplicate the base class's `DisplayAccountInfo` method in the derived classes with and without the `new` keyword, and then use the Program.cs file to observe the results.
+Derived classes can extend the behavior of a base class by defining a method that has the same name and signature as a base class method. The `new` keyword is used to indicate that the method is intended to hide the base class method.
+
+In this task, you examine the use of the `new` keyword when extending the behavior of a base class method.
 
 Use the following steps to complete this section of the exercise:
 
@@ -744,16 +752,18 @@ Use the following steps to complete this section of the exercise:
 
     public string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId} - from the CheckingAccount class";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
     }
 
     ```
+
+    This method is an exact duplicate of the `DisplayAccountInfo` method in the base class.
 
 1. Hover the mouse pointer over the `DisplayAccountInfo` method in `CheckingAccount`.
 
     When you hover the mouse pointer over the `DisplayAccountInfo` method, you see a warning that indicates the method hides the inherited member `BankAccount.DisplayAccountInfo()`. This warning is generated because the method has the same name and signature as the base class method.
 
-1. Use the following code to add the `new` keyword and to customize the method's return value with information specific to the `CheckingAccount` class:
+1. Use the following code to customize the method's return value and apply the `new` keyword:
 
     ```csharp
 
@@ -764,9 +774,9 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-    The `DisplayAccountInfo` method in `CheckingAccount` now provides information specific to the `CheckingAccount` class. Currency values are formatted using the `C` format specifier.
+    The `DisplayAccountInfo` method in `CheckingAccount` now returns information specific to the `CheckingAccount` class. The `new` keyword clarifies your intension to hide the base class method. Since your intension is clear, there's no longer a warning message about hiding the base class method.
 
-    The `new` keyword clarifies your intension to hide the base class method. Since your intension is clear, the warning message about hiding the base class method is gone.
+    The `C` format specifier is used to format currency values in the string that's returned.
 
 1. Open the Program.cs file.
 
@@ -814,9 +824,11 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-## Override methods and properties in derived classes
+## Override properties and methods in derived classes
 
-In this task, you override methods and properties in the derived classes to provide specialized behavior.
+Derived classes can modify the behavior of a base class by overriding base class properties and methods. For example, you can override the `InterestRate` property and the `Withdraw` method in the `CheckingAccount`, `SavingsAccount`, and `MoneyMarketAccount` classes to implement specialized behavior in your derived classes.
+
+In this task, you override properties and methods in the derived classes to implement specialized behavior.
 
 Use the following steps to complete this section of the exercise:
 
@@ -1232,3 +1244,7 @@ Use the following steps to complete this section of the exercise:
     Account Number: 12552071, Type: Money Market, Balance: $1,200.00, Interest Rate: 4.00%, Customer ID: 0013536499, Minimum Balance: 1000, Minimum Opening Balance: 2000
 
     ```
+
+## Clean up
+
+Now that you've finished the exercise, consider archiving your project files for review at a later time. Having your own projects available for review can be a valuable resource when you're learning to code. Also, building up a portfolio of projects can be a great way to demonstrate your skills to potential employers.

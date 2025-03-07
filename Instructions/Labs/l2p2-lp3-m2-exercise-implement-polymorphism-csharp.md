@@ -10,7 +10,7 @@ Polymorphism is a fundamental concept in object-oriented programming that allows
 
 In this exercise, you update an existing app to demonstrate interface-based and inheritance-based polymorphic behavior.
 
-This exercise takes approximately **25** minutes to complete.
+This exercise takes approximately **30** minutes to complete.
 
 ## Before you start
 
@@ -272,7 +272,7 @@ Use the following steps to complete this section of the exercise:
 
 ## Create classes that support customer and account reporting
 
-Your banking app needs to generate reports for bank customers and bank accounts.
+You need to create classes that implement the reporting interfaces you created in the previous task. The classes will include methods that generate reports for different time periods, such as monthly, quarterly, and yearly reports. The classes will accept a bank customer or bank account object as a parameter and use the object's properties to generate the reports.
 
 In this task, you create AccountReportGenerator and CustomerReportGenerator classes that implement the reporting interfaces you created in the previous task.
 
@@ -421,7 +421,9 @@ Creating folders that help organize project files makes it easier to find and ma
 
 ## Implement interface-based polymorphic behavior using the reporting interfaces
 
-Interface-based polymorphism allows you to treat objects of different classes as instances of a common interface. In this task, you'll use the Program.cs file to demonstrate polymorphic behavior using the reporting classes.
+Interface-based polymorphism allows you to treat objects of different classes as instances of a common interface.
+
+In this task, you'll use the Program.cs file to demonstrate polymorphic behavior using the reporting classes.
 
 Use the following steps to complete this section of the exercise:
 
@@ -538,7 +540,7 @@ Use the following steps to complete this section of the exercise:
 
 ## Implement inheritance-based polymorphic behavior using the base and derived account classes
 
-Inheritance-based polymorphism allows you to treat derived classes as instances of their base class. In this task, you'll demonstrate inheritance-based polymorphic behavior using the base and derived account classes.
+Inheritance-based polymorphism allows you to treat derived classes as instances of their base class. In this task, you'll demonstrate inheritance-based polymorphic behavior using BankAccount and the derived account classes.
 
 Use the following steps to complete this section of the exercise:
 
@@ -551,6 +553,8 @@ Use the following steps to complete this section of the exercise:
     - `SavingsAccount.cs`: This file defines the SavingsAccount class, which inherits from the BankAccount class and includes properties and methods specific to savings accounts.
 
     - `MoneyMarketAccount.cs`: This file defines the MoneyMarketAccount class, which inherits from the BankAccount class and includes properties and methods specific to money market accounts.
+
+    Notice that the derived account classes are designed to support polymorphic behavior. Each derived class overrides the `DisplayAccountInfo` method to provide account-specific information. The derived classes also override the `Withdraw` method to implement specialized withdrawal behavior.
 
 1. Open the Program.cs file.
 
@@ -700,3 +704,7 @@ Use the following steps to complete this section of the exercise:
     Account Number: 18662846, Type: Money Market, Balance: $1,000.00, Interest Rate: 4.00%, Customer ID: 0018967171, Minimum Balance: 1000, Minimum Opening Balance: 2000
 
     ```
+
+## Clean up
+
+Now that you've finished the exercise, consider archiving your project files for review at a later time. Having your own projects available for review can be a valuable resource when you're learning to code. Also, building up a portfolio of projects can be a great way to demonstrate your skills to potential employers.
