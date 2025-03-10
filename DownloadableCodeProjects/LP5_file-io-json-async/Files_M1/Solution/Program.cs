@@ -268,10 +268,10 @@ class Program
         Console.WriteLine("\n\nPress Enter to continue...");
         Console.ReadLine();
 
-        // Step 9: Use the StreamWriter class to store bank transaction information as a CSV file.
+        // Step 9: Use the StreamWriter class to write lines of bank transaction data to a CSV file.
         //  Create a directory path named TransactionLogs in the executable's current directory.
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 9: Use the StreamWriter class to store bank transaction information as a CSV file.");
+        Console.WriteLine("\nStep 9: Use the StreamWriter class to write lines of bank transaction data to a CSV file.");
 
         // Get the current directory of the executable program
         string currentDirectory = Directory.GetCurrentDirectory();
@@ -321,9 +321,9 @@ class Program
         Console.WriteLine("\n\nPress Enter to continue...");
         Console.ReadLine();
 
-        // Step 10: Read bank transaction information from the CSV file
+        // Step 10: Use the StreamReader class to read bank transaction lines from a CSV file
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 10: Use the StreamReader class to read bank transaction information from the CSV file.");
+        Console.WriteLine("\nStep 10: Use the StreamReader class to read bank transaction lines from a CSV file.");
 
         using (StreamReader sr = new StreamReader(csvFilePath))
         {
@@ -339,7 +339,7 @@ class Program
         Console.WriteLine("\n\nPress Enter to continue...");
         Console.ReadLine();
 
-        // Step 11:  Use the FileStream class to perform low-level file I/O operations
+        // Step 11: Use the FileStream class to perform low-level file I/O operations
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Console.WriteLine("\nStep 11: Use the FileStream class to perform low-level file I/O operations.");
 
