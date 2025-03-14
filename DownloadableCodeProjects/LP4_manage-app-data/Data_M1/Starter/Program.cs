@@ -5,78 +5,90 @@ class Program
 {
     static void Main()
     {
-        // // Demonstrate polymorphism using interfaces
-        // Console.WriteLine("Demonstrating polymorphism by treating class types as instances of the same interface...");
+        // TASK 1: Create Date and Time Values
 
-        // string firstName = "Sandy";
-        // string lastName = "Zoeng";
+        // TASK 1: Step 1 - Get the current date and time
+        // NEW CODE WILL GO HERE
 
-        // // Create an instance of IBankCustomer using BankCustomer
-        // IBankCustomer customer1 = new BankCustomer(firstName, lastName);
+        // TASK 1: Step 2 - Get the current date only
+        // NEW CODE WILL GO HERE
 
-        // // Create instances of IBankAccount that reference base and derived class types
-        // Console.WriteLine("1. Create instances of IBankAccount that reference base and derived class types");
-        // IBankAccount account1 = new BankAccount(customer1.CustomerId, 10000);
-        // IBankAccount account2 = new CheckingAccount(customer1.CustomerId, 500, 400);
-        // IBankAccount account3 = new SavingsAccount(customer1.CustomerId, 1000);
+        // TASK 1: Step 3 - Get the current time only
+        // NEW CODE WILL GO HERE
 
-        // // Demonstrate polymorphism by treating different types of accounts as instances of the same interface.
-        // Console.WriteLine("2. Demonstrate polymorphism by treating different types of accounts as instances of the same interface");
-        // Console.WriteLine(account1.DisplayAccountInfo());
-        // Console.WriteLine(account2.DisplayAccountInfo());
-        // Console.WriteLine(account3.DisplayAccountInfo());
+        // TASK 1: Step 4 - Get the current day of the week
+        // NEW CODE WILL GO HERE
 
-        // // Demonstrate interface-based polymorphism by creating instances of AccountReportGenerator and CustomerReportGenerator
-        // Console.WriteLine("\nDemonstrating interface-based polymorphism...");
+        // TASK 1: Step 5 - Get the current month and year
+        // NEW CODE WILL GO HERE
 
-        // // Create instances of IReportGenerator using interfaces
-        // Console.WriteLine("1. Create instances of IMonthlyReportGenerator, IQuarterlyReportGenerator, and IYearlyReportGenerator that reference CustomerReportGenerator and AccountReportGenerator");
-        // IMonthlyReportGenerator customerMonthlyReportGenerator = new CustomerReportGenerator(customer1);
-        // IQuarterlyReportGenerator customerQuarterlyReportGenerator = new CustomerReportGenerator(customer1);
-        // IYearlyReportGenerator customerYearlyReportGenerator = new CustomerReportGenerator(customer1);
+        // TASK 1: Step 6 - Add days to the current date
+        // NEW CODE WILL GO HERE
 
-        // IMonthlyReportGenerator accountMonthlyReportGenerator = new AccountReportGenerator(account1);
-        // IQuarterlyReportGenerator accountQuarterlyReportGenerator = new AccountReportGenerator(account1);
-        // IYearlyReportGenerator accountYearlyReportGenerator = new AccountReportGenerator(account1);
+        // TASK 1: Step 7 - Parse a date string
+        // NEW CODE WILL GO HERE
 
-        // Console.WriteLine("2. Demonstrate polymorphism by showing that different report generators can be used interchangeably through their interfaces.");
-        // customerMonthlyReportGenerator.GenerateMonthlyReport();
-        // customerMonthlyReportGenerator.GenerateCurrentMonthToDateReport();
-        // customerMonthlyReportGenerator.GeneratePrevious30DayReport();
-        // customerQuarterlyReportGenerator.GenerateQuarterlyReport();
-        // customerYearlyReportGenerator.GeneratePreviousYearReport();
-        // customerYearlyReportGenerator.GenerateCurrentYearToDateReport();
-        // customerYearlyReportGenerator.GenerateLast365DaysReport();
+        // TASK 1: Step 8 - Format a date using .ToString() method and "yyyy-MM-dd" format
+        // NEW CODE WILL GO HERE
 
-        // accountMonthlyReportGenerator.GenerateMonthlyReport();
-        // accountMonthlyReportGenerator.GenerateCurrentMonthToDateReport();
-        // accountMonthlyReportGenerator.GeneratePrevious30DayReport();
-        // accountQuarterlyReportGenerator.GenerateQuarterlyReport();
-        // accountYearlyReportGenerator.GeneratePreviousYearReport();
-        // accountYearlyReportGenerator.GenerateCurrentYearToDateReport();
-        // accountYearlyReportGenerator.GenerateLast365DaysReport();
+        // TASK 1: Step 9 - Get the current timezone and offset from UTC
+        // NEW CODE WILL GO HERE
+
+        // TASK 1: Step 10 - Convert the current time to UTC
+        // NEW CODE WILL GO HERE
+
+        // TASK 2: Calculate Date and Time Values for Bank Customer Transactions
+
+        // Create a new customer and accounts
+        string firstName = "Tim";
+        string lastName = "Shao";
+        BankCustomer customer2 = new BankCustomer(firstName, lastName);
+
+        BankAccount account1 = new BankAccount(customer2.CustomerId, 10000);
+        BankAccount account2 = new CheckingAccount(customer2.CustomerId, 500, 400);
+        BankAccount account3 = new SavingsAccount(customer2.CustomerId, 1000);
+        BankAccount account4 = new MoneyMarketAccount(customer2.CustomerId, 2000);
+
+        BankAccount[] bankAccounts = new BankAccount[4];
+
+        bankAccounts[0] = account1;
+        bankAccounts[1] = account2;
+        bankAccounts[2] = account3;
+        bankAccounts[3] = account4;
+
+        // TASK 2: Step 1 - Create a transaction for the current date and time
+        // NEW CODE WILL GO HERE
+
+        // TASK 2: Step 2 - Create a transaction for yesterday at 1:15PM
+        // NEW CODE WILL GO HERE
+
+        // TASK 2: Step 3 - Create transactions for the first three days of December 2024
+        // NEW CODE WILL GO HERE
+
+        // TASK 2: Step 4 - Display the datedTransactions
+        // NEW CODE WILL GO HERE
+
+        // TASK 3: Use Date Ranges to Simulate Transactions Programmatically
+
+        // TASK 3: Step 1 - Define a date range starting on December 12, 2024, and ending on February 20, 2025
+        // NEW CODE WILL GO HERE
+
+        // TASK 3: Step 2 - Generate transactions for the specified date range using the SimulateTransactions class
+        // NEW CODE WILL GO HERE
+
+        // TASK 3: Step 3 - Display the simulated transactions
+        // NEW CODE WILL GO HERE
+
+        // TASK 3: Step 4 - Display the number of transactions processed
+        // NEW CODE WILL GO HERE
 
         // Demonstrate inheritance-based polymorphism
         Console.WriteLine("\nDemonstrating inheritance-based polymorphism...");
         // Create a new customer and accounts for inheritance-based polymorphism
         Console.WriteLine("Creating BankCustomer and BankAccount objects...");
-        string firstName = "Tim";
-        string lastName = "Shao";
-        BankCustomer customer2 = new BankCustomer(firstName, lastName);
 
         // Create accounts for customer1
         Console.WriteLine("Creating BankAccount objects for customer1...");
-        BankAccount bankAccount1 = new BankAccount(customer2.CustomerId, 10000);
-        BankAccount bankAccount2 = new CheckingAccount(customer2.CustomerId, 500, 400);
-        BankAccount bankAccount3 = new SavingsAccount(customer2.CustomerId, 1000);
-        BankAccount bankAccount4 = new MoneyMarketAccount(customer2.CustomerId, 2000);
-
-        BankAccount[] bankAccounts = new BankAccount[4];
-
-        bankAccounts[0] = bankAccount1;
-        bankAccounts[1] = bankAccount2;
-        bankAccounts[2] = bankAccount3;
-        bankAccounts[3] = bankAccount4;
 
         // Demonstrate polymorphism by accessing overridden methods from the base class reference
         Console.WriteLine("\nDemonstrating polymorphism by accessing overridden methods from the base class reference:");
