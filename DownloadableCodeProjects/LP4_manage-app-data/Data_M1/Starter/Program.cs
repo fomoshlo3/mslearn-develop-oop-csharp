@@ -3,100 +3,136 @@ using System.Globalization;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        // Task 1: Review the app code - Interfaces, Models, and Services
+        // // Demonstrate polymorphism using interfaces
+        // Console.WriteLine("Demonstrating polymorphism by treating class types as instances of the same interface...");
 
-        /*
-        Task 2: Create date and time values using DateTime, DateOnly, TimeOnly, CultureInfo, Calendar, CalendarWeekRule, DayOfWeek, and TimeZoneInfo classes
-            1. Get the current date and time
-            2. Get the current date only
-            3. Get the current time only
-            4. Get the current day of the week
-            5. Get the current day of the year
-            6. Get the current week of the year
-            7. Get the current month of the year
-            8. Get the current quarter of the year
-            9. Get the current year
-            10. Get the number of days in the current month
-            11. Get the number of days in the current year
-            12. Get the number of days remaining in the current year
-            13. Get the number of days remaining in the current month
-            14. Get the number of days remaining in the current week
-            15. Get the date for the first day of the current month
-            16. Get the date for the last day of the current month
-            17. Get the date for the first day of the current quarter
-            18. Get the date for the last day of the current quarter
-            19. Get the date for the first day of the current year
-            20. Get the date for the first day of the previous month
-            21. Add days to the current date
-            22. Add months to the current date
-            23. Add years to the current date
-            24. Add minutes to the current time
-            25. Add seconds to the current time
-            26. Parse a date string
-            27. Try to parse a date string
-            28. Format a date using .ToString() method and "yyyy-MM-dd" format
-            29. Use DateTimeOffset
-            30. Get the current timezone
-            31. Get the offset from UTC
-            32. Display the timezone information
-            33. Convert the current time to UTC
-            34. Convert UTC time to a specific time zone
-            35. Get all available time zones
-            36. Get the date and time for 2/3/2025 at 11:15PM in a timezone 8 hours earlier than the current timezone
-            37. Display the current date and time in the UTC timezone
-        */
+        // string firstName = "Sandy";
+        // string lastName = "Zoeng";
 
+        // // Create an instance of IBankCustomer using BankCustomer
+        // IBankCustomer customer1 = new BankCustomer(firstName, lastName);
 
-        // Task 3: Calculate date and time values for bank customer transactions
+        // // Create instances of IBankAccount that reference base and derived class types
+        // Console.WriteLine("1. Create instances of IBankAccount that reference base and derived class types");
+        // IBankAccount account1 = new BankAccount(customer1.CustomerId, 10000);
+        // IBankAccount account2 = new CheckingAccount(customer1.CustomerId, 500, 400);
+        // IBankAccount account3 = new SavingsAccount(customer1.CustomerId, 1000);
 
-        // Use the following code to create a BankCustomer object and BankAccount objects
-        Console.WriteLine("\nCreating BankCustomer and BankAccount objects...");
-        string firstName = "Niki";
-        string lastName = "Demetriou";
-        BankCustomer customer1 = new StandardCustomer(firstName, lastName);
+        // // Demonstrate polymorphism by treating different types of accounts as instances of the same interface.
+        // Console.WriteLine("2. Demonstrate polymorphism by treating different types of accounts as instances of the same interface");
+        // Console.WriteLine(account1.DisplayAccountInfo());
+        // Console.WriteLine(account2.DisplayAccountInfo());
+        // Console.WriteLine(account3.DisplayAccountInfo());
+
+        // // Demonstrate interface-based polymorphism by creating instances of AccountReportGenerator and CustomerReportGenerator
+        // Console.WriteLine("\nDemonstrating interface-based polymorphism...");
+
+        // // Create instances of IReportGenerator using interfaces
+        // Console.WriteLine("1. Create instances of IMonthlyReportGenerator, IQuarterlyReportGenerator, and IYearlyReportGenerator that reference CustomerReportGenerator and AccountReportGenerator");
+        // IMonthlyReportGenerator customerMonthlyReportGenerator = new CustomerReportGenerator(customer1);
+        // IQuarterlyReportGenerator customerQuarterlyReportGenerator = new CustomerReportGenerator(customer1);
+        // IYearlyReportGenerator customerYearlyReportGenerator = new CustomerReportGenerator(customer1);
+
+        // IMonthlyReportGenerator accountMonthlyReportGenerator = new AccountReportGenerator(account1);
+        // IQuarterlyReportGenerator accountQuarterlyReportGenerator = new AccountReportGenerator(account1);
+        // IYearlyReportGenerator accountYearlyReportGenerator = new AccountReportGenerator(account1);
+
+        // Console.WriteLine("2. Demonstrate polymorphism by showing that different report generators can be used interchangeably through their interfaces.");
+        // customerMonthlyReportGenerator.GenerateMonthlyReport();
+        // customerMonthlyReportGenerator.GenerateCurrentMonthToDateReport();
+        // customerMonthlyReportGenerator.GeneratePrevious30DayReport();
+        // customerQuarterlyReportGenerator.GenerateQuarterlyReport();
+        // customerYearlyReportGenerator.GeneratePreviousYearReport();
+        // customerYearlyReportGenerator.GenerateCurrentYearToDateReport();
+        // customerYearlyReportGenerator.GenerateLast365DaysReport();
+
+        // accountMonthlyReportGenerator.GenerateMonthlyReport();
+        // accountMonthlyReportGenerator.GenerateCurrentMonthToDateReport();
+        // accountMonthlyReportGenerator.GeneratePrevious30DayReport();
+        // accountQuarterlyReportGenerator.GenerateQuarterlyReport();
+        // accountYearlyReportGenerator.GeneratePreviousYearReport();
+        // accountYearlyReportGenerator.GenerateCurrentYearToDateReport();
+        // accountYearlyReportGenerator.GenerateLast365DaysReport();
+
+        // Demonstrate inheritance-based polymorphism
+        Console.WriteLine("\nDemonstrating inheritance-based polymorphism...");
+        // Create a new customer and accounts for inheritance-based polymorphism
+        Console.WriteLine("Creating BankCustomer and BankAccount objects...");
+        string firstName = "Tim";
+        string lastName = "Shao";
+        BankCustomer customer2 = new BankCustomer(firstName, lastName);
 
         // Create accounts for customer1
-        BankAccount account1 = new CheckingAccount(customer1.CustomerId, 1000.00);
-        BankAccount account2 = new SavingsAccount(customer1.CustomerId, 5000.00);
+        Console.WriteLine("Creating BankAccount objects for customer1...");
+        BankAccount bankAccount1 = new BankAccount(customer2.CustomerId, 10000);
+        BankAccount bankAccount2 = new CheckingAccount(customer2.CustomerId, 500, 400);
+        BankAccount bankAccount3 = new SavingsAccount(customer2.CustomerId, 1000);
+        BankAccount bankAccount4 = new MoneyMarketAccount(customer2.CustomerId, 2000);
 
-        // 1. Create a transaction for the current date and time. Deposit 100 into account1, description = "reimbursement"
+        BankAccount[] bankAccounts = new BankAccount[4];
 
-        // 2. Create a transaction for yesterday at 1:15PM. Deposit 100 into account1, description = "reimbursement"
+        bankAccounts[0] = bankAccount1;
+        bankAccounts[1] = bankAccount2;
+        bankAccounts[2] = bankAccount3;
+        bankAccounts[3] = bankAccount4;
 
-        // 3. Create a transaction for last Tuesday at 1:15PM. Deposit 100 into account1, description = "reimbursement"
+        // Demonstrate polymorphism by accessing overridden methods from the base class reference
+        Console.WriteLine("\nDemonstrating polymorphism by accessing overridden methods from the base class reference:");
 
-        // 4. Create transactions for the first three days of December 2024. Use 1:15PM. Deposit 100 into account1, description = "reimbursement"
-
-        // 5. Display the datedTransactions
-
-
-        // Task 4: Use date ranges to simulate transactions programmatically
-        Console.WriteLine("\nTask 4: Create transactions programmatically for a date range");
-
-        // 1. Define a date range starting on December 12, 2024, and ending on February 20, 2025
-
-        // 2. Generate transactions for the specified date range using the SimulateTransactions class
-        Console.WriteLine($"\nGenerating transactions for the specified date range: {startDate} to {endDate}");
-
-        // 3. Display the simulated transactions
-        Console.WriteLine("\nDisplaying the transactions...");
-        int transactionCount = 0;
-        foreach (Transaction transaction in transactions)
+        foreach (BankAccount account in bankAccounts)
         {
-            try
-            {
-                Console.WriteLine(transaction.ReturnTransaction());
-                transactionCount++;
-            }
-            catch (Exception ex)
-            {
-                //Console.WriteLine($"Error: {ex.Message}");
-            }
+            Console.WriteLine(account.DisplayAccountInfo());
         }
 
-        // Display the number of transactions processed
-        Console.WriteLine($"\nNumber of transactions processed: {transactionCount}");
+        foreach (BankAccount account in bankAccounts)
+        {
+            if (account is CheckingAccount checkingAccount)
+            {
+                // CheckingAccount: Withdraw within overdraft limit
+                Console.WriteLine("\nCheckingAccount: Attempting to withdraw $600 (within overdraft limit)...");
+                checkingAccount.Withdraw(600);
+                Console.WriteLine(checkingAccount.DisplayAccountInfo());
+
+                // CheckingAccount: Withdraw exceeding overdraft limit
+                Console.WriteLine("\nCheckingAccount: Attempting to withdraw $1000 (exceeding overdraft limit)...");
+                checkingAccount.Withdraw(1000);
+                Console.WriteLine(checkingAccount.DisplayAccountInfo());
+            }
+            else if (account is SavingsAccount savingsAccount)
+            {
+                // SavingsAccount: Withdraw within limit
+                Console.WriteLine("\nSavingsAccount: Attempting to withdraw $200 (within withdrawal limit)...");
+                savingsAccount.Withdraw(200);
+                Console.WriteLine(savingsAccount.DisplayAccountInfo());
+
+                // SavingsAccount: Withdraw exceeding limit
+                Console.WriteLine("\nSavingsAccount: Attempting to withdraw $900 (exceeding withdrawal limit)...");
+                savingsAccount.Withdraw(900);
+                Console.WriteLine(savingsAccount.DisplayAccountInfo());
+
+                // SavingsAccount: Exceeding maximum number of withdrawals per month
+                Console.WriteLine("\nSavingsAccount: Exceeding maximum number of withdrawals per month...");
+                for (int i = 0; i < 7; i++)
+                {
+                    Console.WriteLine($"Attempting to withdraw $50 (withdrawal {i + 1})...");
+                    savingsAccount.Withdraw(50);
+                    Console.WriteLine(savingsAccount.DisplayAccountInfo());
+                }
+            }
+            else if (account is MoneyMarketAccount moneyMarketAccount)
+            {
+                // MoneyMarketAccount: Withdraw within minimum balance
+                Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1000 (maintaining minimum balance)...");
+                moneyMarketAccount.Withdraw(1000);
+                Console.WriteLine(moneyMarketAccount.DisplayAccountInfo());
+
+                // MoneyMarketAccount: Withdraw exceeding minimum balance
+                Console.WriteLine("\nMoneyMarketAccount: Attempting to withdraw $1900 (exceeding minimum balance)...");
+                moneyMarketAccount.Withdraw(1900);
+                Console.WriteLine(moneyMarketAccount.DisplayAccountInfo());
+            }
+        }
     }
 }
