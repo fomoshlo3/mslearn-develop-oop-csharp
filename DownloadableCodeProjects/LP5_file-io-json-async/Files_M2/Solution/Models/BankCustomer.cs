@@ -32,6 +32,13 @@ public partial class BankCustomer : IBankCustomer
         s_nextCustomerId = random.Next(10000000, 20000000);
     }
 
+    // // Parameterless constructor for deserialization
+    // public BankCustomer()
+    // {
+    //     this.CustomerId = (s_nextCustomerId++).ToString("D10");        
+    //     _accounts = new List<IBankAccount>();
+    // }
+
     public BankCustomer(string firstName, string lastName)
     {
         FirstName = firstName;
@@ -39,6 +46,23 @@ public partial class BankCustomer : IBankCustomer
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
         _accounts = new List<IBankAccount>();
     }
+
+    public BankCustomer(string firstName, string lastName, string customerId, Bank bank)
+    {
+        // Verify that the CustomerId isn't already in use
+        if (bank.GetCustomerById(customerId) == null)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            this.CustomerId = customerId;
+            _accounts = new List<IBankAccount>();
+        }
+        else
+        {
+            throw new ArgumentException("Customer ID already in use");
+        }
+    }
+
 
     // Copy constructor for BankCustomer
     public BankCustomer(BankCustomer existingCustomer)

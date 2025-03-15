@@ -10,20 +10,20 @@ public class BankAccount : IBankAccount
     protected double priorBalance;
 
     // Public read-only static properties
-    public static double TransactionRate { get; protected set; }
-    public static double MaxTransactionFee { get; protected set; }
-    public static double OverdraftRate { get; protected set; }
-    public static double MaxOverdraftFee { get; protected set; }
+    public static double TransactionRate { get; internal set; }
+    public static double MaxTransactionFee { get; internal set; }
+    public static double OverdraftRate { get; internal set; }
+    public static double MaxOverdraftFee { get; internal set; }
 
     public int AccountNumber { get; }
     public string CustomerId { get; }
     public double Balance { get; internal set; } = 0;
     public string AccountType { get; set; } = "Checking";
-    public IReadOnlyList<Transaction> Transactions => _transactions.AsReadOnly();
+    public IEnumerable<Transaction> Transactions => _transactions;
 
     public BankCustomer Owner { get; }
 
-    public virtual double InterestRate { get; protected set; } // Virtual property to allow overriding in derived classes
+    public virtual double InterestRate { get; internal set; } // Virtual property to allow overriding in derived classes
 
     static BankAccount()
     {
@@ -34,6 +34,14 @@ public class BankAccount : IBankAccount
         OverdraftRate = 0.05; // Default penalty rate for an overdrawn checking account (negative balance)
         MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
     }
+
+    // // Parameterless constructor for deserialization
+    // public BankAccount()
+    // {
+    //     AccountNumber = s_nextAccountNumber++;
+    //     CustomerId = "0000000000";
+    //     _transactions = new List<Transaction>();
+    // }
 
     public BankAccount(BankCustomer owner, string customerIdNumber, double balance = 200, string accountType = "Checking")
     {

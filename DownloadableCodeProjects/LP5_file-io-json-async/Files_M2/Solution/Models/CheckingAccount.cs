@@ -24,7 +24,7 @@ public class CheckingAccount : BankAccount
     public override double InterestRate
     {
         get { return DefaultInterestRate; }
-        protected set { DefaultInterestRate = value; }
+        internal set { DefaultInterestRate = value; }
     }
 
     public override bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)

@@ -6,42 +6,87 @@ namespace Files_M2;
 public class Transaction
 {
     // private fields
-    private readonly Guid transactionId;
-    private readonly string transactionType;
-    private readonly DateOnly transactionDate;
-    private readonly TimeOnly transactionTime;
-    private readonly double priorBalance;
-    private readonly double transactionAmount;
-    private readonly int sourceAccountNumber;
-    private readonly int targetAccountNumber;
-    private readonly string description;
+    private Guid transactionId;
+    private string transactionType;
+    private DateOnly transactionDate;
+    private TimeOnly transactionTime;
+    private double priorBalance;
+    private double transactionAmount;
+    private int sourceAccountNumber;
+    private int targetAccountNumber;
+    private string description;
 
     // Gets the unique identifier for the transaction.
-    public Guid TransactionId => transactionId;
+    public Guid TransactionId
+    {
+        get => transactionId;
+        set => transactionId = value;
+    }
 
     // Gets or sets the type of the transaction (e.g., Withdraw, Deposit, Transfer, Bank Fee, Bank Refund).
-    public string TransactionType => transactionType;
+    public string TransactionType
+    {
+        get => transactionType;
+        set => transactionType = value;
+    }
 
     // Gets or sets the date of the transaction.
-    public DateOnly TransactionDate => transactionDate;
+    public DateOnly TransactionDate
+    {
+        get => transactionDate;
+        set => transactionDate = value;
+    }
 
-     // Gets or sets the time of the transaction.
-    public TimeOnly TransactionTime => transactionTime;
+    // Gets or sets the time of the transaction.
+    public TimeOnly TransactionTime
+    {
+        get => transactionTime;
+        set => transactionTime = value;
+    }
 
     // Gets the prior balance of the account before the transaction.
-    public double PriorBalance => priorBalance;
-    
-    // Gets or sets the amount of the transaction.
-    public double TransactionAmount => transactionAmount;
+    public double PriorBalance
+    {
+        get => priorBalance;
+        set => priorBalance = value;
+    }
 
-     // Gets or sets the source bank account number for the transaction.
-    public int SourceAccountNumber => sourceAccountNumber;
+    // Gets or sets the amount of the transaction.
+    public double TransactionAmount
+    {
+        get => transactionAmount;
+        set => transactionAmount = value;
+    }
+
+    // Gets or sets the source bank account number for the transaction.
+    public int SourceAccountNumber
+    {
+        get => sourceAccountNumber;
+        set => sourceAccountNumber = value;
+    }
 
     // Gets or sets the target bank account number for the transaction.
-    public int TargetAccountNumber => targetAccountNumber;
+    public int TargetAccountNumber
+    {
+        get => targetAccountNumber;
+        set => targetAccountNumber = value;
+    }
 
     // Gets or sets the description of the transaction.
-    public string Description => description;
+    public string Description
+    {
+        get => description;
+        set => description = value;
+    }
+
+
+    // Parameterless constructor for deserialization
+    public Transaction()
+    { 
+        transactionType = "";
+        description = "";
+    }
+
 
     // constructors
     public Transaction(DateOnly date, TimeOnly time, double balance, double amount, int sourceAccountNum, int targetAccountNum, string typeOfTransaction, string descriptionMessage = "")
