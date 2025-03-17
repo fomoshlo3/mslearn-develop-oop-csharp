@@ -74,7 +74,9 @@ public static class SimulateTransactions
         }
 
         // Return only the populated portion of the array
-        return transactions.Take(transactionIndex).ToArray();
+        Transaction[] result = new Transaction[transactionIndex];
+        Array.Copy(transactions, result, transactionIndex);
+        return result;
     }
 
     /// <summary>
