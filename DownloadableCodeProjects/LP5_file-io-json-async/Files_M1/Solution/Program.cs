@@ -90,9 +90,7 @@ class Program
     {
         Console.WriteLine("Demonstrate File I/O operations in C#");
 
-        // Step 1: Define file and directory paths
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 1: Use the Path class to construct file and directory paths. Use Path.Combine to combine a base path with specific file names.");
+        // Step 1: Use the Path class to construct file and directory paths
         
         string directoryPath = @"C:\Temp\SampleDirectory";
         string subDirectoryPath1 = Path.Combine(directoryPath, "SubDirectory1");
@@ -249,7 +247,7 @@ class Program
 
         // Step 8: Use File to manage files - Copy, Move, and Delete a file
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 8: Copy, Move, and Delete a file.");
+        Console.WriteLine("\nStep 8: Use the File class to Copy, Move, and Delete a file.");
 
         // Copy a file
         File.Copy(filePath, copyFilePath, true);
@@ -404,9 +402,9 @@ class Program
         Console.WriteLine("\n\nPress Enter to continue...");
         Console.ReadLine();
 
-        // Step 13: Use the BinaryWriter and BinaryReader classes to create and read binary files
+        // Step 12: Use the BinaryWriter and BinaryReader classes to create and read binary files
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 13: Use the BinaryWriter and BinaryReader classes to create and read binary files.");
+        Console.WriteLine("\nStep 12: Use the BinaryWriter and BinaryReader classes to create and read binary files.");
 
         string binaryFilePath = Path.Combine(directoryPath, "binary.dat");
         using (BinaryWriter writer = new BinaryWriter(File.Open(binaryFilePath, FileMode.Create)))
