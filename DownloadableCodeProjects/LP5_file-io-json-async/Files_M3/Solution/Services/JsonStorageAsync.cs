@@ -1,13 +1,12 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Files_M3;
 
-public static class JsonStorage
+public static class JsonStorageAsync
 {
     private static readonly JsonSerializerOptions _options = new JsonSerializerOptions
     {
@@ -16,7 +15,7 @@ public static class JsonStorage
         ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
     };
 
-    public static void SaveBankCustomer(BankCustomer customer, string directoryPath)
+    public static async Task SaveBankCustomerAsync(BankCustomer customer, string directoryPath)
     {
         var customerDTO = new BankCustomerDTO
         {
@@ -40,20 +39,20 @@ public static class JsonStorage
         }
 
         string json = JsonSerializer.Serialize(customerDTO, _options);
-        File.WriteAllText(customerFilePath, json);
+        await File.WriteAllTextAsync(customerFilePath, json);
 
-        SaveAllAccounts(customer.Accounts, directoryPath);
+        await SaveAllAccountsAsync(customer.Accounts, directoryPath);
     }
 
-    public static void SaveAllCustomers(IEnumerable<BankCustomer> customers, string directoryPath)
+    public static async Task SaveAllCustomersAsync(IEnumerable<BankCustomer> customers, string directoryPath)
     {
         foreach (var customer in customers)
         {
-            SaveBankCustomer(customer, directoryPath);
+            await SaveBankCustomerAsync(customer, directoryPath);
         }
     }
 
-    public static void SaveBankAccount(BankAccount account, string directoryPath)
+    public static async Task SaveBankAccountAsync(BankAccount account, string directoryPath)
     {
         var accountDTO = new BankAccountDTO
         {
@@ -73,24 +72,24 @@ public static class JsonStorage
         }
 
         string json = JsonSerializer.Serialize(accountDTO, _options);
-        File.WriteAllText(accountFilePath, json);
+        await File.WriteAllTextAsync(accountFilePath, json);
 
-        SaveAllTransactions(account.Transactions, directoryPath, account.AccountNumber);
+        await SaveAllTransactionsAsync(account.Transactions, directoryPath, account.AccountNumber);
     }
 
-    public static void SaveAllAccounts(IEnumerable<IBankAccount> accounts, string directoryPath)
+    public static async Task SaveAllAccountsAsync(IEnumerable<IBankAccount> accounts, string directoryPath)
     {
         foreach (var account in accounts)
         {
-            SaveBankAccount((BankAccount)account, directoryPath);
+            await SaveBankAccountAsync((BankAccount)account, directoryPath);
         }
     }
 
-    public static void SaveTransaction(Transaction transaction, string directoryPath, int accountNumber)
+    public static async Task SaveTransactionAsync(Transaction transaction, string directoryPath, int accountNumber)
     {
         string year = transaction.TransactionDate.Year.ToString();
         string month = transaction.TransactionDate.Month.ToString("D2");
-        
+
         string transactionFilePath = Path.Combine(directoryPath, "Transactions", accountNumber.ToString(), $"Y{year}", $"M{month}", $"{transaction.TransactionId}.json");
 
         var transactionDirectoryPath = Path.GetDirectoryName(transactionFilePath);
@@ -100,10 +99,10 @@ public static class JsonStorage
         }
 
         string json = JsonSerializer.Serialize(transaction, _options);
-        File.WriteAllText(transactionFilePath, json);
+        await File.WriteAllTextAsync(transactionFilePath, json);
     }
 
-    public static void SaveAllTransactions(IEnumerable<Transaction> transactions, string directoryPath, int accountNumber)
+    public static async Task SaveAllTransactionsAsync(IEnumerable<Transaction> transactions, string directoryPath, int accountNumber)
     {
         string transactionsFilePath = Path.Combine(directoryPath, "Transactions", $"{accountNumber}-transactions.json");
 
@@ -114,6 +113,6 @@ public static class JsonStorage
         }
 
         string json = JsonSerializer.Serialize(transactions, _options);
-        File.WriteAllText(transactionsFilePath, json);
+        await File.WriteAllTextAsync(transactionsFilePath, json);
     }
 }

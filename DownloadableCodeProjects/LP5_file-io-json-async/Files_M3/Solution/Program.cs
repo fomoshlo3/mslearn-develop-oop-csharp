@@ -1,4 +1,77 @@
-﻿using Files_M2;
+﻿using Files_M3;
+
+/* 
+
+Code that demonstrates the use of asynchronous REST API calls in C#
+
+using System;
+using System.ComponentModel;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Text.Json;
+
+namespace ConsoleApp
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    // PetStore API endpoint
+                    string url = "https://petstore.swagger.io/v2/pet/findByStatus?status=available";
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    //Console.WriteLine($"Response: {responseBody}");
+
+                    // Deserialize the JSON response into a list of pets
+                    var pets = JsonSerializer.Deserialize<List<Pet>>(responseBody);
+
+                    // Iterate through the list of pets and display their details
+                    foreach (var pet in pets)
+                    {
+                        //Console.WriteLine($"Pet ID: {pet.id}, Name: {pet.name}");
+                        if (pet.id.ToString().Length > 4)
+                        {
+                            Console.WriteLine($"Pet ID: {pet.id}, Name: {pet.name}");
+                        }
+                    }
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine($"Request error: {e.Message}");
+                }
+            }
+        }
+    }
+}
+public class Pet
+{
+    public long id { get; set; }
+    public string name { get; set; }
+    public Category category { get; set; }
+    public List<string> photoUrls { get; set; }
+    public List<Tag> tags { get; set; }
+    public string status { get; set; }
+}
+
+public class Category
+{
+    public long id { get; set; }
+    public string name { get; set; }
+}
+
+public class Tag
+{
+    public long id { get; set; }
+    public string name { get; set; }
+} 
+
+*/
+
 
 using System;
 using System.IO;
@@ -7,505 +80,188 @@ using System.Text.Json;
 
 class Program
 {
-    static void Main()
+    static async Task Main()
     {
-        Console.WriteLine("Demonstrate JSON file storage and retrieval using BankCustomer, BankAccount, and Transaction classes");
+        Console.WriteLine("Demonstrate Asynchronous tasks in C# (Clean the Solution before running this program).");
 
-        // Create a Bank object
-        Bank bank = new Bank();
+        // Create Bank objects
+        Bank bank1 = new Bank(); // Bank object to load data synchronously
+        Bank bank2 = new Bank(); // Bank object to load data asynchronously
+        Bank bank3 = new Bank(); // Bank object to load data asynchronously and in parallel
 
-        // Create a bank customer named Niki Demetriou
-        string firstName = "Niki";
-        string lastName = "Demetriou";
-        BankCustomer bankCustomer = new BankCustomer(firstName, lastName);
 
-        // Add Checking, Savings, and MoneyMarket accounts to bankCustomer
-        bankCustomer.AddAccount(new CheckingAccount(bankCustomer, bankCustomer.CustomerId, 5000));
-        bankCustomer.AddAccount(new SavingsAccount(bankCustomer, bankCustomer.CustomerId, 15000));
-        bankCustomer.AddAccount(new MoneyMarketAccount(bankCustomer, bankCustomer.CustomerId, 90000));
 
-        // Add the bank customer to the bank object
-        bank.AddCustomer(bankCustomer);
-
-        // Simulate one month of transactions for customer Niki Demetriou
-        DateOnly startDate = new DateOnly(2025, 2, 1);
-        DateOnly endDate = new DateOnly(2025, 2, 28);
-        bankCustomer = SimulateDepositsWithdrawalsTransfers.SimulateActivityDateRange(startDate, endDate, bankCustomer);
-
-        // Get the current directory of the executable program
-        string currentDirectory = Directory.GetCurrentDirectory();
-
-        // Use currentDirectory to create a directory path named BankLogs
-        string bankLogsDirectoryPath = Path.Combine(currentDirectory, "BankLogs");
-        if (!Directory.Exists(bankLogsDirectoryPath))
-        {
-            Directory.CreateDirectory(bankLogsDirectoryPath);
-            //Console.WriteLine($"Created directory: {bankLogsDirectoryPath}");
-        }
-
-        // Step 1: Use JsonSerializer.Serialize to serialize a transaction object and display the JSON string
+        // Step 1: Implement async and await keywords in File storage tasks
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 1: Use JsonSerializer.Serialize to serialize a transaction object and display the JSON string.");
-
-        // Get the first transaction from the first account of the bank customer
-        Transaction singleTransaction = bankCustomer.Accounts[0].Transactions.ElementAt(0);
-
-        // Serialize the transaction object using JsonSerializer
-        string transactionJson = JsonSerializer.Serialize(singleTransaction);
-
-        // Display the JSON string
-        Console.WriteLine($"\nJSON string: {transactionJson}");
-
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 2: Use JsonSerializer.Deserialize to deserialize a json string and access the Transaction.
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 2: Use JsonSerializer.Deserialize to deserialize a json string and access the Transaction.");
+        Console.WriteLine("\nStep 1: Implement async and await keywords in File storage tasks.");
 
         /*
 
-        Deserialize Error: 
-        
-        When deserializing the JSON string to a Transaction object, a runtime error occurs due to the structure of 
-        the Transaction class.
+        Create an Async version of the ApprovedCustomersLoader class: ApprovedCustomersLoaderAsync.cs
+        Create an Async version of the JsonStorage class: JsonStorageAsync.cs
+            - JsonSerializer.DeserializeAsync
+            - File.WriteAllTextAsync
 
-        Add the following code and then run the program to see the runtime error that occurs during deserialization:
+        Create an Async version of the CreateDataLogs class: CreateDataLogsAsync.cs
 
-        // Deserialize the JSON string using JsonSerializer.Deserialize
-        Transaction deserializedTransaction = JsonSerializer.Deserialize<Transaction>(transactionJson);
-        Console.WriteLine($"\nDeserialized transaction object: {deserializedTransaction.ReturnTransaction()}");
-
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
-
-
-        Explanation and Fix:
-
-        A runtime error occurs during deserialization of the Transaction object because the Transaction class 
-        has private fields and read-only properties without public setters. The JsonSerializer in .NET requires
-        public setters and a parameterless constructor to properly deserialize objects.
-
-        The Transaction class in the Models folder must be updated as follows:
-
-        1. Remove readonly from the fields
-        2. Add setters to the properties
-        3. Create a parameterless constructor.
-
-        After updating the Transaction class, run the application again to see the deserialization process work correctly.
 
         */
 
-        // Deserialize the JSON string using JsonSerializer.Deserialize
-        Transaction? deserializedTransaction = JsonSerializer.Deserialize<Transaction>(transactionJson);
 
-        if (deserializedTransaction == null)
-        {
-            Console.WriteLine("Deserialization failed. Check the Transaction class for public setters and a parameterless constructor.");
-        }
-        else
-        {
-            // Use the Transaction.ReturnTransaction method to display transaction information
-            Console.WriteLine($"\nDeserialized transaction object: {deserializedTransaction.ReturnTransaction()}");
-        }
 
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 3: Serialize and store the transactions for a BankAccount object
+        // Step 2: Implement File I/O tasks (load customer data files)
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 3: Serialize and store the transactions for a BankAccount object.");
+        Console.WriteLine("\nStep 2: Implement File I/O tasks (load customer data files).");
 
-        // Serialize account transactions using JsonSerializer.Serialize
-        string transactionsJson = JsonSerializer.Serialize(bankCustomer.Accounts[0].Transactions);
-        Console.WriteLine($"\nbankCustomer.Accounts[0].Transactions serialized to JSON: \n{transactionsJson}");
+        // get the time before loading the data
+        DateTime timeBeforeLoadCall = DateTime.Now;
 
-        // Construct a file path where the serialized transactions (JSON string) can be stored
-        string transactionsJsonFilePath = Path.Combine(bankLogsDirectoryPath, "Transactions", bankCustomer.Accounts[0].AccountNumber.ToString() + "-transactions" + ".json");
+        // Load the customer data from the file
+        LoadCustomerLogs.ReadCustomerData(bank1);
 
-        // Create the parent directory for the serialized transactions file
-        var directoryPath = Path.GetDirectoryName(transactionsJsonFilePath);
-        if (directoryPath != null && !Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
+        // get the time after loading the data
+        DateTime timeAfterLoadCall = DateTime.Now;
 
-        // Store the serialized JSON string to a file
-        File.WriteAllText(transactionsJsonFilePath, transactionsJson);
-        Console.WriteLine($"\nSerialized transactions saved to: {transactionsJsonFilePath}");
+        // calculate the time taken to load the data
+        TimeSpan timeTakenToReturn = timeAfterLoadCall - timeBeforeLoadCall;
+        Console.WriteLine($"\nTime taken to return to Main: {timeTakenToReturn.TotalSeconds} seconds");
 
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
+        //Console.WriteLine("\n\nPress Enter to continue...");
+        //Console.ReadLine();
 
-        // Step 4: Read the transactions JSON file, deserialize into a Transactions collection, and display transactions in a loop
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 4: Read the transactions JSON file, deserialize into a Transactions collection, and display transactions in a loop.");
-
-        // Use File.ReadAllText to read the JSON file and assign the text contents to a string.
-        string transactionsJsonFromFile = File.ReadAllText(transactionsJsonFilePath);
-
-        // Deserialize the JSON string using JsonSerializer.Deserialize
-        var transactionsJsonDeserialized = JsonSerializer.Deserialize<IEnumerable<Transaction>>(transactionsJsonFromFile);
-
-        // Loop through the deserialized transactions and display each transaction
-        if (transactionsJsonDeserialized == null)
-        {
-            Console.WriteLine("Deserialization failed. Check the Transaction class for public setters and a parameterless constructor.");
-        }
-        else
-        {
-            Console.WriteLine("\nDeserialized transactions:");
-            foreach (var transaction in transactionsJsonDeserialized)
-            {
-                Console.WriteLine(transaction.ReturnTransaction());
-            }
-        }
-
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 5: Serialize and store a BankAccount object using JsonSerializer with JsonSerializerOptions
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 5: Serialize and store a BankAccount object using JsonSerializer.");
-
-        // Configure JsonSerializerOptions
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            MaxDepth = 64, // Increase the maximum depth if needed
-            ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve // Handle circular references
-        };
-
-        //Serialize the CheckingAccount object using JsonSerializer.Serialize with options
-        string accountJson = JsonSerializer.Serialize(bankCustomer.Accounts[0], options);
-        Console.WriteLine(accountJson);
-
-        // Create a file path for the CheckingAccount object
-        string accountFilePath = Path.Combine(bankLogsDirectoryPath, "Account", bankCustomer.Accounts[0].AccountNumber + ".json");
-
-        // Create the parent directory for the serialized account file
-        var accountDirectoryPath = Path.GetDirectoryName(accountFilePath);
-        if (accountDirectoryPath != null && !Directory.Exists(accountDirectoryPath))
-        {
-            Directory.CreateDirectory(accountDirectoryPath);
-        }
-
-        // Save the JSON to a file
-        File.WriteAllText(accountFilePath, accountJson);
-        Console.WriteLine($"Serialized account saved to: {accountFilePath}");
-
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 6: Read the serialized account file, deserialize into a BankAccount object, and then access bankAccount members
+        // Step 3: Implement File I/O tasks asynchronously
         // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         /*
 
-        Deserialize Error: 
+        Create the Async version of the JsonRetrieval class: JsonRetrievalAsync.cs
+        - using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.Asynchronous);
+        - await JsonSerializer.DeserializeAsync<IEnumerable<Transaction>>(stream, _options);
+
+        Create the Async version of the LoadCustomerLogs class: LoadCustomerLogsAsync.cs
+
+        Update Main method to use async calls: 
         
-        When deserializing the JSON string to a BankAccount object, a runtime error occurs due to the structure of
-        the BankAccount class:
-
-        Exception has occurred: CLR/System.NotSupportedException. An unhandled exception of type 
-        'System.NotSupportedException' occurred in System.Text.Json.dll: Deserialization of types without a 
-        parameterless constructor, a singular parameterized constructor, or a parameterized constructor 
-        annotated with 'JsonConstructorAttribute' is not supported.
-
-        The BankAccount class is designed with restricted access policies for properties and fields. It also uses 
-        constructors that require specific parameters, so a parameterless constructor may not work. Direct serialization
-        and deserialization of a BankAccount object is not the best option. This is where Data Transfer Objects (DTOs)
-        come into play.
-        
-        Data Transfer Objects (DTOs) enable you to create a separate object with public properties and a parameterless
-        constructor. You can then map the properties from the original object to the DTO object and serialize the DTO object
-        instead. This approach allows you to serialize and deserialize objects without violating the encapsulation of the
-        original object.
-        
-        */
-
-        Console.WriteLine("\nStep 6: Read the serialized account file, deserialize into a BankAccount object, and then access bankAccount members.");
-
-        // read the JSON from the file
-        string accountJsonFromFile = File.ReadAllText(accountFilePath);
-
-        // Deserialize the JSON string using JsonSerializer.Deserialize with options
-        try
-        {
-            BankAccount? deserializedAccount = JsonSerializer.Deserialize<BankAccount>(accountJsonFromFile, options);
-
-            // Demonstrate the deserialized BankAccount object
-            if (deserializedAccount == null)
-            {
-                Console.WriteLine("Deserialization failed. Check the BankAccount class for public setters and a parameterless constructor.");
-            }
-            else
-            {
-                Console.WriteLine($"\nDeserialized BankAccount object: {deserializedAccount.DisplayAccountInfo()}");
-                Console.WriteLine($"Transactions for Account Number: {deserializedAccount.AccountNumber}");
-
-                foreach (var transaction in deserializedAccount.Transactions)
-                {
-                    Console.WriteLine(transaction.ReturnTransaction());
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            string displayMessage = "Exception has occurred: " + ex.Message.Split('.')[0] + ".";
-            displayMessage += "\n\nConsider using Data Transfer Objects (DTOs) for serializing and deserializing complex and nested objects.";
-            Console.WriteLine(displayMessage);
-        }
-
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 7: Use a Data Transfer Object to store bank account info, and store account transactions separately
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 7: Use a Data Transfer Object to store bank account info, and store account transactions separately.");
-
-        /*
-
-        Create a new class named BankAccountDTO in the Services folder. This class will be used as a Data Transfer Object (DTO) 
-        to store account information in a format that can be serialized and deserialized without violating the encapsulation of 
-        the BankAccount class.
+            - static async Task Main()
+            - var asyncLoadTask = LoadCustomerLogsAsync.ReadCustomerDataAsync(bank2);
+            - await asyncLoadTask;
 
         */
 
-        // Create directory paths for Account and Transaction files
-        string accountsDirectoryPath = Path.Combine(bankLogsDirectoryPath, "Accounts");
-        Directory.CreateDirectory(accountsDirectoryPath);
+        // wait 10 seconds before starting the async task
+        //Console.WriteLine("\n\nWaiting for 10 seconds before starting the async task...");
 
-        string transactionsDirectory = Path.Combine(bankLogsDirectoryPath, "Transactions");
-        Directory.CreateDirectory(transactionsDirectory);
+        await Task.Delay(10000);
 
-        BankAccount customerAccount1 = (BankAccount)bankCustomer.Accounts[0];
+        // Load the customer data asynchronously from the file
+        // Step 2: Load the customer data asynchronously
+        Console.WriteLine("\nStep 3: Implement File I/O tasks asynchronously.");
 
-        // Create a jsonAccountDTOFilePath for the BankAccount object
-        string jsonAccountDTOFilePath = Path.Combine(accountsDirectoryPath, customerAccount1.AccountNumber.ToString() + ".json");
+        // Get the time before loading the data asynchronously
+        DateTime timeBeforeAsyncLoadCall = DateTime.Now;
 
-        // Create a bankAccountDTO object from the BankAccount object and serialize it as JSON
-        BankAccountDTO bankAccountDTO = BankAccountDTO.MapToDTO((BankAccount)customerAccount1);
-        string jsonAccountDTO = JsonSerializer.Serialize(bankAccountDTO, options);
+        // Start the async data loading task
+        var asyncLoadTask = LoadCustomerLogsAsync.ReadCustomerDataAsync(bank2);
 
-        // Save the serialized jsonAccountDTO to a file in the Accounts directory using the AccountNumber value as the filename  (.json)
-        File.WriteAllText(jsonAccountDTOFilePath, jsonAccountDTO);
-        Console.WriteLine($"Serialized account saved to: {jsonAccountDTOFilePath}");
+        DateTime timeAfterAsyncLoadCall = DateTime.Now;
 
-        // For each account, serialize the Transactions collection, and save the JSON to a file in the Transactions directory
-        string jsonTransactions = JsonSerializer.Serialize(customerAccount1.Transactions);
+        Console.WriteLine($"\nTime taken to return to Main: {(timeAfterAsyncLoadCall - timeBeforeAsyncLoadCall).TotalSeconds} seconds");
 
-        // Create a jsonTransactionsFilePath for the Transactions collection
-        string jsonTransactionsFilePath = Path.Combine(transactionsDirectory, customerAccount1.AccountNumber.ToString() + "T" + ".json");
+        // Wait for the async task to complete
+        await asyncLoadTask;
 
-        // Save the serialized jsonTransactionDTO to a file in the Transactions directory using the TransactionId value as the filename  (.json)
-        File.WriteAllText(jsonTransactionsFilePath, jsonTransactions);
-        Console.WriteLine($"Serialized account transactions saved to: {jsonTransactionsFilePath}");
+        DateTime timeAfterAsyncLoadCompleted = DateTime.Now;
 
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
+        Console.WriteLine($"Time taken to load the data asynchronously: {(timeAfterAsyncLoadCompleted - timeBeforeAsyncLoadCall).TotalSeconds} seconds");
 
-        // Step 8: Read JSON files and use Data Transfer Objects to construct an account with associated transactions
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 8: Read JSON files and use Data Transfer Objects to construct an account with associated transactions.");
+        int countBank2Customers = 0;
+        int countBank2Accounts = 0;
+        int countBank2Transactions = 0;
 
-        // Load the BankAccountDTO info from the JSON file
-        jsonAccountDTO = File.ReadAllText(jsonAccountDTOFilePath);
-
-        // Deserialize the JSON string into a BankAccountDTO object using JsonSerializer.Deserialize
-        var accountDTO = JsonSerializer.Deserialize<BankAccountDTO>(jsonAccountDTO, options);
-
-        if (accountDTO == null)
+        foreach (var customer in bank2.GetAllCustomers())
         {
-            Console.WriteLine("Deserialization failed. Check the BankAccountDTO class for public setters and a parameterless constructor.");
-        }
-        else
-        {
-            // create a bank account using the recovered data
-            var recoveredBankAccount = new BankAccount(bankCustomer, bankCustomer.CustomerId, accountDTO.Balance, accountDTO.AccountType);
-
-            // load the transactions file into a JSON formatted string
-            jsonTransactions = File.ReadAllText(jsonTransactionsFilePath);
-
-            // deserialize the JSON string into a collection of Transaction objects
-            var transactions = JsonSerializer.Deserialize<IEnumerable<Transaction>>(jsonTransactions, options);
-
-            if (transactions == null)
-            {
-                Console.WriteLine("Deserialization failed. Check the Transaction class for public setters and a parameterless constructor.");
-            }
-            else
-            {
-                // add the transactions to the recovered account
-                foreach (var transaction in transactions)
-                {
-                    recoveredBankAccount.AddTransaction(transaction);
-                }
-
-                // display the recovered account information
-                Console.WriteLine($"\nRecovered BankAccount object: {recoveredBankAccount.DisplayAccountInfo()}");
-                Console.WriteLine($"Transactions for Account Number: {recoveredBankAccount.AccountNumber}\n");
-
-                foreach (var transaction in recoveredBankAccount.Transactions)
-                {
-                    Console.WriteLine(transaction.ReturnTransaction());
-                }
-            }
-        }
-
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 9: Use a helper class and Data Transfer Objects to store and retrieve accounts
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 9: Create helper classes that store and retrieve accounts using the DTOs.");
-
-        /*
-
-        Create a new class named JsonStorage in the Services folder. This class will contain methods to save BankAccount and BankAccount
-        objects to JSON files using the DTO classes. When saving a BankAccount, the associated transactions will also be saved to a separate
-        JSON file.
-
-        Create a new class named JsonRetrieval in the Services folder. This class will contain methods to load BankAccount and BankAccount
-        objects from JSON files using the DTO classes. When loading a BankAccount, the associated transactions will also be loaded from a
-        separate JSON file.
-
-        */
-
-        // Get the customer's checking account
-        BankAccount checkingAccount = (CheckingAccount)bankCustomer.Accounts[0];
-
-        // Use the JsonStorage.SaveBankAccount method to save account info to JSON files (an account file using BankAccountDTO and a separate transactions file)
-        JsonStorage.SaveBankAccount(checkingAccount, bankLogsDirectoryPath);
-
-        // Construct the file path for the checking account
-        //string retrieveAccountFilePath = Path.Combine(bankLogsDirectoryPath, "Accounts", checkingAccount.AccountNumber + ".json");
-        string retrieveAccountFilePath = JsonRetrieval.ReturnAccountFilePath(bankLogsDirectoryPath, checkingAccount.AccountNumber);
-
-        // Use the JsonStorage.LoadBankAccount method to load account info from JSON files (an account file using BankAccountDTO and a separate transactions file)
-        BankAccount retrievedAccount = JsonRetrieval.LoadBankAccount(retrieveAccountFilePath, transactionsDirectory, bankCustomer);
-
-        // Display the retrieved account information
-        Console.WriteLine($"The owner of the retrieved account is: {retrievedAccount.Owner.ReturnFullName()}");
-        Console.WriteLine($"{retrievedAccount.Owner.ReturnFullName()} has the following {retrievedAccount.Owner.Accounts.Count} accounts:");
-        foreach (var account in retrievedAccount.Owner.Accounts)
-        {
-            Console.WriteLine($"Account number: {account.AccountNumber} is a {account.AccountType} account.");
-        }
-
-        Console.WriteLine($"\nRetrieved {retrievedAccount.AccountType} account info: {retrievedAccount.DisplayAccountInfo()}");
-
-        Console.WriteLine($"The following transactions were retrieved for {retrievedAccount.Owner.ReturnFullName()}'s {retrievedAccount.AccountType} account: \n");
-
-        foreach (var transaction in retrievedAccount.Transactions)
-        {
-            Console.WriteLine(transaction.ReturnTransaction());
-        }
-
-        // Console.WriteLine("\n\nPress Enter to continue...");
-        // Console.ReadLine();
-
-        // Step 10: Use Data Transfer Objects to store and retrieve BankCustomer objects
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 10: Use Data Transfer Objects to store and retrieve BankCustomer objects.");
-
-        /*
-
-
-        NOTE: Add InterestRate to the IBankAccount interface
-
-
-        Create a new class named BankCustomerDTO in the Services folder. This class will be used as a Data Transfer Object (DTO) 
-        to store customer information in a format that can be serialized and deserialized without violating the encapsulation of 
-        the BankCustomer class.
-
-        Update the JsonStorage with methods to save BankCustomer objects to JSON files using the DTO classes. When saving a BankCustomer,
-        the associated accounts will also be saved to separate JSON files.
-
-        Update the JsonRetrieval class to load BankCustomer objects from JSON files using the DTO classes. When loading a BankCustomer,
-        the associated accounts will also be loaded from separate JSON files.
-
-        */
-
-        string customersDirectoryPath = Path.Combine(bankLogsDirectoryPath, "Customers");
-        Directory.CreateDirectory(customersDirectoryPath);
-
-        JsonStorage.SaveBankCustomer(bankCustomer, bankLogsDirectoryPath);
-        Console.WriteLine($"Bank customer information for {bankCustomer.ReturnFullName()} saved to JSON file.");
-
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
-
-        // construct the customer file path (customersDirectoryPath + bankCustomer.CustomerId + ".json")
-        string customerFilePath = Path.Combine(customersDirectoryPath, bankCustomer.CustomerId + ".json");
-
-        // public static BankCustomer LoadBankCustomer(Bank bank, string filePath, string accountsDirectoryPath, string transactionsDirectoryPath)
-        BankCustomer retrievedCustomer = JsonRetrieval.LoadBankCustomer(bank, customerFilePath, accountsDirectoryPath, transactionsDirectory);
-
-        Console.WriteLine($"\nRetrieved customer information for {retrievedCustomer.ReturnFullName()}:");
-        Console.WriteLine($"Customer ID: {retrievedCustomer.CustomerId}");
-        Console.WriteLine($"First Name: {retrievedCustomer.FirstName}");
-        Console.WriteLine($"Last Name: {retrievedCustomer.LastName}");
-        Console.WriteLine($"Number of accounts: {retrievedCustomer.Accounts.Count}");
-
-        foreach (var account in retrievedCustomer.Accounts)
-        {
-            Console.WriteLine($"\nAccount number: {account.AccountNumber} is a {account.AccountType} account.");
-            Console.WriteLine($" - Balance: {account.Balance}");
-            Console.WriteLine($" - Interest Rate: {account.InterestRate}");
-            Console.WriteLine($" - Transactions:");
-            foreach (var transaction in account.Transactions)
-            {
-                Console.WriteLine($"    {transaction.ReturnTransaction()}");
-            }
-        }
-
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
-
-
-
-
-        /* 
-
-        Generate 24 months of account transactions for all approved customers and save the data to JSON files.
-        
-        Console.WriteLine("\n\nPress Enter to generate customer logs...");
-        Console.ReadLine();
-        CreateDataLogs.GenerateCustomerData();
-
-        Console.WriteLine("\n\nPress Enter to read customer logs...");
-        Console.ReadLine();
-        LoadCustomerLogs.ReadCustomerData(bank);
-
-        Console.WriteLine("\n\nPress Enter to display customer logs...");
-        Console.ReadLine();
-        foreach (var customer in bank.GetAllCustomers())
-        {
-            Console.WriteLine($"\nCustomer: {customer.ReturnFullName()}");
+            countBank2Customers++;
             foreach (var account in customer.Accounts)
             {
-                Console.WriteLine($"\nAccount Number: {account.AccountNumber}");
-                Console.WriteLine($"Account Type: {account.AccountType}");
-                Console.WriteLine($"Balance: {account.Balance}");
-                Console.WriteLine($"Interest Rate: {account.InterestRate}");
-                Console.WriteLine($"Transactions:");
+                countBank2Accounts++;
                 foreach (var transaction in account.Transactions)
                 {
-                    Console.WriteLine(transaction.ReturnTransaction());
+                    countBank2Transactions++;
                 }
             }
         }
 
+        Console.WriteLine($"\nBank 2 information...");
+        Console.WriteLine($"Number of customers: {countBank2Customers}");
+        Console.WriteLine($"Number of accounts: {countBank2Accounts}");
+        Console.WriteLine($"Number of transactions: {countBank2Transactions}");
+
+        //Console.WriteLine("\n\nPress Enter to continue...");
+        //Console.ReadLine();
+
+        // Step 4: Implement File I/O tasks asynchronously and in parallel
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        /*
+
+        /*
+
+        Create the Parallel processing version of the JsonRetrievalAsync class: JsonRetrievalAsyncParallel.cs
+
+        Create the Parallel processing version of the LoadCustomerLogsAsync class: LoadCustomerLogsAsyncParallel.cs
+
+        Update Main method to use async calls: 
+        
+            - var asyncParallelLoadTask = LoadCustomerLogsAsyncParallel.ReadCustomerDataAsyncParallel(bank3);
+            - await asyncParallelLoadTask;
+
         */
 
-        // Step ??: Clean up by deleting all the files and directories
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 16: Clean up by deleting all the files and directories.");
+        // wait 10 seconds before starting the parallel task
+        //Console.WriteLine("\n\nWaiting for 10 seconds before starting the parallel task...");
+        await Task.Delay(10000);
 
-        Console.WriteLine("\n\nPress Enter to delete BankLogs and exit the app...");
+        Console.WriteLine("\nStep 4: Implement File I/O tasks asynchronously and in parallel.");
+
+        // Get the time before loading the data asynchronously using parallel tasks
+        DateTime timeBeforeAsyncParallelLoadCall = DateTime.Now;
+
+        // Start the async data loading task
+        var asyncParallelLoadTask = LoadCustomerLogsAsyncParallel.ReadCustomerDataAsyncParallel(bank3);
+
+        DateTime timeAfterAsyncParallelLoadCall = DateTime.Now;
+
+        // Wait for the async task to complete
+        await asyncParallelLoadTask;
+
+        DateTime timeAfterAsyncParallelLoadCompleted = DateTime.Now;
+
+        Console.WriteLine($"\nTime taken to return to Main: {(timeAfterAsyncParallelLoadCall - timeBeforeAsyncParallelLoadCall).TotalSeconds} seconds");
+        Console.WriteLine($"Time taken to load the data asynchronously and in parallel: {(timeAfterAsyncParallelLoadCompleted - timeBeforeAsyncParallelLoadCall).TotalSeconds} seconds");
+
+        int countBank3Customers = 0;
+        int countBank3Accounts = 0;
+        int countBank3Transactions = 0;
+
+        foreach (var customer in bank3.GetAllCustomers())
+        {
+            countBank3Customers++;
+            foreach (var account in customer.Accounts)
+            {
+                countBank3Accounts++;
+                foreach (var transaction in account.Transactions)
+                {
+                    countBank3Transactions++;
+                }
+            }
+        }
+
+        Console.WriteLine($"\nBank 3 information...");
+        Console.WriteLine($"Number of customers: {countBank3Customers}");
+        Console.WriteLine($"Number of accounts: {countBank3Accounts}");
+        Console.WriteLine($"Number of transactions: {countBank3Transactions}");
+
+        Console.WriteLine("\n\nPress Enter to exit...");
         Console.ReadLine();
-
-        Directory.Delete(bankLogsDirectoryPath, true);
     }
 }

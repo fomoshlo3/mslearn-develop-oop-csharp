@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Files_M2;
+namespace Files_M3;
 
 public class CreateDataLogs
 {

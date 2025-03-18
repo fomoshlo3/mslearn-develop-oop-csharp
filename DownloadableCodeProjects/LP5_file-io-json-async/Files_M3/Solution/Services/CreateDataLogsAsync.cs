@@ -1,13 +1,12 @@
 using System;
 using System.IO;
-using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Files_M3;
 
-public class CreateDataLogs
+public class CreateDataLogsAsync
 {
     /*
-
     // The .csproj file needs to include the following ItemGroup element to copy the Config folder to the output directory
 
     <ItemGroup>
@@ -16,15 +15,14 @@ public class CreateDataLogs
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     </ItemGroup>
-    
     */
 
-    // create the GenerateCustomerData method
-    public static void GenerateCustomerData()
+    // create the GenerateCustomerDataAsync method
+    public static async Task GenerateCustomerDataAsync()
     {
-        var approvedCustomers = ApprovedCustomersLoader.LoadApprovedNames();
+        var approvedCustomers = await ApprovedCustomersLoaderAsync.LoadApprovedNamesAsync();
 
-        string ConfigDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Config");
+        string configDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Config");
 
         foreach (var customer in approvedCustomers)
         {
@@ -38,18 +36,17 @@ public class CreateDataLogs
             // Get the current date
             var currentDate = DateTime.Now;
 
-            // set a DateOnly endDate using the current date to determine th last day of the previous month
+            // Set a DateOnly endDate using the current date to determine the last day of the previous month
             var endDate = new DateOnly(currentDate.Year, currentDate.Month, 1).AddDays(-1);
 
-            // set a DateOnly startDate that's two years before the endDate
+            // Set a DateOnly startDate that's two years before the endDate
             var startDate = endDate.AddYears(-2);
 
             // Simulate two years of deposits, withdrawals, and transfers for the customer
             newCustomer = SimulateDepositsWithdrawalsTransfers.SimulateActivityDateRange(startDate, endDate, newCustomer);
 
-            // Save the approved customers to a JSON file
-            JsonStorage.SaveBankCustomer(newCustomer, ConfigDirectoryPath);
-
+            // Save the approved customers to a JSON file asynchronously
+            await JsonStorageAsync.SaveBankCustomerAsync(newCustomer, configDirectoryPath);
         }
     }
 }

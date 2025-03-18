@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Files_M2;
+namespace Files_M3;
 
 public static class ApprovedCustomersLoader
 {
@@ -37,10 +37,10 @@ public static class ApprovedCustomersLoader
     {
         public List<ApprovedCustomer> ApprovedNames { get; set; } = new List<ApprovedCustomer>();
     }
+    public class ApprovedCustomer
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+    }
 }
 
-public class ApprovedCustomer
-{
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-}
