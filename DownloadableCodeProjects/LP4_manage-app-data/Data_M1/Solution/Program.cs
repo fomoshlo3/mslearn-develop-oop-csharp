@@ -1,263 +1,123 @@
 ﻿using Data_M1;
 using System.Globalization;
-using System.Collections.ObjectModel;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        // Task 1: Review the app code - Interfaces, Models, and Services
+        // TASK 1: Create and Manipulate Date and Time Values
+        Console.WriteLine("\n--- TASK 1: Create and Manipulate Date and Time Values ---");
 
+        // TASK 1: Step 1 - Get the current date and time, and extract date and time components
+        DateTime currentDateTime = DateTime.Now;
+        Console.WriteLine($"Current Date and Time: {currentDateTime}");
+        Console.WriteLine($"Date Component: {currentDateTime.Date}");
+        Console.WriteLine($"Time Component: {currentDateTime.TimeOfDay}");
 
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 2: Create date and time values using DateTime, DateOnly, TimeOnly, CultureInfo, Calendar, CalendarWeekRule, DayOfWeek, and TimeZoneInfo classes
+        // TASK 1: Step 2 - Get the current day of the week and the current month and year
+        Console.WriteLine($"Day of the Week: {currentDateTime.DayOfWeek}");
+        Console.WriteLine($"Month and Year: {currentDateTime.ToString("MMMM yyyy")}");
 
-        // Get the current date and time
-        DateTime now = DateTime.Now;
-        Console.WriteLine($"\nCurrent date and time: {now}");
+        // TASK 1: Step 3 - Add days to the current date and parse a date string
+        DateTime futureDate = currentDateTime.AddDays(10);
+        Console.WriteLine($"Date 10 Days from Now: {futureDate}");
+        string dateString = "2024-12-01";
+        DateTime parsedDate = DateTime.Parse(dateString);
+        Console.WriteLine($"Parsed Date: {parsedDate}");
 
-        // Get the current date only
-        DateOnly today = DateOnly.FromDateTime(now);
-        Console.WriteLine($"Current date only: {today}");
-
-        // Get the current time only
-        TimeOnly currentTime = TimeOnly.FromDateTime(now);
-        Console.WriteLine($"Current time only: {currentTime}");
-
-        // Get the current day of the week
-        DayOfWeek dayOfWeek = today.DayOfWeek;
-        Console.WriteLine($"Current day of the week: {dayOfWeek}");
-
-        // Get the current day of the year
-        int dayOfYear = today.DayOfYear;
-        Console.WriteLine($"Current day of the year: {dayOfYear}");
-
-        // Get the current week of the year
-        CultureInfo culture = CultureInfo.CurrentCulture;
-        CalendarWeekRule weekRule = culture.DateTimeFormat.CalendarWeekRule;
-        DayOfWeek firstDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
-        Calendar calendar = culture.Calendar;
-        int weekOfYear = calendar.GetWeekOfYear(now, weekRule, firstDayOfWeek);
-        Console.WriteLine($"Current week of the year: {weekOfYear}");
-
-        // Get the current month of the year
-        int month = today.Month;
-        Console.WriteLine($"Current month of the year: {month}");
-
-        // Get the current quarter of the year
-        int quarter = (month - 1) / 3 + 1;
-        Console.WriteLine($"Current quarter of the year: {quarter}");
-
-        // Get the current year
-        int year = today.Year;
-        Console.WriteLine($"Current year: {year}");
-
-        // Get the number of days in the current month
-        int daysInMonth = DateTime.DaysInMonth(year, month);
-        Console.WriteLine($"Number of days in the current month: {daysInMonth}");
-
-        // Get the number of days in the current year
-        int daysInYear = DateTime.IsLeapYear(year) ? 366 : 365;
-        Console.WriteLine($"Number of days in the current year: {daysInYear}");
-
-        // Get the number of days remaining in the current year
-        int daysRemaining = daysInYear - dayOfYear;
-        Console.WriteLine($"Number of days remaining in the current year: {daysRemaining}");
-
-        // Get the number of days remaining in the current month
-        int daysRemainingInMonth = daysInMonth - today.Day;
-        Console.WriteLine($"Number of days remaining in the current month: {daysRemainingInMonth}");
-
-        // Get the number of days remaining in the current week
-        int daysRemainingInWeek = 7 - (int)dayOfWeek;
-        Console.WriteLine($"Number of days remaining in the current week: {daysRemainingInWeek}");
-
-        // Get the date for the first day of the current month
-        DateOnly firstDayOfMonth = new DateOnly(year, month, 1);
-        Console.WriteLine($"First day of the current month: {firstDayOfMonth}");
-
-        // Get the date for the last day of the current month
-        DateOnly lastDayOfMonth = new DateOnly(year, month, daysInMonth);
-        Console.WriteLine($"Last day of the current month: {lastDayOfMonth}");
-
-        // Get the date for the first day of the current quarter
-        int firstMonthOfQuarter = (quarter - 1) * 3 + 1;
-        DateOnly firstDayOfQuarter = new DateOnly(year, firstMonthOfQuarter, 1);
-        Console.WriteLine($"First day of the current quarter: {firstDayOfQuarter}");
-
-        // Get the date for the last day of the current quarter
-        int lastMonthOfQuarter = firstMonthOfQuarter + 2;
-        int daysInQuarter = DateTime.DaysInMonth(year, firstMonthOfQuarter) + DateTime.DaysInMonth(year, firstMonthOfQuarter + 1) + DateTime.DaysInMonth(year, lastMonthOfQuarter);
-        DateOnly lastDayOfQuarter = new DateOnly(year, lastMonthOfQuarter, DateTime.DaysInMonth(year, lastMonthOfQuarter));
-        Console.WriteLine($"Last day of the current quarter: {lastDayOfQuarter}");
-
-        // Get the date for the first day of the current year
-        DateOnly firstDayOfYear = new DateOnly(year, 1, 1);
-        Console.WriteLine($"First day of the current year: {firstDayOfYear}");
-
-        // Get the date for the first day of the previous month
-        DateOnly firstDayOfPreviousMonth = new DateOnly(today.Year, today.Month - 1, 1);
-        Console.WriteLine($"First day of the previous month: {firstDayOfPreviousMonth}");
-
-        // Add days to the current date
-        DateTime futureDate = now.AddDays(10);
-        Console.WriteLine($"Date 10 days from now: {futureDate}");
-
-        // Add months to the current date
-        DateTime futureMonth = now.AddMonths(1);
-        Console.WriteLine($"Date 1 month from now: {futureMonth}");
-
-        // Add years to the current date
-        DateTime futureYear = now.AddYears(1);
-        Console.WriteLine($"Date 1 year from now: {futureYear}");
-
-        // Add minutes to the current time
-        DateTime futureMinutes = now.AddMinutes(30);
-        Console.WriteLine($"Time 30 minutes from now: {futureMinutes}");
-
-        // Add seconds to the current time
-        DateTime futureSeconds = now.AddSeconds(45);
-        Console.WriteLine($"Time 45 seconds from now: {futureSeconds}");
-
-        // Parse a date string
-        DateTime parsedDate = DateTime.Parse("2025-02-03");
-        Console.WriteLine($"Parsed date: {parsedDate}");
-
-        // Try to parse a date string
-        if (DateTime.TryParse("2025-02-03", out DateTime tryParsedDate))
-        {
-            Console.WriteLine($"Try parsed date: {tryParsedDate}");
-        }
-
-        // Format a date
-        string formattedDate = now.ToString("yyyy-MM-dd");
-        Console.WriteLine($"Formatted date: {formattedDate}");
-
-        // Use DateTimeOffset
-        DateTimeOffset nowOffset = DateTimeOffset.Now;
-        Console.WriteLine($"Current date and time with offset: {nowOffset}");
-
-        DateTimeOffset utcNowOffset = DateTimeOffset.UtcNow;
-        Console.WriteLine($"Current date and time in UTC with offset: {utcNowOffset}");
-
-        // Get the current timezone
+        // TASK 1: Step 4 - Format a date and get the current timezone offset
+        Console.WriteLine($"Formatted Date: {currentDateTime.ToString("yyyy-MM-dd")}");
         TimeZoneInfo localZone = TimeZoneInfo.Local;
+        Console.WriteLine($"Timezone: {localZone.DisplayName}, Offset: {localZone.BaseUtcOffset}");
 
-        // Get the offset from UTC
-        TimeSpan offset = localZone.GetUtcOffset(DateTime.Now);
+        // TASK 1: Step 5 - Convert the current time to UTC and display it
+        DateTime utcTime = currentDateTime.ToUniversalTime();
+        Console.WriteLine($"Current UTC Time: {utcTime}");
 
-        // Display the timezone information
-        Console.WriteLine($"Local Time Zone: {localZone.DisplayName}");
-        Console.WriteLine($"Offset from UTC: {offset}");
+        // TASK 2: Calculate Date and Time Values for Bank Customer Transactions
+        Console.WriteLine("\n--- TASK 2: Calculate Date and Time Values for Bank Customer Transactions ---");
 
-        // Convert the current time to UTC
-        DateTime utcTime = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
-        Console.WriteLine($"Current time in UTC: {utcTime}");
-
-        // Convert UTC time to a specific time zone
-        TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-        DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, easternZone);
-        Console.WriteLine($"Current time in Eastern Time: {easternTime}");
-
-        // Get all available time zones
-        TimeZoneInfo[] timeZones = TimeZoneInfo.GetSystemTimeZones().ToArray();
-        foreach (TimeZoneInfo timeZone in timeZones)
-        {
-            Console.WriteLine($"Time Zone: {timeZone.DisplayName}, ID: {timeZone.Id}");
-        }
-
-        // Example: Get the date and time for 2/3/2025 at 11:15PM in a timezone 8 hours earlier than the current timezone
-        DateTime dateTime = new DateTime(2025, 2, 3, 23, 15, 0);
-        DateTime newDateTime = dateTime.AddHours(-8);
-        Console.WriteLine($"Date and time for 2/3/2025 at 11:15PM in a timezone 8 hours earlier: {newDateTime}");
-
-        // Display the current date and time in the UTC timezone
-        DateTime utcNow = DateTime.UtcNow;
-        Console.WriteLine($"Current date and time in UTC: {utcNow}");
-
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 3: Calculate date and time values for bank customer transactions
-
-        // Use the following code to create a BankCustomer object and BankAccount objects
-        Console.WriteLine("\nCreating BankCustomer and BankAccount objects...");
-        string firstName = "Niki";
-        string lastName = "Demetriou";
+        // New customer and accounts
+        string firstName = "Tim";
+        string lastName = "Shao";
         BankCustomer customer1 = new StandardCustomer(firstName, lastName);
 
-        // Create accounts for customer1
-        BankAccount account1 = new CheckingAccount(customer1.CustomerId, 1000.00);
-        BankAccount account2 = new SavingsAccount(customer1.CustomerId, 5000.00);
+        BankAccount account1 = new BankAccount(customer1.CustomerId, 10000);
+        BankAccount account2 = new CheckingAccount(customer1.CustomerId, 500, 400);
+        BankAccount account3 = new SavingsAccount(customer1.CustomerId, 1000);
+        BankAccount account4 = new MoneyMarketAccount(customer1.CustomerId, 2000);
 
-        // Create transactions for specified dates and times
+        BankAccount[] bankAccounts = new BankAccount[4];
+        bankAccounts[0] = account1;
+        bankAccounts[1] = account2;
+        bankAccounts[2] = account3;
+        bankAccounts[3] = account4;
 
-        // 1. Create a transaction for the current date and time. Deposit 100 into account1, description = "reimbursement"
-        Transaction datedTransaction1 = new Transaction(DateOnly.FromDateTime(now), TimeOnly.FromDateTime(now), 100.00, account1.AccountNumber, account1.AccountNumber, "Deposit", "reimbursement");
+        // TASK 2: Step 1 - Create a transaction for the current date and time
+        Transaction transaction1 = new Transaction(DateOnly.FromDateTime(currentDateTime), TimeOnly.FromDateTime(currentDateTime), 100, account1.AccountNumber, account2.AccountNumber, "Transfer");
+        Console.WriteLine($"Transaction: {transaction1.ReturnTransaction()}");
 
-        // 2. Create a transaction for yesterday at 1:15PM. Deposit 100 into account1, description = "reimbursement"
-        DateTime yesterday = now.AddDays(-1);
-        DateTime yesterdayAt115PM = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 13, 15, 0);
-        Transaction datedTransaction2 = new Transaction(DateOnly.FromDateTime(yesterday), TimeOnly.FromDateTime(yesterdayAt115PM), 100.00, account1.AccountNumber, account1.AccountNumber, "Deposit", "reimbursement");
+        // TASK 2: Step 2 - Create a transaction for yesterday at 1:15PM
+        DateTime yesterday = currentDateTime.AddDays(-1).Date.AddHours(13).AddMinutes(15);
+        Transaction transaction2 = new Transaction(DateOnly.FromDateTime(yesterday), TimeOnly.FromDateTime(yesterday), 200, account2.AccountNumber, account3.AccountNumber, "Deposit");
+        Console.WriteLine($"Transaction: {transaction2.ReturnTransaction()}");
 
-        // 3. Create a transaction for last Tuesday at 1:15PM. Deposit 100 into account1, description = "reimbursement"
-        DateOnly dateToday = DateOnly.FromDateTime(now);
+        // TASK 2: Step 3 - Create transactions for the first three days of December 2024
+        Transaction[] decemberTransactions = new Transaction[3];
+        for (int i = 0; i < 3; i++)
+        {
+            DateTime transactionDate = new DateTime(2024, 12, i + 1);
+            decemberTransactions[i] = new Transaction(DateOnly.FromDateTime(transactionDate), TimeOnly.FromDateTime(transactionDate), 300 + i * 50, account3.AccountNumber, account4.AccountNumber, "Withdraw");
+            Console.WriteLine($"Transaction: {decemberTransactions[i].ReturnTransaction()}");
+        }
 
-        // get the day of the week for today
-        DayOfWeek dayNameToday = dateToday.DayOfWeek;
+        // TASK 2: Step 4 - Display the datedTransactions
+        Console.WriteLine("\nDisplaying all dated transactions:");
+        Console.WriteLine(transaction1.ReturnTransaction());
+        Console.WriteLine(transaction2.ReturnTransaction());
+        foreach (var transaction in decemberTransactions)
+        {
+            Console.WriteLine(transaction.ReturnTransaction());
+        }
 
-        // get the number of days to subtract to get to last Tuesday
-        int daysToLastTuesday = ((int)dayNameToday + 7 - 2) % 7;
-        DateOnly lastTuesday = dateToday.AddDays(-daysToLastTuesday);
+        // TASK 3: Use Date Ranges to Simulate Transactions Programmatically
+        Console.WriteLine("\n--- TASK 3: Use Date Ranges to Simulate Transactions Programmatically ---");
 
-        Transaction datedTransaction3 = new Transaction(lastTuesday, new TimeOnly(13, 15), 100.00, account1.AccountNumber, account1.AccountNumber, "Deposit", "reimbursement");
-
-        // 4. Create transactions for the first three days of December 2024. Use 1:15PM. Deposit 100 into account1, description = "reimbursement"
-        DateOnly firstDayOfDecember = new DateOnly(2024, 12, 1);
-        TimeOnly time115PM = new TimeOnly(13, 15);
-
-        Transaction datedTransaction4 = new Transaction(firstDayOfDecember, time115PM, 100.00, account1.AccountNumber, account1.AccountNumber, "Deposit", "reimbursement");
-        Transaction datedTransaction5 = new Transaction(firstDayOfDecember.AddDays(1), time115PM, 100.00, account1.AccountNumber, account1.AccountNumber, "Deposit", "reimbursement");
-        Transaction datedTransaction6 = new Transaction(firstDayOfDecember.AddDays(2), time115PM, 100.00, account1.AccountNumber, account1.AccountNumber, "Deposit", "reimbursement");
-
-        // Display the datedTransactions
-        Console.WriteLine("\nDisplaying the dated transactions...");
-        Console.WriteLine(datedTransaction1.ReturnTransaction());
-        Console.WriteLine(datedTransaction2.ReturnTransaction());
-        Console.WriteLine(datedTransaction3.ReturnTransaction());
-        Console.WriteLine(datedTransaction4.ReturnTransaction());
-        Console.WriteLine(datedTransaction5.ReturnTransaction());
-        Console.WriteLine(datedTransaction6.ReturnTransaction());
-
-
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Task 4: Use date range to simulate transactions programmatically
-        Console.WriteLine("\nTask 4: Create transactions programmatically for a date range");
-
-        // Define a date range
+        // TASK 3: Step 1 - Define a date range starting on December 12, 2024, and ending on February 20, 2025
         DateOnly startDate = new DateOnly(2024, 12, 12);
         DateOnly endDate = new DateOnly(2025, 2, 20);
 
-        // Generate transactions for the specified date range using the SimulateTransactions class
-        Console.WriteLine($"\nGenerating transactions for the specified date range: {startDate} to {endDate}");
-        Transaction[] transactions = SimulateTransactions.SimulateTransactionsDateRange(startDate, endDate, account1, account2);
+        // TASK 3: Step 2 - Generate transactions for the specified date range using the SimulateTransactions class
+        Transaction[] simulatedTransactions = SimulateTransactions.SimulateTransactionsDateRange(startDate, endDate, account1, account2);
 
-        // Display the simulated transactions
-        Console.WriteLine("\nDisplaying the transactions...");
-        int transactionCount = 0;
-        foreach (Transaction transaction in transactions)
+        // TASK 3: Step 3 - Display the simulated transactions
+        Console.WriteLine("Summary of simulated transactions:");
+
+        int totalDeposits = 0, totalWithdrawals = 0, totalTransfers = 0;
+        double totalDepositAmount = 0, totalWithdrawalAmount = 0, totalTransferAmount = 0;
+
+        foreach (var transaction in simulatedTransactions)
         {
-            try
+            switch (transaction.TransactionType)
             {
-                Console.WriteLine(transaction.ReturnTransaction());
-                transactionCount++;
-            }
-            catch (Exception ex)
-            {
-                //Console.WriteLine($"Error: {ex.Message}");
+                case "Deposit":
+                    totalDeposits++;
+                    totalDepositAmount += transaction.TransactionAmount;
+                    break;
+                case "Withdraw":
+                    totalWithdrawals++;
+                    totalWithdrawalAmount += transaction.TransactionAmount;
+                    break;
+                case "Transfer":
+                    totalTransfers++;
+                    totalTransferAmount += transaction.TransactionAmount;
+                    break;
             }
         }
 
-        // Display the number of transactions processed
-        Console.WriteLine($"\nNumber of transactions processed: {transactionCount}");
+        Console.WriteLine($"Total Deposits: {totalDeposits}, Amount: {totalDepositAmount:C}");
+        Console.WriteLine($"Total Withdrawals: {totalWithdrawals}, Amount: {totalWithdrawalAmount:C}");
+        Console.WriteLine($"Total Transfers: {totalTransfers}, Amount: {totalTransferAmount:C}");
+        Console.WriteLine($"Number of transactions processed: {simulatedTransactions.Length}");
     }
 }
