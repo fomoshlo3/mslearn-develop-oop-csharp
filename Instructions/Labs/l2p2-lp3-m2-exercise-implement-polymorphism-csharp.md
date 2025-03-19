@@ -74,7 +74,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Expand the LP3SampleApps folder, and then open the `Reuse_M2` folder.
 
-    The Reuse_M1 folder contains the following code project folders:
+    The Reuse_M2 folder contains the following code project folders:
 
     - Solution
     - Starter
@@ -505,7 +505,7 @@ Use the following steps to complete this section of the exercise:
 
 1. Run the app and verify that your reports are generated correctly.
 
-    To run your app, right-click the **Reuse_M1** project in the Solution Explorer, select **Debug**, and then select **Start New Instance**.
+    To run your app, right-click the **Reuse_M2** project in the Solution Explorer, select **Debug**, and then select **Start New Instance**.
 
     Your app should produce output that's similar to the following example:
 
