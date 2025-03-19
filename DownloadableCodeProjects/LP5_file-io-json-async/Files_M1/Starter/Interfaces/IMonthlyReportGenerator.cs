@@ -1,6 +1,6 @@
 using System;
 
-namespace Data_M2;
+namespace Files_M1;
 
 public interface IMonthlyReportGenerator
 {
