@@ -8,15 +8,13 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("Demonstrate File I/O operations in C#");
-
-        // Step 1: Define file and directory paths
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 1: Use the Path class to construct file and directory paths. Use Path.Combine to combine a base path with specific file names.");
+        /*
         
-        string directoryPath = @"C:\Temp\SampleDirectory";
+        string directoryPath = @"C:\TempDir\SampleDirectory";
+
         string subDirectoryPath1 = Path.Combine(directoryPath, "SubDirectory1");
         string subDirectoryPath2 = Path.Combine(directoryPath, "SubDirectory2");
+
         string filePath = Path.Combine(directoryPath, "sample.txt");
         string appendFilePath = Path.Combine(directoryPath, "append.txt");
         string copyFilePath = Path.Combine(directoryPath, "copy.txt");
@@ -24,13 +22,7 @@ class Program
 
         Console.WriteLine($"Directory path: {directoryPath}");
         Console.WriteLine($"Text file paths ... Sample file path: {filePath}, Append file path: {appendFilePath}, Copy file path: {copyFilePath}, Move file path: {moveFilePath}");
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
 
-        // Step 2: Use the Directory and File classes to create directories and files
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 2: Use the Directory and File classes to create directories and files.");
-        
         if (!Directory.Exists(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);
@@ -49,40 +41,43 @@ class Program
             Console.WriteLine($"Created subdirectory: {subDirectoryPath2}");
         }
 
+        // Use the File class to create a sample file in the root directory
+        File.WriteAllText(filePath, "This is a sample file.");
+
         // Use the File class to create sample files in the subdirectories
         File.WriteAllText(Path.Combine(subDirectoryPath1, "file1.txt"), "Content of file1 in SubDirectory1");
         File.WriteAllText(Path.Combine(subDirectoryPath2, "file2.txt"), "Content of file2 in SubDirectory2");
 
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
+        Console.WriteLine("\nEnumerating directories and files ...\n");
 
-        // Step 3: Use the Directory class to enumerate directories and files
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 3: Use the Directory class to enumerate directories and files.");
-        
-        foreach (var dir in Directory.GetDirectories(directoryPath))
-        {
-            Console.WriteLine($"Directory: {dir}");
-        }
+        // Enumerate the files within a specified root directory
         foreach (var file in Directory.GetFiles(directoryPath))
         {
             Console.WriteLine($"File: {file}");
         }
+
+        // Enumerate the directories within a specified root directory
+        foreach (var dir in Directory.GetDirectories(directoryPath))
+        {
+            Console.WriteLine($"Directory: {dir}");
+        }
+
+        // Enumerate the files within each subdirectory of the specified root directory
         foreach (var subDir in Directory.GetDirectories(directoryPath))
         {
             foreach (var file in Directory.GetFiles(subDir))
             {
-                Console.WriteLine($"File in {subDir}: {file}");
+                Console.WriteLine($"File: {file}");
             }
         }
-        
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
 
-        // Step 4: Use the File class to write text to a file
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 4: Use the File class to write text to a file.");
-        
+        // foreach (var entry in Directory.EnumerateFileSystemEntries(directoryPath, "*", SearchOption.AllDirectories))
+        // {
+        //     Console.WriteLine($"Entry: {entry}");
+        // }
+
+        Console.WriteLine("\nUse the File class to write and read CSV-formatted text files.");
+
         string label = "deposits";
         double[,] depositValues =
         {
@@ -100,35 +95,43 @@ class Program
 
         // Split the string representation of the StringBuilder object into an array of strings 
         //  based on the environment's newline character, removing any empty entries.
-        string[] lines = sb.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-        
-        Console.WriteLine("Content to be written to the file:");
-        foreach (var line in lines)
+        string csvString = sb.ToString();
+        string[] csvLines = csvString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+        Console.WriteLine("\nCSV formatted string array:");
+        foreach (var line in csvLines)
         {
             Console.WriteLine(line);
         }
-        File.WriteAllLines(filePath, lines);
 
-        Console.WriteLine($"Written to file: {filePath}");
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
+        // Write the CSV formatted string array to a text file. The file is created if it doesn't exist, or overwritten if it does. 
+        File.WriteAllText(filePath, csvString);
 
-        // Step 5: Use the File class to read text from a file
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 5: Use the File class to read text from a file.");
-
+        // Read the contents of the text file into a string array and display the file contents
         string[] readLines = File.ReadAllLines(filePath);
-        Console.WriteLine("Content read from the file:");
+        Console.WriteLine($"\nContent read from the {filePath} file:");
         foreach (var line in readLines)
         {
             Console.WriteLine(line);
         }
 
-        string readLabel = readLines[0].Split(':')[0];
-        double[,] readDepositValues = new double[readLines.Length, 3];
-        for (int i = 0; i < readLines.Length; i++)
+        // Append a new line to the text file
+        File.AppendAllText(filePath, "deposits: 215.25, 417, 111.5\r\n");
+
+        // Read and display the updated file contents
+        string[] readUpdatedLines = File.ReadAllLines(filePath);
+        Console.WriteLine($"\nContent read from updated the {filePath} file:");
+        foreach (var line in readUpdatedLines)
         {
-            string[] parts = readLines[i].Split(':');
+            Console.WriteLine(line);
+        }
+
+        // Extract the label and value components from the CSV formatted string
+        string readLabel = readUpdatedLines[0].Split(':')[0];
+        double[,] readDepositValues = new double[readUpdatedLines.Length, 3];
+        for (int i = 0; i < readUpdatedLines.Length; i++)
+        {
+            string[] parts = readUpdatedLines[i].Split(':');
             string[] values = parts[1].Split(',');
             for (int j = 0; j < values.Length; j++)
             {
@@ -136,62 +139,43 @@ class Program
             }
         }
 
-        Console.WriteLine($"Label: {readLabel}");
+        Console.WriteLine($"\nLabel: {readLabel}");
         Console.WriteLine("Deposit values:");
         for (int i = 0; i < readDepositValues.GetLength(0); i++)
         {
-            Console.WriteLine($"{readDepositValues[i, 0]}, {readDepositValues[i, 1]}, {readDepositValues[i, 2]}");
+            Console.WriteLine($"{readDepositValues[i, 0]:C}, {readDepositValues[i, 1]:C}, {readDepositValues[i, 2]:C}");
         }
-        
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
 
-        // Step 6:Use the File class to append text to a file
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 6: Use the File class to append text to a file.");
+        Console.WriteLine("\nUse the File class to perform file management operations.\n");
 
-        File.AppendAllText(appendFilePath, "Appended line\n");
-        Console.WriteLine($"Appended to file: {appendFilePath}");
-        
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
-
-        // Step 7: Use the File class to check whether a file exists
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 7: Use the File class to check whether a file exists.");
-        
-        if (File.Exists(filePath))
+        // Check whether the sample.txt file exists
+        if (File.Exists(appendFilePath))
         {
-            Console.WriteLine($"File exists: {filePath}");
+            Console.WriteLine($"The {appendFilePath} file exists.");
         }
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
+        else
+        {
+            Console.WriteLine($"The {appendFilePath} file does not exist.");
+        }
 
-        // Step 8: Use File to manage files - Copy, Move, and Delete a file
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 8: Copy, Move, and Delete a file.");
-
-        // Copy a file
+        // Copy the sample.txt file to the file location defined by the copyFilePath variable
         File.Copy(filePath, copyFilePath, true);
-        Console.WriteLine($"Copied file to: {copyFilePath}");
+        Console.WriteLine($"Copied {filePath} to {copyFilePath}.");
 
-        // Move a file
-        File.Move(copyFilePath, moveFilePath);
+        // Move the copy.txt file to the file location defined by the moveFilePath variable
+        File.Move(copyFilePath, moveFilePath, true);
         Console.WriteLine($"Moved file to: {moveFilePath}");
 
-        // Delete a file
+        // Delete the move.txt file
         if (File.Exists(moveFilePath))
         {
             File.Delete(moveFilePath);
             Console.WriteLine($"Deleted file: {moveFilePath}");
         }
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
 
-        // Step 9: Use the StreamWriter class to write lines of bank transaction data to a CSV file.
-        //  Create a directory path named TransactionLogs in the executable's current directory.
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 9: Use the StreamWriter class to write lines of bank transaction data to a CSV file.");
+        */
+
+        Console.WriteLine("\nUse the StreamWriter and StreamReader classes.\n");
 
         // Get the current directory of the executable program
         string currentDirectory = Directory.GetCurrentDirectory();
@@ -205,9 +189,9 @@ class Program
             Console.WriteLine($"Created directory: {transactionsDirectoryPath}");
         }
 
-        // Create a CSV file named transactions.csv in the TransactionLogs directory
+        // Create a filepath in the TransactionLogs directory for a file named transactions.csv
         string csvFilePath = Path.Combine(transactionsDirectoryPath, "transactions.csv");
-        
+
         // Simulate one month of transactions for customer Niki Demetriou
         string firstName = "Niki";
         string lastName = "Demetriou";
@@ -226,47 +210,36 @@ class Program
         {
             sw.WriteLine("TransactionId,TransactionType,TransactionDate,TransactionTime,PriorBalance,TransactionAmount,SourceAccountNumber,TargetAccountNumber,Description");
 
-            Console.WriteLine("Simulated transactions:");
+            Console.WriteLine("\nSimulated transactions:\n");
             foreach (var account in customer.Accounts)
             {
                 foreach (var transaction in account.Transactions)
                 {
-                    Console.WriteLine($"{transaction.TransactionId},{transaction.TransactionType},{transaction.TransactionDate},{transaction.TransactionTime},{transaction.PriorBalance},{transaction.TransactionAmount},{transaction.SourceAccountNumber},{transaction.TargetAccountNumber},{transaction.Description}");
-                    sw.WriteLine($"{transaction.TransactionId},{transaction.TransactionType},{transaction.TransactionDate},{transaction.TransactionTime},{transaction.PriorBalance},{transaction.TransactionAmount},{transaction.SourceAccountNumber},{transaction.TargetAccountNumber},{transaction.Description}");
+                    Console.WriteLine($"{transaction.TransactionId},{transaction.TransactionType},{transaction.TransactionDate},{transaction.TransactionTime},{transaction.PriorBalance:F2},{transaction.TransactionAmount:F2},{transaction.SourceAccountNumber},{transaction.TargetAccountNumber},{transaction.Description}");
+                    sw.WriteLine($"{transaction.TransactionId},{transaction.TransactionType},{transaction.TransactionDate},{transaction.TransactionTime},{transaction.PriorBalance:F2},{transaction.TransactionAmount:F2},{transaction.SourceAccountNumber},{transaction.TargetAccountNumber},{transaction.Description}");
                 }
             }
         }
 
-        Console.WriteLine($"Written transaction data to CSV file: {csvFilePath}");
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
-
-        // Step 10: Use the StreamReader class to read bank transaction lines from a CSV file
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 10: Use the StreamReader class to read bank transaction lines from a CSV file.");
-
+        // Read the transaction data from the transactions.csv file
         using (StreamReader sr = new StreamReader(csvFilePath))
         {
             string headerLine = sr.ReadLine(); // Read the header line
-            Console.WriteLine("Read transaction data from CSV file:");
+            Console.WriteLine("\nTransaction data read from the CSV file:\n");
             string line;
             while ((line = sr.ReadLine()) != null)
             {
                 Console.WriteLine(line);
             }
         }
-        
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
 
-        // Step 11: Use the FileStream class to perform low-level file I/O operations
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 11: Use the FileStream class to perform low-level file I/O operations.");
+        // Use the FileStream class to perform low-level file I/O operations
 
-        string fileStreamPath = Path.Combine(directoryPath, "filestream.txt");
+        // Create a filepath for the filestream.txt file
+        string fileStreamPath = Path.Combine(currentDirectory, "filestream.txt");
 
         // Prepare transaction data from customer accounts
-        sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.AppendLine("TransactionId,TransactionType,TransactionDate,TransactionTime,PriorBalance,TransactionAmount,SourceAccountNumber,TargetAccountNumber,Description");
 
         foreach (var account in customer.Accounts)
@@ -274,90 +247,74 @@ class Program
             foreach (var transaction in account.Transactions)
             {
                 // Append transaction data to the StringBuilder object
-                sb.AppendLine($"{transaction.TransactionId},{transaction.TransactionType},{transaction.TransactionDate},{transaction.TransactionTime},{transaction.PriorBalance},{transaction.TransactionAmount},{transaction.SourceAccountNumber},{transaction.TargetAccountNumber},{transaction.Description}");
+                sb.AppendLine($"{transaction.TransactionId},{transaction.TransactionType},{transaction.TransactionDate},{transaction.TransactionTime},{transaction.PriorBalance:F2},{transaction.TransactionAmount:F2},{transaction.SourceAccountNumber},{transaction.TargetAccountNumber},{transaction.Description}");
             }
         }
+
+        Console.WriteLine($"\n\nUse the FileStream class to perform file I/O operations.");
 
         // Write transaction data to file using FileStream
-        using (FileStream fs = new FileStream(fileStreamPath, FileMode.Create, FileAccess.Write))
+        using (FileStream fileStream = new FileStream(fileStreamPath, FileMode.Create, FileAccess.Write))
         {
             // Convert the StringBuilder object to a byte array and write the byte array to the file
-            byte[] info = new UTF8Encoding(true).GetBytes(sb.ToString());
-            
-            // Use the Write method to write the byte array to the file
-            fs.Write(info, 0, info.Length);
-            Console.WriteLine($"File length after write: {fs.Length} bytes");
-            
-            // Use the Flush method to ensure all data is written to the file
-            fs.Flush(); 
+            byte[] transactionDataBytes = new UTF8Encoding(true).GetBytes(sb.ToString());
 
-            Console.WriteLine("Data flushed to the file.");
+            // Use the Write method to write the byte array to the file
+            fileStream.Write(transactionDataBytes, 0, transactionDataBytes.Length);
+            Console.WriteLine($"\nFile length after write: {fileStream.Length} bytes");
+
+            // Use the Flush method to ensure all data is written to the file
+            fileStream.Flush();
         }
 
-        Console.WriteLine($"Wrote transaction data to file using FileStream: {fileStreamPath}");
+        Console.WriteLine($"\nTransaction data written using FileStream. File: {fileStreamPath}");
+
 
         // Read transaction data from file using FileStream
-        using (FileStream fs = new FileStream(fileStreamPath, FileMode.Open, FileAccess.Read))
+        using (FileStream fileStream = new FileStream(fileStreamPath, FileMode.Open, FileAccess.Read))
         {
-            byte[] b = new byte[1024];
-            UTF8Encoding temp = new UTF8Encoding(true);
+            byte[] readBuffer = new byte[1024];
+            UTF8Encoding utf8Decoder = new UTF8Encoding(true);
             int bytesRead;
 
-            Console.WriteLine("Use FileStream to read transaction data from file:");
-            while ((bytesRead = fs.Read(b, 0, b.Length)) > 0)
+            Console.WriteLine("\nUsing FileStream to read/display transaction data.\n");
+            while ((bytesRead = fileStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
             {
-                Console.WriteLine(temp.GetString(b, 0, bytesRead));
+                Console.WriteLine($"bytes read: {utf8Decoder.GetString(readBuffer, 0, bytesRead)}\n");
             }
 
-            Console.WriteLine($"File length: {fs.Length} bytes");
-            Console.WriteLine($"Current position: {fs.Position} bytes");
+            Console.WriteLine($"File length: {fileStream.Length} bytes");
+            Console.WriteLine($"Current position: {fileStream.Position} bytes");
 
             // Use the Seek method to move to the beginning of the file
-            fs.Seek(0, SeekOrigin.Begin);
-            Console.WriteLine($"Position after seek: {fs.Position} bytes");
+            fileStream.Seek(0, SeekOrigin.Begin);
+            Console.WriteLine($"Position after seek: {fileStream.Position} bytes");
 
             // Use the FileStream.Read method to read the first 100 bytes
-            bytesRead = fs.Read(b, 0, 100);
-            Console.WriteLine($"Read first 100 bytes: {temp.GetString(b, 0, bytesRead)}");
+            bytesRead = fileStream.Read(readBuffer, 0, 100);
+            Console.WriteLine($"Read first 100 bytes: {utf8Decoder.GetString(readBuffer, 0, bytesRead)}");
         }
-        
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
 
-        // Step 13: Use the BinaryWriter and BinaryReader classes to create and read binary files
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 13: Use the BinaryWriter and BinaryReader classes to create and read binary files.");
+        // Create a filepath for a binary file named binary.dat
+        string binaryFilePath = Path.Combine(currentDirectory, "binary.dat");
 
-        string binaryFilePath = Path.Combine(directoryPath, "binary.dat");
-        using (BinaryWriter writer = new BinaryWriter(File.Open(binaryFilePath, FileMode.Create)))
+        // Create a BinaryWriter object and write binary data to the binary.dat file
+        using (BinaryWriter binaryWriter = new BinaryWriter(File.Open(binaryFilePath, FileMode.Create)))
         {
-            writer.Write(1.25);
-            writer.Write("Hello");
-            writer.Write(true);
+            binaryWriter.Write(1.25);
+            binaryWriter.Write("Hello");
+            binaryWriter.Write(true);
         }
-        Console.WriteLine($"Written binary data to: {binaryFilePath}");
 
-        using (BinaryReader reader = new BinaryReader(File.Open(binaryFilePath, FileMode.Open)))
+        Console.WriteLine($"\n\nBinary data written to: {binaryFilePath}");
+
+        // Create a BinaryReader object and read binary data from the binary.dat file
+        using (BinaryReader binaryReader = new BinaryReader(File.Open(binaryFilePath, FileMode.Open)))
         {
-            double a = reader.ReadDouble();
-            string b = reader.ReadString();
-            bool c = reader.ReadBoolean();
-            Console.WriteLine($"Read binary data: {a}, {b}, {c}");
+            double a = binaryReader.ReadDouble();
+            string b = binaryReader.ReadString();
+            bool c = binaryReader.ReadBoolean();
+            Console.WriteLine($"Binary data read from {binaryFilePath}: {a}, {b}, {c}");
         }
-        Console.WriteLine("\n\nPress Enter to continue...");
-        Console.ReadLine();
-
-        // Step 16: Clean up by deleting all the files and directories
-        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Console.WriteLine("\nStep 16: Clean up by deleting all the files and directories.");
-        
-        Directory.Delete(directoryPath, true);
-        Console.WriteLine($"Deleted directory: {directoryPath}");
-        
-        Directory.Delete(transactionsDirectoryPath, true);
-        Console.WriteLine($"Deleted directory: {transactionsDirectoryPath}");
-
-        Console.WriteLine("\n\nPress Enter to exit...");
-        Console.ReadLine();
     }
 }
