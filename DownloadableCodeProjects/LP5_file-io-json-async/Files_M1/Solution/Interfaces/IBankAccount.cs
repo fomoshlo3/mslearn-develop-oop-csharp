@@ -8,7 +8,7 @@ public interface IBankAccount
     string AccountType { get; }
     BankCustomer Owner { get; } // This is the BankCustomer object that owns the account
     IReadOnlyList<Transaction> Transactions { get; } // List of transactions for the account
-    
+
     void Deposit(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description);
     bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description);
     bool Transfer(IBankAccount targetAccount, double amount, DateOnly transactionDate, TimeOnly transactionTime, string description);
