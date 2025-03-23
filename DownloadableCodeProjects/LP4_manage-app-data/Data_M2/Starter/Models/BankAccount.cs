@@ -1,5 +1,7 @@
 using System;
 
+// TASK 4: Step 1 - Add System.Collections.Generic namespace
+
 namespace Data_M2;
 
 public class BankAccount : IBankAccount
@@ -7,16 +9,15 @@ public class BankAccount : IBankAccount
     private static int s_nextAccountNumber;
 
     // Public read-only static properties
-    public static double TransactionRate { get; protected set; }
-    public static double MaxTransactionFee { get; protected set; }
-    public static double OverdraftRate { get; protected set; }
-    public static double MaxOverdraftFee { get; protected set; }
+    public static double TransactionRate { get; private set; }
+    public static double MaxTransactionFee { get; private set; }
+    public static double OverdraftRate { get; private set; }
+    public static double MaxOverdraftFee { get; private set; }
 
     public int AccountNumber { get; }
     public string CustomerId { get; }
     public double Balance { get; internal set; } = 0;
     public string AccountType { get; set; } = "Checking";
-
     public virtual double InterestRate { get; protected set; } // Virtual property to allow overriding in derived classes
 
     static BankAccount()
@@ -35,7 +36,6 @@ public class BankAccount : IBankAccount
         this.CustomerId = customerIdNumber;
         this.Balance = balance;
         this.AccountType = accountType;
-
     }
 
     // Copy constructor for BankAccount
@@ -47,12 +47,28 @@ public class BankAccount : IBankAccount
         this.AccountType = existingAccount.AccountType;
     }
 
+    // TASK 4: Update BankAccount Class
+    // Purpose: Add Owner and Transactions properties for customer reference and transaction tracking.
+
+    // TASK 4: Step 2 - Add Owner property to reference BankCustomer
+    // Placeholder for adding a property to reference the owner of the account
+
+
+    // TASK 4: Step 3 - Add List<Transaction> property to track transactions
+    // Placeholder for adding a property to store a list of transactions
+
+
+    // TASK 4: Step 4 - Add methods to log transactions (e.g., AddTransaction)
+    // Placeholder for adding methods to log transactions
+    
     // Method to deposit money into the account
-    public virtual void Deposit(double amount)
+    public void Deposit(double amount)
     {
         if (amount > 0)
         {
             Balance += amount;
+            // TASK 4: Step 4a - Add logic to log the deposit transaction
+            // Placeholder for logging the deposit transaction
         }
     }
 
@@ -62,41 +78,56 @@ public class BankAccount : IBankAccount
         if (amount > 0 && Balance >= amount)
         {
             Balance -= amount;
+            // TASK 4: Step 4b - Add logic to log the withdrawal transaction
+            // Placeholder for logging the withdrawal transaction
             return true;
         }
         return false;
     }
 
     // Method to transfer money to another account
-    public virtual bool Transfer(IBankAccount targetAccount, double amount)
+    public bool Transfer(IBankAccount targetAccount, double amount)
     {
         if (Withdraw(amount))
         {
             targetAccount.Deposit(amount);
+            // TASK 4: Step 4c - Add logic to log the transfer transaction
+            // Placeholder for logging the transfer transaction
+
             return true;
         }
         return false;
     }
 
     // Method to apply interest
-    public virtual void ApplyInterest(double years)
+    public void ApplyInterest(double years)
     {
-        Balance += AccountCalculations.CalculateCompoundInterest(Balance, InterestRate, years);
+        double interest = AccountCalculations.CalculateCompoundInterest(Balance, InterestRate, years);
+        Balance += interest;
+        // TASK 4: Step 4d - Add logic to log the interest transaction
+        // Placeholder for logging the interest transaction
+
     }
 
     // Method to apply refund
-    public virtual void ApplyRefund(double refund)
+    public void ApplyRefund(double refund)
     {
         Balance += refund;
+        // TASK 4: Step 4e - Add logic to log the refund transaction
+        // Placeholder for logging the refund transaction
+
     }
 
     // Method to issue a cashier's check
-    public virtual bool IssueCashiersCheck(double amount)
+    public bool IssueCashiersCheck(double amount)
     {
         if (amount > 0 && Balance >= amount + BankAccount.MaxTransactionFee)
         {
             Balance -= amount;
-            Balance -= AccountCalculations.CalculateTransactionFee(amount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
+            double fee = AccountCalculations.CalculateTransactionFee(amount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
+            Balance -= fee;
+            // TASK 4: Step 4f - Add logic to log the cashier's check transaction
+            // Placeholder for logging the cashier's check and fee transactions
             return true;
         }
         return false;
@@ -105,20 +136,6 @@ public class BankAccount : IBankAccount
     // Method to display account information
     public virtual string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance}, Interest Rate: {InterestRate}, Customer ID: {CustomerId}";
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance:C}, Interest Rate: {InterestRate:P}, Customer ID: {CustomerId}";
     }
 }
-
-// Summary of Changes:
-//
-// - Marked BankAccount as abstract.
-// - Made methods virtual: Deposit, Withdraw, Transfer, ApplyInterest, ApplyRefund, IssueCashiersCheck, and DisplayAccountInfo.
-//
-// These changes allow derived classes to override these methods and provide specific implementations. Now you can create derived classes like CheckingAccount, SavingsAccount, MoneyMarketAccount, and CertificateOfDeposit with their specific behaviors.
-
-
-// Step 3: Demonstrate the derived classes in Program.cs
-
-
-
-

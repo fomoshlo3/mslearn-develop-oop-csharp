@@ -4,12 +4,14 @@ namespace Data_M2;
 
 public class MoneyMarketAccount : BankAccount
 {
-    public double MinimumBalance { get; set; }
-    public double MinimumOpeningBalance { get; set; }
-
+    // public static properties with private setters for default interest rate, default minimum balance, and default minimum opening balance
     public static double DefaultInterestRate { get; private set; }
     public static double DefaultMinimumBalance { get; private set; }
     public static double DefaultMinimumOpeningBalance { get; private set; }
+
+    // public property for minimum balance and minimum opening balance
+    public double MinimumBalance { get; set; }
+    public double MinimumOpeningBalance { get; set; }
 
     static MoneyMarketAccount()
     {
@@ -30,12 +32,6 @@ public class MoneyMarketAccount : BankAccount
         MinimumOpeningBalance = DefaultMinimumOpeningBalance; // Set the minimum opening balance to the default value
     }
 
-    public override double InterestRate
-    {
-        get { return DefaultInterestRate; }
-        protected set { DefaultInterestRate = value; }
-    }
-
     public override bool Withdraw(double amount)
     {
         if (amount > 0 && Balance - amount >= MinimumBalance)
@@ -46,8 +42,14 @@ public class MoneyMarketAccount : BankAccount
         return false;
     }
 
+    public override double InterestRate
+    {
+        get { return DefaultInterestRate; }
+        protected set { DefaultInterestRate = value; }
+    }
+
     public override string DisplayAccountInfo()
     {
-        return base.DisplayAccountInfo() + $", Minimum Balance: {MinimumBalance}, Interest Rate: {InterestRate * 100}%, Minimum Opening Balance: {MinimumOpeningBalance}";
+        return base.DisplayAccountInfo() + $", Minimum Balance: {MinimumBalance}, Minimum Opening Balance: {MinimumOpeningBalance}";
     }
 }

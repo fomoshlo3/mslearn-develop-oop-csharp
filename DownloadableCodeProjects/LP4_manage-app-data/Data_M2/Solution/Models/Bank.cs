@@ -3,130 +3,51 @@ using System.Collections.Generic;
 
 namespace Data_M2;
 
+// TASK 2: Create Bank Class
+// Purpose: Manage customers and transaction reports.
+
 public class Bank
 {
-    // Fields
-    private readonly Guid _bankId;
-    private readonly List<BankCustomer> _customers;
+    // TASK 2: Step 1 - Add Name and List<BankCustomer> properties
+    public string Name { get; set; } // Removed 'required' keyword
+    public List<BankCustomer> Customers { get; private set; }
 
-    // Properties
-    public Guid BankId => _bankId;
-    public IReadOnlyList<BankCustomer> Customers => _customers.AsReadOnly();
+    // TASK 2: Step 2 - Add a Dictionary<string, List<Transaction>> for transaction reports
+    public Dictionary<string, List<Transaction>> TransactionReports { get; private set; }
 
-    // Constructors
-    public Bank()
+    // Constructor to initialize properties
+    public Bank(string name)
     {
-        _bankId = Guid.NewGuid();
-        _customers = new List<BankCustomer>();
+        Name = name; // Initialize the Name property
+        Customers = new List<BankCustomer>();
+        TransactionReports = new Dictionary<string, List<Transaction>>();
     }
 
-    // Methods
-    internal IEnumerable<BankCustomer> GetAllCustomers()
+    // TASK 2: Step 3 - Implement AddCustomer method
+    public void AddCustomer(BankCustomer customer)
     {
-        return new List<BankCustomer>(_customers);
-    }
-
-    internal IEnumerable<BankCustomer> GetCustomersByName(string firstName, string lastName)
-    {
-        List<BankCustomer> matchingCustomers = new List<BankCustomer>();
-        foreach (var customer in _customers)
+        if (customer != null && !Customers.Contains(customer))
         {
-            if (customer.FirstName.Equals(firstName, StringComparison.OrdinalIgnoreCase) &&
-                customer.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase))
-            {
-                matchingCustomers.Add(customer);
-            }
+            Customers.Add(customer);
         }
-        return matchingCustomers;
     }
 
-    // get customer based on Customer ID
-    internal BankCustomer? GetCustomerById(string customerId)
+    // TASK 10: Add Dictionary for Reports
+    // Purpose: Manage transaction data for reports in the Bank class.
+
+    // TASK 10: Step 1 - Add a method to add transactions to the dictionary
+    public void AddTransactionToReport(string key, Transaction transaction)
     {
-        foreach (var customer in _customers)
+        if (!TransactionReports.ContainsKey(key))
         {
-            if (customer.CustomerId.Equals(customerId, StringComparison.OrdinalIgnoreCase))
-            {
-                return customer;
-            }
+            TransactionReports[key] = new List<Transaction>();
         }
-        return null;
+        TransactionReports[key].Add(transaction);
     }
 
-    internal int GetNumberOfTransactions()
+    // TASK 10: Step 2 - Add a method to retrieve transactions for a specific key
+    public List<Transaction> GetTransactionsForKey(string key)
     {
-        int totalTransactions = 0;
-        foreach (BankCustomer customer in _customers)
-        {
-            foreach (BankAccount account in customer.Accounts)
-            {
-                foreach (Transaction transaction in account.Transactions)
-                {
-                    totalTransactions++;
-                }
-            }
-        }
-        return totalTransactions;
-    }
-
-    internal double GetTotalMoneyInVault()
-    {
-        double totalBankCash = 0;
-        foreach (BankCustomer customer in _customers)
-        {
-            foreach (BankAccount account in customer.Accounts)
-            {
-                totalBankCash += account.Balance;
-            }
-        }
-        return totalBankCash;
-    }
-
-    internal double GetDailyDeposits(DateOnly date)
-    {
-        double totalDailyDeposits = 0;
-        foreach (BankCustomer customer in _customers)
-        {
-            foreach (BankAccount account in customer.Accounts)
-            {
-                foreach (Transaction transaction in account.Transactions)
-                {
-                    if (transaction.TransactionDate == date && transaction.TransactionType == "Deposit")
-                    {
-                        totalDailyDeposits += transaction.TransactionAmount;
-                    }
-                }
-            }
-        }
-        return totalDailyDeposits;
-    }
-
-    internal double GetDailyWithdrawals(DateOnly date)
-    {
-        double totalDailyWithdrawals = 0;
-        foreach (BankCustomer customer in _customers)
-        {
-            foreach (BankAccount account in customer.Accounts)
-            {
-                foreach (Transaction transaction in account.Transactions)
-                {
-                    if (transaction.TransactionDate == date && transaction.TransactionType == "Withdraw")
-                    {
-                        totalDailyWithdrawals += transaction.TransactionAmount;
-                    }
-                }
-            }
-        }
-        return totalDailyWithdrawals;
-    }
-
-    internal void AddCustomer(BankCustomer customer)
-    {
-        _customers.Add(customer);
-    }
-
-    internal void RemoveCustomer(BankCustomer customer)
-    {
-        _customers.Remove(customer);
+        return TransactionReports.ContainsKey(key) ? TransactionReports[key] : new List<Transaction>();
     }
 }

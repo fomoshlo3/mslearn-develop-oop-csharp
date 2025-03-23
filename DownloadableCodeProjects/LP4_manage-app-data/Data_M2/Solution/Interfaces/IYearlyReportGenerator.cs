@@ -4,7 +4,7 @@ namespace Data_M2;
 
 public interface IYearlyReportGenerator
 {
-    void GeneratePreviousYearReport(BankCustomer bankCustomer, int accountNumber, DateOnly reportDate);
-    void GenerateCurrentYearToDateReport(BankCustomer bankCustomer, int accountNumber, DateOnly reportDate);
-    void GenerateLast365DaysReport(BankCustomer bankCustomer, int accountNumber, DateOnly reportDate);
+    void GeneratePreviousYearReport(); // Generates a report for the previous year
+    void GenerateCurrentYearToDateReport(); // Generates a report for the current year up to the current date
+    void GenerateLast365DaysReport(); // Generates a report for the previous 365 days
 }
