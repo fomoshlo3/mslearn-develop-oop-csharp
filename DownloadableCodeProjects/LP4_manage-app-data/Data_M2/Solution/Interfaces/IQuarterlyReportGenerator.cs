@@ -4,5 +4,5 @@ namespace Data_M2;
 
 public interface IQuarterlyReportGenerator
 {
-    void GenerateQuarterlyReport(BankCustomer bankCustomer, int accountNumber, DateOnly reportDate);
+    void GenerateQuarterlyReport(); // Generates a report for a complete three-month period (Jan-Mar, Apr-Jun, Jul-Sep, Oct-Dec)
 }

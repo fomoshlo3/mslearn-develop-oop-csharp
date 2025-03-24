@@ -1,4 +1,6 @@
 using System;
+
+// TASK 4: Step 1 - Add System.Collections.Generic namespace
 using System.Collections.Generic;
 
 namespace Data_M2;
@@ -6,24 +8,24 @@ namespace Data_M2;
 public class BankAccount : IBankAccount
 {
     private static int s_nextAccountNumber;
-    private readonly List<Transaction> _transactions;
-    protected double priorBalance;
 
     // Public read-only static properties
-    public static double TransactionRate { get; protected set; }
-    public static double MaxTransactionFee { get; protected set; }
-    public static double OverdraftRate { get; protected set; }
-    public static double MaxOverdraftFee { get; protected set; }
+    public static double TransactionRate { get; private set; }
+    public static double MaxTransactionFee { get; private set; }
+    public static double OverdraftRate { get; private set; }
+    public static double MaxOverdraftFee { get; private set; }
 
     public int AccountNumber { get; }
     public string CustomerId { get; }
     public double Balance { get; internal set; } = 0;
     public string AccountType { get; set; } = "Checking";
-    public IReadOnlyList<Transaction> Transactions => _transactions.AsReadOnly();
-
-    public BankCustomer Owner { get; }
-
     public virtual double InterestRate { get; protected set; } // Virtual property to allow overriding in derived classes
+
+    // TASK 4: Step 2 - Add Owner property to reference BankCustomer
+    public BankCustomer Owner { get; set; }
+
+    // TASK 4: Step 3 - Add List<Transaction> property to track transactions
+    public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
     static BankAccount()
     {
@@ -35,136 +37,136 @@ public class BankAccount : IBankAccount
         MaxOverdraftFee = 10; // Maximum overdraft fee for an overdrawn checking account
     }
 
-    public BankAccount(BankCustomer owner, string customerIdNumber, double balance = 200, string accountType = "Checking")
+    public BankAccount(string customerIdNumber, double balance = 200, string accountType = "Checking", BankCustomer? owner = null)
     {
-        Owner = owner;
-        AccountNumber = s_nextAccountNumber++;
-        CustomerId = customerIdNumber;
-        Balance = balance;
-        AccountType = accountType;
-        _transactions = new List<Transaction>();
+        this.AccountNumber = s_nextAccountNumber++;
+        this.CustomerId = customerIdNumber;
+        this.Balance = balance;
+        this.AccountType = accountType;
+        this.Owner = owner ?? new BankCustomer("Default", "Customer"); // Initialize with a default owner if none is provided
     }
 
     // Copy constructor for BankAccount
     public BankAccount(BankAccount existingAccount)
     {
-        Owner = existingAccount.Owner;
-        AccountNumber = s_nextAccountNumber++;
-        CustomerId = existingAccount.CustomerId;
-        Balance = existingAccount.Balance;
-        AccountType = existingAccount.AccountType;
-        _transactions = new List<Transaction>(existingAccount._transactions);
+        this.AccountNumber = s_nextAccountNumber++;
+        this.CustomerId = existingAccount.CustomerId;
+        this.Balance = existingAccount.Balance;
+        this.AccountType = existingAccount.AccountType;
+        this.Owner = existingAccount.Owner; // Copy the owner from the existing account
     }
 
-    // Method to deposit money into the account
-    public virtual void Deposit(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
+    // TASK 4: Step 4a - Add logic to log the deposit transaction
+    public void Deposit(double amount)
     {
         if (amount > 0)
         {
-            priorBalance = Balance;
             Balance += amount;
-            string transactionType = "Deposit";
-            if (description.Contains("-(TRANSFER)"))
-            {
-                transactionType = "Transfer";
-            }
-            else if(description.Contains("-(BANK REFUND)"))
-            {
-                transactionType = "Bank Refund";
-            }
-
-            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
+            AddTransaction(new Transaction(
+                Guid.NewGuid().ToString(), // Generate a unique transaction ID
+                DateTime.Now,
+                "Deposit",
+                amount
+            ));
         }
     }
 
-    // Method to withdraw money from the account
-    public virtual bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
+    // TASK 4: Step 4b - Add logic to log the withdrawal transaction
+    public virtual bool Withdraw(double amount)
     {
         if (amount > 0 && Balance >= amount)
         {
-            priorBalance = Balance;
             Balance -= amount;
-            string transactionType = "Withdraw";
-            if (description.Contains("-(TRANSFER)"))
-            {
-                transactionType = "Transfer";
-            }
-            else if (description.Contains("-(BANK FEE)"))
-            {
-                transactionType = "Bank Fee";
-            }
-            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
+            AddTransaction(new Transaction(
+                Guid.NewGuid().ToString(),
+                DateTime.Now,
+                "Withdrawal",
+                amount
+            ));
             return true;
         }
         return false;
     }
 
-    // Method to transfer money to another account
-    public virtual bool Transfer(IBankAccount targetAccount, double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
+    // TASK 4: Step 4c - Add logic to log the transfer transaction
+    public bool Transfer(IBankAccount targetAccount, double amount)
     {
-        description += "-(TRANSFER)";
-        if (Withdraw(amount, transactionDate, transactionTime, description))
+        if (Withdraw(amount))
         {
-            targetAccount.Deposit(amount, transactionDate, transactionTime, description);
+            targetAccount.Deposit(amount);
+            AddTransaction(new Transaction(
+                Guid.NewGuid().ToString(),
+                DateTime.Now,
+                "Transfer",
+                amount
+            ));
             return true;
         }
         return false;
     }
 
-    // Method to apply interest
-    public virtual void ApplyInterest(double years, DateOnly transactionDate, TimeOnly transactionTime, string description)
+    // TASK 4: Step 4d - Add logic to log the interest transaction
+    public void ApplyInterest(double years)
     {
-        priorBalance = Balance;
         double interest = AccountCalculations.CalculateCompoundInterest(Balance, InterestRate, years);
         Balance += interest;
-        AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, interest, AccountNumber, AccountNumber, AccountType, "Interest"));
+        AddTransaction(new Transaction(
+            Guid.NewGuid().ToString(),
+            DateTime.Now,
+            "Interest",
+            interest
+        ));
     }
 
-    // Method to apply refund
-    public virtual void ApplyRefund(double refund, DateOnly transactionDate, TimeOnly transactionTime, string description)
+    // TASK 4: Step 4e - Add logic to log the refund transaction
+    public void ApplyRefund(double refund)
     {
-        priorBalance = Balance;
         Balance += refund;
-        AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, refund, AccountNumber, AccountNumber, AccountType, "Refund"));
+        AddTransaction(new Transaction(
+            Guid.NewGuid().ToString(),
+            DateTime.Now,
+            "Refund",
+            refund
+        ));
     }
 
-    // Method to issue a cashier's check
-    public virtual bool IssueCashiersCheck(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)
+    // TASK 4: Step 4f - Add logic to log the cashier's check transaction
+    public bool IssueCashiersCheck(double amount)
     {
         if (amount > 0 && Balance >= amount + BankAccount.MaxTransactionFee)
         {
-            priorBalance = Balance;
             Balance -= amount;
             double fee = AccountCalculations.CalculateTransactionFee(amount, BankAccount.TransactionRate, BankAccount.MaxTransactionFee);
             Balance -= fee;
-            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, AccountType, "Cashier's Check"));
-            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, fee, AccountNumber, AccountNumber, AccountType, "Transaction Fee"));
+            AddTransaction(new Transaction(
+                Guid.NewGuid().ToString(),
+                DateTime.Now,
+                "Cashier's Check",
+                amount
+            ));
+            AddTransaction(new Transaction(
+                Guid.NewGuid().ToString(),
+                DateTime.Now,
+                "Transaction Fee",
+                fee
+            ));
             return true;
         }
         return false;
+    }
+
+    // Method to log transactions
+    private void AddTransaction(Transaction transaction)
+    {
+        if (transaction != null)
+        {
+            Transactions.Add(transaction);
+        }
     }
 
     // Method to display account information
     public virtual string DisplayAccountInfo()
     {
-        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance.ToString("C")}, Interest Rate: {InterestRate.ToString("P")}, Customer ID: {CustomerId}";
-    }
-
-    // Method to add a transaction to the account
-    public void AddTransaction(Transaction transaction)
-    {
-        _transactions.Add(transaction);
-    }
-
-    // Method to remove a transaction from the account
-    public void RemoveTransaction(Transaction transaction)
-    {
-        _transactions.Remove(transaction);
-    }
-
-    // Method to return all transactions for the account
-    public List<Transaction> GetAllTransactions()
-    {
-        return _transactions;
+        return $"Account Number: {AccountNumber}, Type: {AccountType}, Balance: {Balance:C}, Interest Rate: {InterestRate:P}, Customer ID: {CustomerId}";
     }
 }

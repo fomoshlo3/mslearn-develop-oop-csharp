@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; // Required for List<T>
 
 namespace Data_M2;
 
@@ -8,8 +8,6 @@ public partial class BankCustomer : IBankCustomer
     private static int s_nextCustomerId;
     private string _firstName = "Tim";
     private string _lastName = "Shao";
-    private readonly List<IBankAccount> _accounts;
-
     public string CustomerId { get; }
 
     public string FirstName
@@ -24,8 +22,6 @@ public partial class BankCustomer : IBankCustomer
         set { _lastName = value; }
     }
 
-    public IReadOnlyList<IBankAccount> Accounts => _accounts.AsReadOnly();
-
     static BankCustomer()
     {
         Random random = new Random();
@@ -37,7 +33,21 @@ public partial class BankCustomer : IBankCustomer
         FirstName = firstName;
         LastName = lastName;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
-        _accounts = new List<IBankAccount>();
+
+        // TASK 3: Step 1 - Initialize the Accounts list in the constructor
+        Accounts = new List<BankAccount>();
+    }
+
+    // TASK 3: Step 2 - Add List<BankAccount> property
+    public List<BankAccount> Accounts { get; set; }
+
+    // TASK 3: Step 3 - Add methods to manage accounts (e.g., AddAccount)
+    public void AddAccount(BankAccount account)
+    {
+        if (account != null && !Accounts.Contains(account))
+        {
+            Accounts.Add(account);
+        }
     }
 
     // Copy constructor for BankCustomer
@@ -46,6 +56,8 @@ public partial class BankCustomer : IBankCustomer
         this.FirstName = existingCustomer.FirstName;
         this.LastName = existingCustomer.LastName;
         this.CustomerId = (s_nextCustomerId++).ToString("D10");
-        _accounts = new List<IBankAccount>(existingCustomer._accounts);
+
+        // TASK 3: Step 4 - Copy the Accounts list in the copy constructor
+        Accounts = new List<BankAccount>(existingCustomer.Accounts);
     }
 }
