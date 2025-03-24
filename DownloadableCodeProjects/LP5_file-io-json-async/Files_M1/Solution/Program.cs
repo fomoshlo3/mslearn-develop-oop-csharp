@@ -76,6 +76,7 @@ class Program
         //     Console.WriteLine($"Entry: {entry}");
         // }
 
+
         Console.WriteLine("\nUse the File class to write and read CSV-formatted text files.");
 
         string label = "deposits";
@@ -148,7 +149,7 @@ class Program
 
         Console.WriteLine("\nUse the File class to perform file management operations.\n");
 
-        // Check whether the sample.txt file exists
+        // Check whether the append.txt file exists
         if (File.Exists(appendFilePath))
         {
             Console.WriteLine($"The {appendFilePath} file exists.");
@@ -164,7 +165,7 @@ class Program
 
         // Move the copy.txt file to the file location defined by the moveFilePath variable
         File.Move(copyFilePath, moveFilePath, true);
-        Console.WriteLine($"Moved file to: {moveFilePath}");
+        Console.WriteLine($"Moved {copyFilePath} to {moveFilePath}");
 
         // Delete the move.txt file
         if (File.Exists(moveFilePath))
@@ -172,7 +173,7 @@ class Program
             File.Delete(moveFilePath);
             Console.WriteLine($"Deleted file: {moveFilePath}");
         }
-
+        
         */
 
         Console.WriteLine("\nUse the StreamWriter and StreamReader classes.\n");
@@ -269,7 +270,6 @@ class Program
 
         Console.WriteLine($"\nTransaction data written using FileStream. File: {fileStreamPath}");
 
-
         // Read transaction data from file using FileStream
         using (FileStream fileStream = new FileStream(fileStreamPath, FileMode.Open, FileAccess.Read))
         {
@@ -278,6 +278,7 @@ class Program
             int bytesRead;
 
             Console.WriteLine("\nUsing FileStream to read/display transaction data.\n");
+
             while ((bytesRead = fileStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
             {
                 Console.WriteLine($"bytes read: {utf8Decoder.GetString(readBuffer, 0, bytesRead)}\n");
@@ -293,6 +294,7 @@ class Program
             // Use the FileStream.Read method to read the first 100 bytes
             bytesRead = fileStream.Read(readBuffer, 0, 100);
             Console.WriteLine($"Read first 100 bytes: {utf8Decoder.GetString(readBuffer, 0, bytesRead)}");
+
         }
 
         // Create a filepath for a binary file named binary.dat
@@ -316,5 +318,6 @@ class Program
             bool c = binaryReader.ReadBoolean();
             Console.WriteLine($"Binary data read from {binaryFilePath}: {a}, {b}, {c}");
         }
+
     }
 }
