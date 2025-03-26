@@ -129,9 +129,4 @@ public class Bank
     {
         _customers.Remove(customer);
     }
-
-    internal void AddCustomers(IEnumerable<BankCustomer> customers)
-    {
-        _customers.AddRange(customers);
-    }
 }

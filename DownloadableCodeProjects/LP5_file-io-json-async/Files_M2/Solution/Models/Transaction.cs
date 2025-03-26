@@ -16,6 +16,7 @@ public class Transaction
     private int targetAccountNumber;
     private string description;
 
+
     // Gets the unique identifier for the transaction.
     public Guid TransactionId
     {
@@ -86,7 +87,6 @@ public class Transaction
         transactionType = "";
         description = "";
     }
-
 
     // constructors
     public Transaction(DateOnly date, TimeOnly time, double balance, double amount, int sourceAccountNum, int targetAccountNum, string typeOfTransaction, string descriptionMessage = "")
