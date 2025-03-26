@@ -1653,7 +1653,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-In this exercise, you used the `JsonSerializer` class to back up and recover `BankAccount` and `BankCustomer` objects using JSON files. You also updated the `JsonStorage` and `JsonRetrieval` classes to include methods that can be used to save and load account and customer information.
+In this exercise, you used the `JsonSerializer` class serialize and deserialize JSON, beginning with simple conversions and progressing to a more complex data backup and restore implementation.
 
 ## Clean up
 
