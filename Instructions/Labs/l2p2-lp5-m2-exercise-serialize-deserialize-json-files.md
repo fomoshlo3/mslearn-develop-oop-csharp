@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Serialize and deserialize JSON files'
-    description: 'Learn how transform simple C# objects into JSON strings using JsonSerializer.Serialize, how to convert JSON strings into simple C# objects object using JsonSerializer.Deserialize, and how to use JsonSerializerOptions objects to customize serialization and deserialization for more complex objects. When objects can't be serialized directly due to design constraints, learn how to use Data Transfer Objects (DTOs) that can be used to implement serialization and deserialization of the objects without violating the encapsulation of the original object.'
+    description: 'Learn how serialize and deserialize JSON using JsonSerializer methods, how to use JsonSerializerOptions to customize serialization and deserialization, and how to use Data Transfer Objects (DTOs) to implement serialization and deserialization when objects can't be serialized directly.'
 ---
 
 # Serialize and deserialize JSON files
