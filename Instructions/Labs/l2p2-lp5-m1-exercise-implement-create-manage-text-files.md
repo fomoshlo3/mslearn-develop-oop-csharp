@@ -1302,7 +1302,7 @@ Use the following steps to complete this section of the exercise:
 
     ```
 
-In this exercise, you learned how to use the `System.IO` namespace to perform file input and output operations in C#. You learned how to use the `Directory`, `Path`, `File` `StreamWriter`, `StreamReader`, `FileStream`, `BinaryWriter`, and `BinaryReader` classes to create, read, and write text and binary files.
+In this exercise, you used the `System.IO` namespace to perform file input and output operations in C#. You learned how to use the `Directory`, `Path`, `File` `StreamWriter`, `StreamReader`, `FileStream`, `BinaryWriter`, and `BinaryReader` classes to create, read, and write text and binary files.
 
 ## Clean up
 
