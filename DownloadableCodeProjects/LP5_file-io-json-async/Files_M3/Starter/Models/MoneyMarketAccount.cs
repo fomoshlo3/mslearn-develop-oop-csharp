@@ -33,7 +33,7 @@ public class MoneyMarketAccount : BankAccount
     public override double InterestRate
     {
         get { return DefaultInterestRate; }
-        internal set { DefaultInterestRate = value; }
+        protected set { DefaultInterestRate = value; }
     }
 
     public override bool Withdraw(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description)

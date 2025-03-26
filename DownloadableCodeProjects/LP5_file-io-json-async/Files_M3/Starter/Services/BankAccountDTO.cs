@@ -10,7 +10,7 @@ public class BankAccountDTO
     public string AccountType { get; set; } = "";
     public double InterestRate { get; set; }
 
-        public static BankAccountDTO MapToDTO(BankAccount bankAccount)
+    public static BankAccountDTO MapToDTO(BankAccount bankAccount)
     {
         return new BankAccountDTO
         {
