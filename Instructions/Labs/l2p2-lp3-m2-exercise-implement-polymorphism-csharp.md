@@ -194,9 +194,6 @@ Use the following steps to complete this section of the exercise:
 
     The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
-    > [!TIP]
-    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Classes_M3 solution, navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
-
 ## Create interfaces that support monthly, quarterly, and yearly reporting
 
 You need to practice implementing interface-based polymorphism, but the existing app relies primarily on class inheritance. You decide to add reporting capabilities to your banking app. The reporting interfaces will define a set of methods that represent monthly, quarterly, and yearly reporting periods. Initially, the interfaces will be implemented by classes that generate reports for bank customers and bank accounts. In the future, the same interfaces could also be applied to other classes, such as bank branches or financial products. This makes the reporting interfaces a good candidate for practicing interface-based polymorphism.

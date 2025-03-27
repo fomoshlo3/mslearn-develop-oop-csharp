@@ -223,9 +223,6 @@ Use the following steps to complete this section of the exercise:
 
     The customer IDs, account numbers, and transaction amounts in your output will be different from the example output.
 
-    > [!TIP]
-    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Classes_M3 solution, navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
-
 ## Use JsonSerializer to serialize and deserialize a transaction object
 
 The `JsonSerializer` class in the `System.Text.Json` namespace provides functionality for converting C# objects to JSON and vice versa.

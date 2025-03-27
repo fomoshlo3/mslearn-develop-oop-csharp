@@ -144,9 +144,6 @@ Use the following steps to complete this section of the exercise:
 
     The customer IDs and account numbers in your output will be different from the example output. Remember that they're sequential values based on a randomly generated initial value.
 
-    > [!TIP]
-    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Classes_M3 solution, navigate to the LP1SampleApps/Classes_M3/Solution folder and open the Solution project in Visual Studio Code.
-
 ## Split the BankCustomer class into two partial class files
 
 Partial classes allow you to split the definition of a class across multiple files. This can be useful when a class has a large number of properties and methods, or when you want to separate the definition of a class into logical sections. Splitting a class between two partial class files can make your code easier to read and maintain. For example, if the methods of a class are logically grouped into different categories, you can place each group of methods in a separate partial class file. This enables a team of developers to work on different parts of a class without interfering with each other's work. By using partial classes, you can organize your code more effectively and improve the readability and maintainability of your code.
