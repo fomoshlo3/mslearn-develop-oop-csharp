@@ -68,7 +68,7 @@ In this task, you download the existing version of your banking app and review t
 
 Use the following steps to complete this section of the exercise:
 
-1. Download the starter code from the following URL: [Implement classes, properties, and methods - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/raw/refs/heads/main/DownloadableCodeProjects/Downloads/LP3SampleApps.zip)
+1. Download the starter code from the following URL: [Implement inheritance and polymorphism - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/raw/refs/heads/main/DownloadableCodeProjects/Downloads/LP3SampleApps.zip)
 
 1. Extract the contents of the LP3SampleApps.zip file to a folder location on your computer.
 
