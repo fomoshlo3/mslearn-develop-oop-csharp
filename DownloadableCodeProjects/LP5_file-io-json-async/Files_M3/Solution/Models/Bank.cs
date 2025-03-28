@@ -43,14 +43,8 @@ public class Bank
     // get customer based on Customer ID
     internal BankCustomer? GetCustomerById(string customerId)
     {
-        foreach (var customer in _customers)
-        {
-            if (customer.CustomerId.Equals(customerId, StringComparison.OrdinalIgnoreCase))
-            {
-                return customer;
-            }
-        }
-        return null;
+        return _customers.FirstOrDefault(customer => customer.CustomerId.Equals(customerId, StringComparison.OrdinalIgnoreCase));
+
     }
 
     internal int GetNumberOfTransactions()
