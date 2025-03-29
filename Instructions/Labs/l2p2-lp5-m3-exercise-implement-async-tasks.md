@@ -24,7 +24,7 @@ For additional help configuring the Visual Studio Code environment, see <a href=
 
 ## Exercise scenario
 
-Suppose you've agreed to help a non-profit company with a software project. Before the project kicks off, you decide to update your object-oriented programming skills by developing a banking app. The current version of your app supports basic operations such as creating accounts, managing transactions, and archiving bank records. To practice asynchronous programming, you're going convert synchronous file I/O methods into asynchronous tasks that improve the responsiveness of your app. You also plan to evaluate the performance gains achieved by running async tasks in parallel.
+Suppose you've agreed to help a non-profit company with a software project. Before the project kicks off, you decide to update your object-oriented programming skills by developing a banking app. The current version of your app supports basic operations such as creating accounts, managing transactions, and archiving bank records. To practice asynchronous programming, you're going convert synchronous file I/O methods into asynchronous tasks that improve the responsiveness of your app. You'll also investigate the performance gains achieved by running async tasks in parallel.
 
 This exercise includes the following tasks:
 
