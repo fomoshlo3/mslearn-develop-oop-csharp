@@ -4,7 +4,7 @@ lab:
     description: 'Learn how to improve app responsiveness by converting synchronous methods into asynchronous tasks, and how to reduce performance bottlenecks in your apps by running asynchronous tasks in parallel.'
 ---
 
-# Serialize and deserialize JSON files
+# Implement asynchronous tasks
 
 In this exercise, you learn how to implement asynchronous tasks in C# to improve the responsiveness of your apps. You implement the `async` and `await` keywords to convert synchronous file I/O methods into asynchronous tasks that use the `Task` class to represent the result of an asynchronous operation. You also learn how to run tasks in parallel using the `Parallel` class, using methods such as `Parallel.ForEachAsync` to improve the performance of your code.
 
