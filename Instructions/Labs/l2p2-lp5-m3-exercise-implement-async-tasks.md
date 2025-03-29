@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Implement asynchronous tasks'
-    description: 'Learn how reduce performance bottlenecks and improve app responsiveness by implementing tasks asynchronously and in parallel.'
+    description: 'Learn how to improve app responsiveness by converting synchronous methods into asynchronous tasks, and how to reduce performance bottlenecks in your apps by running asynchronous tasks in parallel.'
 ---
 
 # Serialize and deserialize JSON files
