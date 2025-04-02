@@ -24,7 +24,7 @@ For additional help configuring the Visual Studio Code environment, see <a href=
 
 ## Exercise scenario
 
-Suppose you've agreed to help a non-profit company with a software project. Before the project kicks off, you decide to update your object-oriented programming skills by developing a banking app. The current version of your app supports basic operations such as creating accounts, depositing and withdrawing money, and transferring funds between accounts. To practice file I/O operations, you're going implement JSON file I/O in the app's Program.cs file and helper classes. You plan to work you way through some basic serialization and deserialization tasks and then finish up with more advanced tasks like storing and retrieving bank accounts.
+Suppose you've agreed to help a non-profit company with a software project. Before the project kicks off, you decide to update your object-oriented programming skills by developing a banking app. The current version of your app supports basic operations such as creating accounts, depositing and withdrawing money, and transferring funds between accounts. To practice JSON serialization and deserialization skills, you're going implement JSON file I/O in the app's Program.cs file and helper classes. You plan to work you way through some basic serialization and deserialization tasks and then finish up with more advanced tasks like storing and retrieving bank accounts.
 
 This exercise includes the following tasks:
 
