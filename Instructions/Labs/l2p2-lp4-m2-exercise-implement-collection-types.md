@@ -48,6 +48,46 @@ This exercise includes the following tasks:
 
 ---
 
+## Review the current version of your project
+
+In this task, you download the existing version of your project and review the code.
+
+Use the following steps to complete this section of the exercise:
+
+1. Download the starter code from the following URL: [Implement Collection Types - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/blob/main/DownloadableCodeProjects/Downloads/LP4SampleApps.zip)
+
+1. Extract the contents of the LP4SampleApps.zip file to a folder location on your computer.
+
+1. Expand the LP4SampleApps folder, and then open the `Data_M2` folder.
+
+    The Data_M2 folder contains the following code project folders:
+
+    - Solution
+    - Starter
+
+    The **Starter** folder contains the starter project files for this exercise.
+
+1. Use Visual Studio Code to open the **Starter** folder.
+
+1. In the EXPLORER view, collapse the **STARTER** folder, select **SOLUTION EXPLORER**, and expand the **Data_M2** project.
+
+    You should see the following project files:
+
+    - Program.cs
+
+1. Take a few minutes to open and review the Program.cs file.
+
+    - `Program.cs`: This file contains the main entry point of the application, demonstrating the creation and manipulation of date and time values.
+
+1. Run the app and review the output in the terminal window.
+
+    To run your app, right-click the **Data_M2** project in the Solution Explorer, select **Debug**, and then select **Start New Instance**.
+
+    > [!TIP]
+    > If you encounter any issues while completing this exercise, review the provided code snippets and compare them to your own code. Pay close attention to the syntax and structure of the code. If you're still having trouble, you can review the solution code in the sample apps that you downloaded at the beginning of this exercise. To view the Data_M2 solution, navigate to the LP4SampleApps/Data_M2/Solution folder and open the Solution project in Visual Studio Code.
+
+---
+
 ## Task 1: Create and manage objects in `Program.cs`
 
 You will implement functionality to create `Bank`, `BankCustomer`, and `BankAccount` objects, add accounts to customers and customers to the bank, simulate transactions, ensure unique transactions using a `HashSet`, and generate a report of transactions within a date range. Each step aligns with a `// Task 1` comment in the `Program.cs` file to help you locate where to add the code.
