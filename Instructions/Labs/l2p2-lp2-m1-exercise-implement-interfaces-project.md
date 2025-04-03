@@ -92,18 +92,18 @@ Now, you will create a class that implements the `IPerson` interface. This class
 1. In the `ImplementInterfaces` project, create a new file named `Student.cs`.
 1. Add the following code to implement the `IPerson` interface in the `Student` class. Note that we initialize the properties with default values to avoid nullable warnings:
 
-   ```csharp
-   public class Student : IPerson
-   {
-       public string Name { get; set; } = string.Empty;
-       public int Age { get; set; } = 0;
+    ```csharp
+    public class Student : IPerson
+    {
+        public string Name { get; set; } = string.Empty;
+        public int Age { get; set; } = 0;
 
-       public void DisplayInfo()
-       {
-           Console.WriteLine($"Student Name: {Name}, Age: {Age}");
-       }
-   }
-
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Student Name: {Name}, Age: {Age}");
+        }
+    }
+    ```
 
 > **Note:**
 > In C#, the code `public string Name { get; set; } = string.Empty;` and `public int Age { get; set; } = 0;` sets default values for the properties (`Name` starts as an empty string, and `Age` starts as 0). This helps avoid warnings from the compiler about "nullable" issues. If you don’t set these default values (e.g., just use `public string Name { get; set; }`), your code will still work, but the compiler will warn you that these properties might not be initialized before being used.
