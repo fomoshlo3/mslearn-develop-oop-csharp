@@ -12,15 +12,19 @@ In this exercise, you will create a console app to define and implement interfac
 
 This exercise takes approximately **20** minutes to complete.
 
+---
+
 ## Before you start
 
 Before you can start this exercise, you need to:
 
-1. Ensure that you have the latest short term support (STS) version of the .NET SDK installed on your computer. You can download the latest versions of the .NET SDK using the following URL: Download .NET
-1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code using the following URL: Download Visual Studio Code
+1. Ensure that you have the latest short term support (STS) version of the .NET SDK installed on your computer. You can download the latest versions of the .NET SDK using the following URL: [Download .NET](https://dotnet.microsoft.com/download).
+1. Ensure that you have Visual Studio Code installed on your computer. You can download Visual Studio Code using the following URL: [Download Visual Studio Code](https://code.visualstudio.com/).
 1. Ensure that you have the C# Dev Kit configured in Visual Studio Code.
 
-For additional help configuring the Visual Studio Code environment, see Install and configure Visual Studio Code for C# development
+For additional help configuring the Visual Studio Code environment, see [Install and configure Visual Studio Code for C# development](https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code).
+
+---
 
 ## Exercise scenario
 
@@ -35,9 +39,17 @@ This exercise includes the following tasks:
 1. Demonstrate interface implementation by creating instances of the classes and calling their methods.
 1. Test the implemented interfaces and their implementations to ensure they work as expected.
 
+---
+
 ## Task 1: Create a new C# project
 
 To start, you need to create a new C# project in your development environment. This project will serve as the foundation for implementing interfaces and their respective classes.
+
+### What you'll learn
+
+- How to create a new C# console application using the .NET CLI.
+
+### Steps
 
 1. Open Visual Studio Code.
 1. Ensure that the C# Dev Kit extension is installed.
@@ -61,86 +73,105 @@ To start, you need to create a new C# project in your development environment. T
    code .
    ```
 
-### Check your work: Create a new C# project
+### Check your work
 
 Ensure that the project has been created successfully by verifying the presence of the `Program.cs` file in the project directory. You should also see the project structure in the Visual Studio Code Explorer pane.
 
+---
+
 ## Task 2: Define an interface with method signatures and properties
 
-Next, you will define an interface that includes method signatures and properties. This interface will be used to enforce a contract for any class that implements it.
+Next, you will define an interface that includes method signatures and properties. This interface will be used to enforce a contract for any class that implements it. The code defines an interface in C# which shows interfaces enforcing consistent behavior across classes.
+
+### Steps
 
 1. In the `ImplementInterfaces` project, create a new file named `IPerson.cs`.
 1. Add the following code to define the `IPerson` interface:
 
    ```csharp
-   public interface IPerson
+   namespace ImplementInterfaces
    {
-       string Name { get; set; }
-       int Age { get; set; }
-       void DisplayInfo();
+       public interface IPerson
+       {
+           string Name { get; set; }
+           int Age { get; set; }
+           void DisplayInfo();
+       }
    }
    ```
 
-### Check your work: Define an interface
+### Check your work
 
 Verify that the `IPerson` interface is correctly defined by checking the `IPerson.cs` file. The interface should include the `Name` and `Age` properties, as well as the `DisplayInfo` method signature.
 
+---
+
 ## Task 3: Implement the defined interface in a class
 
-Now, you will create a class that implements the `IPerson` interface. This class will provide concrete implementations for the interface members.
+Now, you will create a class that implements the `IPerson` interface. This class will provide concrete implementations for the interface members. The code in this step implements an interface in a class and provides concrete implementations for the interface.
+
+### Steps
 
 1. In the `ImplementInterfaces` project, create a new file named `Student.cs`.
-1. Add the following code to implement the `IPerson` interface in the `Student` class. Note that we initialize the properties with default values to avoid nullable warnings:
+1. Add the following code to implement the `IPerson` interface in the `Student` class:
 
-    ```csharp
-    public class Student : IPerson
-    {
-        public string Name { get; set; } = string.Empty;
-        public int Age { get; set; } = 0;
+   ```csharp
+   namespace ImplementInterfaces
+   {
+       public class Student : IPerson
+       {
+           public string Name { get; set; } = string.Empty;
+           public int Age { get; set; } = 0;
 
-        public void DisplayInfo()
-        {
-            Console.WriteLine($"Student Name: {Name}, Age: {Age}");
-        }
-    }
-    ```
+           public void DisplayInfo()
+           {
+               Console.WriteLine($"Student Name: {Name}, Age: {Age}");
+           }
+       }
+   }
+   ```
 
-> **Note:**
-> In C#, the code `public string Name { get; set; } = string.Empty;` and `public int Age { get; set; } = 0;` sets default values for the properties (`Name` starts as an empty string, and `Age` starts as 0). This helps avoid warnings from the compiler about "nullable" issues. If you don’t set these default values (e.g., just use `public string Name { get; set; }`), your code will still work, but the compiler will warn you that these properties might not be initialized before being used.
-
-### Check your work: Implement the defined interface
-
+### Check your work
 Ensure that the `Student` class correctly implements the `IPerson` interface by checking the `Student.cs` file. The class should provide implementations for the `Name` and `Age` properties, as well as the `DisplayInfo` method.
+
+---
 
 ## Task 4: Create another class that implements different behavior
 
-You will now create another class that implements the `IPerson` interface but with different behavior.
+You will now create another class that implements the `IPerson` interface but with different behavior. Task 4 implements the same interface in multiple classes. This demonstrates how to provide unique behavior for each class using an interface.
+
+### Steps
 
 1. In the `ImplementInterfaces` project, create a new file named `Teacher.cs`.
 1. Add the following code to implement the `IPerson` interface in the `Teacher` class:
 
    ```csharp
-   public class Teacher : IPerson
+   namespace ImplementInterfaces
    {
-       public string Name { get; set; } = string.Empty;
-       public int Age { get; set; } = 0;
-
-       public void DisplayInfo()
+       public class Teacher : IPerson
        {
-           Console.WriteLine($"Teacher Name: {Name}, Age: {Age}");
+           public string Name { get; set; } = string.Empty;
+           public int Age { get; set; } = 0;
+
+           public void DisplayInfo()
+           {
+               Console.WriteLine($"Teacher Name: {Name}, Age: {Age}");
+           }
        }
    }
    ```
 
-In the teacher class the `DisplayInfo` method differs from the version in the student class with teh console output starting with "Teacher Name."
-
-### Check your work: Create another class that implements the same interface
+### Check your work
 
 Verify that the `Teacher` class correctly implements the `IPerson` interface by checking the `Teacher.cs` file. The class should provide implementations for the `Name` and `Age` properties, as well as the `DisplayInfo` method.
 
+---
+
 ## Task 5: Demonstrate interface implementation
 
-In this task, you will demonstrate the use of the interface by creating instances of the `Student` and `Teacher` classes and calling their methods.
+In this task, you will demonstrate the use of the interface by creating instances of the `Student` and `Teacher` classes and calling their methods. This demonstrates how to use polymorphism to treat objects of different classes as the same interface type.
+
+### Steps
 
 1. Open the `Program.cs` file in the `ImplementInterfaces` project.
 1. Replace the existing code with the following:
@@ -154,8 +185,8 @@ In this task, you will demonstrate the use of the interface by creating instance
        {
            static void Main(string[] args)
            {
-               IPerson student = new Student { Name = "John Doe", Age = 20 };
-               IPerson teacher = new Teacher { Name = "Jane Smith", Age = 35 };
+               IPerson student = new Student { Name = "Eric Solomon", Age = 20 };
+               IPerson teacher = new Teacher { Name = "Kayla Lewis", Age = 35 };
 
                student.DisplayInfo();
                teacher.DisplayInfo();
@@ -164,33 +195,49 @@ In this task, you will demonstrate the use of the interface by creating instance
    }
    ```
 
-### Check your work: Demonstrate interface implementation
+### Check your work
 
-You should see the `dotnet run` output displaying the information for both the student and the teacher, demonstrating the interface implementation.
+Run the application using the following command:
+
+```bash
+dotnet run
+```
+
+You should see the output displaying the information for both the student and the teacher, demonstrating the interface implementation.
+
+---
 
 ## Task 6: Test the implemented interfaces
 
-Finally, you will test the implemented interfaces and their respective classes to ensure they function correctly.
+Next, you will test the implemented interfaces and their respective classes to ensure they function correctly. This section of code demonstrates how to test interface implementations in a C# application.
+
+### Steps
 
 1. Ensure that the `Program.cs` file contains the code to create instances of `Student` and `Teacher` and calls their `DisplayInfo` methods.
 1. Run the application again using the following command:
 
-    ```bash
-    dotnet run
-    ```
+   ```bash
+   dotnet run
+   ```
 
 1. Verify the output to ensure that the information for both the student and the teacher is displayed correctly.
 
-### Check your work: Test the implemented interfaces
+### Check your work
 
 Confirm that the application runs without errors and displays the correct information for both the student and the teacher. The output should look similar to the following:
 
 ```console
-Student Name: John Doe, Age: 20
-Teacher Name: Jane Smith, Age: 35
+Student Name: Eric Solomon, Age: 20
+Teacher Name: Kayla Lewis, Age: 35
 ```
 
-In this exercise, you learned how to define and implement interfaces in C# to enforce consistent behavior across multiple classes. By creating a shared interface and implementing it in different classes, you ensured that each class adhered to a common contract while allowing for unique implementations. You also demonstrated the use of interfaces by creating instances of these classes and testing their functionality. This approach is a powerful way to design flexible and maintainable applications in object-oriented programming.
+---
+
+## Key learnings
+
+This exercise demonstrated how to use interfaces in C# to enforce consistent behavior across multiple classes. By implementing the `IPerson` interface in both `Student` and `Teacher` classes, you explored how interfaces enable polymorphism and allow different classes to share a common contract while maintaining unique behavior. This approach is essential for building scalable and maintainable applications.
+
+---
 
 ## Clean up
 
