@@ -15,6 +15,6 @@ public class Teacher : IPerson
 
     public void Greet()
     {
-        Console.WriteLine($"Hello, I am {Name}, a teacher with {Age} years of experience.");
+        Console.WriteLine($"Hello, I am {Name}, and I am a teacher.");
     }
 }

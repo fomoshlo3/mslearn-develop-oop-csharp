@@ -136,7 +136,7 @@ The `Teacher` and `Student` classes now implement the new `Role` property. The `
     
         public void Greet()
         {
-            Console.WriteLine($"Hello, I am {Name}, a teacher with {Age} years of experience.");
+            Console.WriteLine($"Hello, I am {Name}, and I am a teacher.");
         }
     }
     ```  
@@ -324,7 +324,7 @@ In this task, you will create a `Classroom` class that uses `List<T>` to store s
 
    ```plaintext  
         Teacher Name: Helen Karu, Age: 35
-        Hello, I am Helen Karu, a teacher with 35 years of experience.
+        Hello, I am Helen Karu, and I am a teacher.
         Student Name: Eba Lencho, Age: 20
         Hello, my name is Eba Lencho and I am a Student.
         
