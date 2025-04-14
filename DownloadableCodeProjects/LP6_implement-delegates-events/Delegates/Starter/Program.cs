@@ -13,7 +13,7 @@ class Program
         Bank bank = new Bank();
 
         // Generate 2 years of transactions for 50 customers
-        GenerateCustomerDataAsync;
+        await CreateDataLogsAsync.GenerateCustomerDataAsync();
 
         // Load the customer data asynchronously from the file
         var asyncLoadTask = LoadCustomerLogsAsync.ReadCustomerDataAsync(bank);

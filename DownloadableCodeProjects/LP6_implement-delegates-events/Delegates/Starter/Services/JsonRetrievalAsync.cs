@@ -67,7 +67,8 @@ public static class JsonRetrievalAsync
         List<BankCustomer> customers = new List<BankCustomer>();
         foreach (var filePath in Directory.GetFiles(Path.Combine(directoryPath, "Customers"), "*.json"))
         {
-            customers.Add(await LoadBankCustomerAsync(bank, filePath, accountsDirectoryPath, transactionsDirectoryPath));
+            // the LoadBankCustomerAsync method will add the customer to the bank
+            await LoadBankCustomerAsync(bank, filePath, accountsDirectoryPath, transactionsDirectoryPath);
         }
         return customers;
     }

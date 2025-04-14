@@ -23,6 +23,25 @@ public class CreateDataLogsAsync
         var approvedCustomers = await ApprovedCustomersLoaderAsync.LoadApprovedNamesAsync();
 
         string configDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Config");
+        string customersDirectoryPath = Path.Combine(configDirectoryPath, "Customers");
+        string accountsDirectoryPath = Path.Combine(configDirectoryPath, "Accounts");
+        string transactionsDirectoryPath = Path.Combine(configDirectoryPath, "Transactions");
+
+        // Delete the Customers, Accounts, and Transactions directories if they exist
+        if (Directory.Exists(customersDirectoryPath))
+        {
+            Directory.Delete(customersDirectoryPath, true);
+        }
+        
+        if (Directory.Exists(accountsDirectoryPath))
+        {
+            Directory.Delete(accountsDirectoryPath, true);
+        }
+        
+        if (Directory.Exists(transactionsDirectoryPath))
+        {
+            Directory.Delete(transactionsDirectoryPath, true);
+        }
 
         foreach (var customer in approvedCustomers)
         {
