@@ -15,34 +15,33 @@ class Program
         // Generate 2 years of transactions for 50 customers
         GenerateCustomerDataAsync;
 
-        await Task.Delay(2000);
-
         // Load the customer data asynchronously from the file
         var asyncLoadTask = LoadCustomerLogsAsync.ReadCustomerDataAsync(bank);
 
         // Wait for the async task to complete
         await asyncLoadTask;
 
-        int countBank2Customers = 0;
-        int countBank2Accounts = 0;
-        int countBank2Transactions = 0;
+        // Get the bank information
+        int countBankCustomers = 0;
+        int countBankAccounts = 0;
+        int countBankTransactions = 0;
 
-        foreach (var customer in bank2.GetAllCustomers())
+        foreach (var customer in bank.GetAllCustomers())
         {
-            countBank2Customers++;
+            countBankCustomers++;
             foreach (var account in customer.Accounts)
             {
-                countBank2Accounts++;
+                countBankAccounts++;
                 foreach (var transaction in account.Transactions)
                 {
-                    countBank2Transactions++;
+                    countBankTransactions++;
                 }
             }
         }
 
-        Console.WriteLine($"\nBank 2 information...");
-        Console.WriteLine($"Number of customers: {countBank2Customers}");
-        Console.WriteLine($"Number of accounts: {countBank2Accounts}");
-        Console.WriteLine($"Number of transactions: {countBank2Transactions}");
+        Console.WriteLine($"\nBank information...");
+        Console.WriteLine($"Number of customers: {countBankCustomers}");
+        Console.WriteLine($"Number of accounts: {countBankAccounts}");
+        Console.WriteLine($"Number of transactions: {countBankTransactions}");
     }
 }
