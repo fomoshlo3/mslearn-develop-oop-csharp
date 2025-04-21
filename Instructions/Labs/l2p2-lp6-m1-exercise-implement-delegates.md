@@ -493,11 +493,11 @@ Use the following steps to complete this section of the exercise:
 
 ## Replace custom delegates with strongly typed `Action` and `Func` delegates
 
-In C#, strongly typed delegates like `Action` and `Func` provide a way to define and use delegates without explicitly declaring custom delegate types. These are part of the `System` namespace and are commonly used for scenarios involving callbacks, event handling, or passing methods as parameters.
+In C#, strongly typed delegates like `Action` and `Func` provide a way to define and use delegates without explicitly declaring custom delegate types. These strongly typed delegates are part of the `System` namespace and are commonly used for scenarios involving callbacks, event handling, and other scenaraios where passing methods as parameters is required.
 
-In this task, you will replace custom delegate types with strongly typed delegates in the BankAccount and Bank classes.
+In this task, you replace custom delegate types with strongly typed delegates in the BankAccount and Bank classes.
 
-1. Open the BankAccount.cs file and then scroll to the top of the file.
+1. Open the BankAccount.cs file, and then scroll to the top of the file.
 
 1. Comment out the custom delegate definition:
 
@@ -507,7 +507,7 @@ In this task, you will replace custom delegate types with strongly typed delegat
 
     ```
 
-1. Scroll down to find the `AddTransaction` method in the BankAccount class.
+1. Scroll down to the bottom of the file and locate the `AddTransaction` method.
 
 1. To replace the custom delegate with `Action<Transaction>`, update the method using the following code:
 
@@ -533,13 +533,14 @@ In this task, you will replace custom delegate types with strongly typed delegat
 
     ```csharp
 
+    // void AddTransaction(Transaction transaction, TransactionProcessedCallback? transactionProcessedCallback = null);
     void AddTransaction(Transaction transaction, Action<Transaction>? transactionProcessedCallback = null);
 
     ```
 
 1. Open the Bank.cs file.
 
-    You can replace the `CustomerComparison` delegate with `Func<BankCustomer, BankCustomer, int>`, which is a strongly typed delegate that takes two `BankCustomer` objects and returns an integer.
+    You will be replacing the `CustomerComparison` delegate with `Func<BankCustomer, BankCustomer, int>`, which is a strongly typed delegate that takes two `BankCustomer` objects and returns an integer.
 
 1. Scroll to the top of the file and then comment out the custom delegate definition:
 
@@ -573,4 +574,10 @@ In this task, you will replace custom delegate types with strongly typed delegat
 
 1. Run the app and review the output.
 
-    Notice that the app still works as expected. The strongly typed delegates `Action` and `Func` are used instead of custom delegate types.
+    Notice that the strongly typed delegates (`Action` and `Func`) enable the same flexible behavior as the custom delegates, but with less code complexity and improved readability.
+
+In this exercise, you learned how to declare, instantiate, and invoke delegates for scenarios that require dynamic method invocation. You implemented callback and sorting scenarios using custom delegates, and then replaced the custom delegates with strongly typed `Action` and `Func` delegates that reduce code complexity while providing the same functionality. You also learned how to use lambda expressions to define the delegate logic inline, which can make your code more concise and easier to read.
+
+## Clean up
+
+Now that you've finished the exercise, consider archiving your project files for review at a later time. Having your own projects available for review can be a valuable resource when you're learning to code. Also, building up a portfolio of projects can be a great way to demonstrate your skills to potential employers.

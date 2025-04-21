@@ -17,6 +17,7 @@ public interface IBankAccount
     void ApplyRefund(double refund, DateOnly transactionDate, TimeOnly transactionTime, string description);
     bool IssueCashiersCheck(double amount, DateOnly transactionDate, TimeOnly transactionTime, string description);
     string DisplayAccountInfo();
-    void AddTransaction(Transaction transaction);
+    // void AddTransaction(Transaction transaction, TransactionProcessedCallback? transactionProcessedCallback = null);
+    void AddTransaction(Transaction transaction, Action<Transaction>? transactionProcessedCallback = null);
     List<Transaction> GetAllTransactions();
 }

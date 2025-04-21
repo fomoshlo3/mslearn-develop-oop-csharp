@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace Delegates;
 
+// public delegate int CustomerComparison(BankCustomer x, BankCustomer y);
+
 public class Bank
 {
     // Fields
@@ -24,6 +26,20 @@ public class Bank
     internal IEnumerable<BankCustomer> GetAllCustomers()
     {
         return new List<BankCustomer>(_customers);
+    }
+
+    // public IEnumerable<BankCustomer> GetSortedCustomers(CustomerComparison comparison)
+    // {
+    //     var sortedCustomers = _customers.ToList();
+    //     sortedCustomers.Sort((x, y) => comparison(x, y));
+    //     return sortedCustomers;
+    // }
+
+    public IEnumerable<BankCustomer> GetSortedCustomers(Func<BankCustomer, BankCustomer, int> comparison)
+    {
+        var sortedCustomers = _customers.ToList();
+        sortedCustomers.Sort((x, y) => comparison(x, y));
+        return sortedCustomers;
     }
 
     internal IEnumerable<BankCustomer> GetCustomersByName(string firstName, string lastName)

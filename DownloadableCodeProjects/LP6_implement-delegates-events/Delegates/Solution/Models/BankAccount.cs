@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Delegates;
 
+// public delegate void TransactionProcessedCallback(Transaction transaction);
+
+// Method to add a transaction to the account
 public class BankAccount : IBankAccount
 {
     private static int s_nextAccountNumber;
@@ -75,13 +78,21 @@ public class BankAccount : IBankAccount
             if (description.Contains("-(TRANSFER)"))
             {
                 transactionType = "Transfer";
+                AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
             }
-            else if(description.Contains("-(BANK REFUND)"))
+            else if (description.Contains("-(BANK REFUND)"))
             {
                 transactionType = "Bank Refund";
+                AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description), transaction =>
+                {
+                    Console.WriteLine($"Log the refund to customer {Owner.ReturnFullName()} for account {AccountNumber}.");
+                });
             }
-
-            AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
+            else
+            {
+                transactionType = "Deposit";
+                AddTransaction(new Transaction(transactionDate, transactionTime, priorBalance, amount, AccountNumber, AccountNumber, transactionType, description));
+            }
         }
     }
 
@@ -159,9 +170,16 @@ public class BankAccount : IBankAccount
     }
 
     // Method to add a transaction to the account
-    public void AddTransaction(Transaction transaction)
+    // public void AddTransaction(Transaction transaction, TransactionProcessedCallback? callback = null)
+    // {
+    //     _transactions.Add(transaction);
+    //     callback?.Invoke(transaction); // Invoke the callback if provided
+    // }
+
+    public void AddTransaction(Transaction transaction, Action<Transaction>? callback = null)
     {
         _transactions.Add(transaction);
+        callback?.Invoke(transaction); // Invoke the callback if provided
     }
 
     // Method to remove a transaction from the account
