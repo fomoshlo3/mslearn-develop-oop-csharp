@@ -6,12 +6,12 @@ lab:
 
 # Implement delegates in a C# app
 
-Delegates enable developers to encapsulate methods and pass them as parameters, allowing for flexible and extensible code design. Delegates are useful when implementing callback methods, custom sorting or filtering, multicast, and other real-world scenarios.
+Delegates enable developers to encapsulate methods and pass them as parameters, allowing for flexible and extensible code design. Delegates are useful when implementing callback methods, custom sorting or filtering, and many other programming scenarios.
 
 > [!NOTE]
-> Delegates are also used in event handling, where you can define a delegate type that represents the signature of the event handler methods. The event-handling scenario is covered separately.
+> Delegates are also used as event handlers, where you define a delegate type that represents the signature of the event handler methods. The implementation of event publishers and subscribers is covered separately.
 
-In this exercise, you declare, instantiate, and invoke delegates that implement callback and sorting scenarios. You will implement custom delegates to perform callback sorting scenarios, and then replace the custom delegates with strongly-typed `Action` and `Func` delegates that reduce code complexity and improve readability.
+In this exercise, you declare, instantiate, and invoke delegates that implement callback and custom sorting scenarios. You implement custom delegates to perform callback and sorting scenarios, and then replace the custom delegates with strongly typed `Action` and `Func` delegates that reduce code complexity and improve readability.
 
 This exercise takes approximately **20** minutes to complete.
 
@@ -29,17 +29,17 @@ For additional help configuring the Visual Studio Code environment, see <a href=
 
 ## Exercise scenario
 
-Suppose you've agreed to help a non-profit company with a software project. Before the project kicks off, you decide to update your object-oriented programming skills by developing a banking app. The current version of your app supports basic operations such as creating accounts, depositing and withdrawing money, and transferring funds between accounts. To practice working with delegates, you're going implement delegates in the `BankAccount` and `Bank` classes. You plan to start by implementing custom delegates and then transition to using strongly-typed delegates.
+Suppose you've agreed to help a non-profit company with a software project. Before the project kicks off, you decide to update your object-oriented programming skills by developing a banking app. The current version of your app supports basic operations such as creating accounts, making deposits and withdrawals, and transferring funds between accounts. To practice implementing delegates, you're going add delegates to the `Bank` and `BankAccount` classes. You plan to start by implementing custom delegates and then transition to strongly typed delegates that implement the same behavior.
 
 This exercise includes the following tasks:
 
 1. Review the current version of your banking app.
 
-1. Implement a custom delegate that performs callback tasks adding transactions to an account.
+1. Implement a custom delegate that performs callback tasks after adding transactions to an account.
 
 1. Implement a custom delegate that returns a list of sorted customers.
 
-1. Replace custom delegates with strongly-typed `Action` and `Func` delegates.
+1. Replace custom delegates with strongly typed `Action` and `Func` delegates.
 
 ## Review the current version of your banking app
 
@@ -47,9 +47,9 @@ In this task, you download the existing version of your banking app and review t
 
 Use the following steps to complete this section of the exercise:
 
-1. Download the starter code from the following URL: [Access local files asynchronously - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/raw/refs/heads/main/DownloadableCodeProjects/Downloads/LP6SampleApps.zip)
+1. Download the starter code from the following URL: [Implement delegates in a C# app - exercise code projects](https://github.com/MicrosoftLearning/mslearn-develop-oop-csharp/raw/refs/heads/main/DownloadableCodeProjects/Downloads/LP6SampleApps.zip)
 
-1. Extract the contents of the LP5SampleApps.zip file to a folder location on your computer.
+1. Extract the contents of the LP6SampleApps.zip file to a folder location on your computer.
 
     For example, if your running Windows, you can extract the file contents to your Desktop folder.
 
@@ -68,6 +68,8 @@ Use the following steps to complete this section of the exercise:
 
     You should see the following project folders and files:
 
+    - Config
+        - ApprovedCustomers.json
     - Interfaces
         - IBankAccount.cs
         - IBankCustomer.cs
@@ -89,6 +91,7 @@ Use the following steps to complete this section of the exercise:
         - ApprovedCustomerLoaderAsync.cs
         - BankAccountDTO.cs
         - BankCustomerDTO.cs
+        - CreateDataLogsAsync.cs
         - CustomerReportGenerator.cs
         - Extensions.cs
         - JsonRetrievalAsync.cs
@@ -105,13 +108,13 @@ Use the following steps to complete this section of the exercise:
 
     - `BankCustomer.cs`: This file defines the BankCustomer partial class, which implements the IBankCustomer interface and includes properties and constructors for customer constructor.
 
-    - `CreateDataLogsAsync.cs`: This file includes a method that uses `ApprovedCustomerLoaderAsync` and `SimulateDepositsWithdrawalsTransfers` to generate two years of transactions for 50 bank customers,and then stores the data as JSON files using `JsonStorageAsync`.
+    - `CreateDataLogsAsync.cs`: This file includes a method that uses `ApprovedCustomerLoaderAsync` and `SimulateDepositsWithdrawalsTransfers` to generate two years of transactions for 50 bank customers, and then stores the data as JSON files using `JsonStorageAsync`.
 
-    - `SimulateDepositsWithdrawalsTransfers.cs`: This file includes methods that simulate deposits, withdrawals, and transfers for bank accounts.
+    - `SimulateDepositsWithdrawalsTransfers.cs`: This file uses methods of the account classes to simulate deposits, withdrawals, and transfers for a bank account.
 
-    - `Program.cs`: This file includes the main entry point for the app. Program.cs uses `CreateDataLogsAsync` to create two years of transaction data for 50 customers, and then uses `LoadCustomerLogsAsync` to load the customer data into a `bank` object.
+    - `Program.cs`: This file provides the main entry point for the app. Program.cs uses `CreateDataLogsAsync` to save two years of bank transactions to JSON files for 50 customers, and then uses `LoadCustomerLogsAsync` to load the customer data into a `bank` object.
 
-    Notice that a bank object includes a collection of bank customer objects, and that each bank customer object includes a collection of bank account objects for that customer. The account objects include a collection of transactions, which provide a record of the deposits, withdrawals, and transfers associated with the account. The SimulateDepositsWithdrawalsTransfers class is used simulate customer account activity by generating transactions for each account. The app is able to store and retrieve customer and account information.
+    Notice that a bank object includes a collection of bank customer objects, and that each bank customer object includes a collection of bank account objects for that customer. Each account object includes a collection of transactions, which provide a record of the deposits, withdrawals, and transfers associated with the account. The `SimulateDepositsWithdrawalsTransfers` class is used simulate customer account activity by generating transactions for each account. The app is able to store and retrieve customer and account information.
 
 1. Run the app and review the output in the terminal window.
 
@@ -179,11 +182,11 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
-    The output shows the names of the 50 customer objects that were created. Each customer has three account types: Checking, Savings, and MoneyMarket. Transactions are generated at a rate of about 20 per month, so each customer has about 480 transactions spread across two years. The transactions are mostly associated with the checking accounts. Transactions include deposits, withdrawals, transfers, and bank refunds.
+    The output shows the names of the 50 customer objects that were created. Each customer has three account types: Checking, Savings, and MoneyMarket. The simulator generates about 20 transactions per month for each customer, so each customer has about 480 transactions spread across two years. The transactions are mostly associated with the checking accounts. Transactions include deposits, withdrawals, transfers, and bank refunds.
 
-## Implement a custom delegate that performs callback tasks adding transactions to an account
+## Implement a custom delegate that performs callback tasks after adding transactions to an account
 
-Delegates can be used to implement callback methods that run when an asynchronous operation completes. In this task, you implement a custom delegate that performs callback tasks after adding transactions to an account. A callback delegate can be used to log transactions or perform additional actions.
+Delegates can be used to implement callback methods that run when an asynchronous operation completes. In this task, you implement a custom delegate that performs callback tasks after adding transactions to an account. In this scenario, a callback delegate can be used to log transactions or perform additional actions based on the type of transaction.
 
 Use the following steps to complete this section of the exercise:
 
@@ -202,9 +205,9 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
-1. Scroll down to find the `AddTransaction` method in the BankAccount class.
+1. Scroll down to the end of the file and locate the `AddTransaction` method.
 
-1. To include the delegate as a parameter of the `AddTransaction` method, update the `AddTransaction` method:
+1. To include the `TransactionProcessedCallback` delegate as a parameter of the `AddTransaction` method, update the `AddTransaction` method as follows:
 
     ```csharp
     
@@ -216,9 +219,13 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
+    This updated `AddTransaction` method now accepts a delegate of type `TransactionProcessedCallback` as an optional parameter. The method adds the transaction to the `_transactions` list and then invokes the callback if it's provided. The `?` operator is used to safely invoke the callback if it isn't null.
+
 1. Scroll up to find the `Deposit` method.
 
-1. To invoke the delegate when an account transfer transaction is detected, update the `Deposit` method:
+    You'll modify the deposit method to implement a callback when the deposit corresponds to a bank refund.
+
+1. To invoke the delegate when a bank refund transaction is detected, update the `Deposit` method as follows:
 
     ```csharp
     
@@ -252,9 +259,13 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
+    When the `Deposit` method detects a bank refund transaction, it invokes the `AddTransaction` method with a lambda expression that logs the refund to the console. The lambda expression is passed as the callback delegate. The logging message includes the customer's full name and the account number. In a production app, you would want to log this information to a file or a database instead of the console.
+
 1. Open the IBankAccount.cs file and then scroll to the top of the file.
 
-1. To include the delegate as a parameter of the `AddTransaction` method, update the IBankAccount interface:
+    You need to update the interface to include the delegate as a parameter of the `AddTransaction` method.
+
+1. To include the delegate as a parameter of the `AddTransaction` method, update the method signature as follows:
 
     ```csharp
     
@@ -262,9 +273,11 @@ Use the following steps to complete this section of the exercise:
     
     ```
 
-1. Run the app and notice the message generated by the delegate.
+1. Run the app and notice the logging messages generated by the delegate.
 
-    When the app detects a bank refund transaction, a message is written to the console. Messages should appear similar to the following output
+    Each time the app detects a bank refund transaction, a message is written to the console. This should occur 24 time for each customer, once for each month of the two-year period. The logging messages are generated by the lambda expression passed to the `AddTransaction` method.
+
+    Logging messages should appear similar to the following output:
 
     ```plaintext
 
@@ -274,9 +287,11 @@ Use the following steps to complete this section of the exercise:
 
 ## Implement a custom delegate that returns a list of sorted customers
 
-Use a delegate to sort customers based on different criteria, such as name, total balance, or number of accounts.
+Delegates can be used to implement customized sorting based on runtime criteria, such as name, total balance, or number of accounts.
 
-Use the following steps:
+In this task you sort customers by their total balance and then by name using the same custom delegate.
+
+Use the following steps to complete this section of the exercise:
 
 1. Open the Bank.cs file and then scroll to the top of the file.
 
@@ -288,7 +303,7 @@ Use the following steps:
 
     ```
 
-1. Add a method in the Bank class that accepts a delegate for sorting:
+1. To create a method that accepts a delegate for sorting, add the following code to the Bank class:
 
     ```csharp
 
@@ -301,46 +316,15 @@ Use the following steps:
 
     ```
 
-    The `GetSortedCustomers` method is a public method in the `Bank` class that provides a way to retrieve a sorted list of bank customers based on a custom sorting logic. This method is highly flexible because it uses a delegate, `CustomerComparison`, to define the sorting criteria.
+    The `GetSortedCustomers` method is a public method that provides a way to retrieve a sorted list of bank customers based on a custom sorting logic. This method is highly flexible because it uses the `CustomerComparison` delegate to define the sorting criteria.
 
-    Key Details:
+    Inside the method, the `_customers` list (a private field containing all customers of the bank) is first converted to a new `List<BankCustomer>` using `ToList()`. This ensures that the original list is not modified. The `Sort` method is then called on this new list, using a lambda function. The lambda function takes two `BankCustomer` objects (`x` and `y`) and applies the comparison delegate to determine their relative order. The `Sort` method uses the comparison delegate to sort the list in place. The lambda function is a concise way to pass the comparison logic without needing to create a separate method for it.
 
-    1. Delegate Parameter (CustomerComparison): The method takes a parameter of type CustomerComparison, which is a delegate defined as:
-
-        ```csharp
-    
-        public delegate int CustomerComparison(BankCustomer x, BankCustomer y);
-    
-        ```
-
-        This delegate represents a method that compares two BankCustomer objects and returns an integer:
-
-        - A negative value if x should come before y.
-        - Zero if x and y are considered equal.
-        - A positive value if x should come after y.
-
-        By passing a custom comparison function, the caller can define how customers should be sorted (e.g., by name, account balance, or customer ID).
-
-    1. Sorting Logic: Inside the method, the _customers list (a private field containing all customers of the bank) is first converted to a new List<BankCustomer> using ToList(). This ensures that the original list is not modified. The Sort method is then called on this new list, using a lambda function:
-
-    Here, the comparison delegate is invoked for each pair of customers to determine their relative order.
-
-    Return Value: The method returns the sorted list as an IEnumerable<BankCustomer>. By returning an IEnumerable, the method provides a read-only view of the sorted customers, ensuring that the caller cannot modify the internal state of the bank's customer list.
-
-    Example Usage:
-    Suppose you want to sort customers by their last name in ascending order. You could call the method like this:
-
-    This lambda function compares the LastName properties of two BankCustomer objects, ignoring case.
-
-    Benefits:
-    Flexibility: The use of a delegate allows the sorting logic to be defined at runtime, making the method adaptable to various use cases.
-    Encapsulation: The method does not expose the internal _customers list directly, preserving the integrity of the bank's data.
-    Reusability: The same method can be reused for different sorting criteria without requiring changes to the Bank class.
-    This design demonstrates a clean and extensible approach to implementing custom sorting in C#.
+    The method returns the sorted list as an `IEnumerable<BankCustomer>`. By returning an IEnumerable, the method provides a read-only view of the sorted customers, ensuring that the caller can't modify the internal state of the bank's customer list.
 
 1. Open the Program.cs file and then scroll to the bottom of the file.
 
-1. To sort customers by total balance, enter the following code:
+1. To sort customers by total balance, enter the following code to the end of the `Main` method:
 
     ```csharp
 
@@ -362,6 +346,8 @@ Use the following steps:
     This code implements a delegate to sort the customers by their total balance in descending order. The `GetSortedCustomers` method is called with a lambda expression that compares the total balances of two customers. The `Sum` method is used to calculate the total balance of each customer by summing the balances of all their accounts.
 
 1. Run the app and review the output.
+
+    The list of sorted customers should be displayed at the bottom of the console.
 
     Notice that the customers are sorted by total balance in descending order. The output should be similar to the following:
 
@@ -422,9 +408,9 @@ Use the following steps:
     ```
 
 > [!NOTE]
-> Transactions are generated using random values. The final account balances, and the order of customers may vary each time you run the app.
+> Transactions are generated using random values. The final account balances, and the order of customers will vary each time you run the app.
 
-1. To demonstrate using the delegate to sort by name rather than by balance, add the following code:
+1. To demonstrate using the delegate to sort by name rather than by balance, add the following code to the end of the `Main` method:
 
     ```csharp
 
@@ -434,6 +420,7 @@ Use the following steps:
         int lastNameComparison = x.LastName.CompareTo(y.LastName);
         return lastNameComparison != 0 ? lastNameComparison : x.FirstName.CompareTo(y.FirstName);
     });
+
     Console.WriteLine("\nCustomers sorted by name:");
     foreach (var customer in sortedCustomersByName)
     {
@@ -446,7 +433,7 @@ Use the following steps:
 
 1. Run the app again and review the output.
 
-    The output should be similar to the following:
+    You shee that the second list of customers is sorted by name in ascending order. The output should be similar to the following:
 
     ```plaintext
 
@@ -504,13 +491,11 @@ Use the following steps:
 
     ```
 
-The `GetSortedCustomers` method is a public method in the `Bank` class that provides a way to retrieve a sorted list of bank customers based on a custom sorting logic. This method is highly flexible because it uses a delegate, `CustomerComparison`, to define the sorting criteria.
+## Replace custom delegates with strongly typed `Action` and `Func` delegates
 
-## Replace custom delegates with strongly-typed `Action` and `Func` delegates
+In C#, strongly typed delegates like `Action` and `Func` provide a way to define and use delegates without explicitly declaring custom delegate types. These are part of the `System` namespace and are commonly used for scenarios involving callbacks, event handling, or passing methods as parameters.
 
-In C#, strongly-typed delegates like `Action` and `Func` provide a way to define and use delegates without explicitly declaring custom delegate types. These are part of the `System` namespace and are commonly used for scenarios involving callbacks, event handling, or passing methods as parameters.
-
-In this task, you will replace custom delegate types with strongly-typed delegates in the BankAccount and Bank classes.
+In this task, you will replace custom delegate types with strongly typed delegates in the BankAccount and Bank classes.
 
 1. Open the BankAccount.cs file and then scroll to the top of the file.
 
@@ -554,7 +539,7 @@ In this task, you will replace custom delegate types with strongly-typed delegat
 
 1. Open the Bank.cs file.
 
-    You can replace the `CustomerComparison` delegate with `Func<BankCustomer, BankCustomer, int>`, which is a strongly-typed delegate that takes two `BankCustomer` objects and returns an integer.
+    You can replace the `CustomerComparison` delegate with `Func<BankCustomer, BankCustomer, int>`, which is a strongly typed delegate that takes two `BankCustomer` objects and returns an integer.
 
 1. Scroll to the top of the file and then comment out the custom delegate definition:
 
@@ -588,4 +573,4 @@ In this task, you will replace custom delegate types with strongly-typed delegat
 
 1. Run the app and review the output.
 
-    Notice that the app still works as expected. The strongly-typed delegates `Action` and `Func` are used instead of custom delegate types.
+    Notice that the app still works as expected. The strongly typed delegates `Action` and `Func` are used instead of custom delegate types.
