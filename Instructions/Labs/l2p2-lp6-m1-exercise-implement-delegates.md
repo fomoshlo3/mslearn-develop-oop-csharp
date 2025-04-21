@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise - Implement delegates in a C# app'
-    description: 'Learn how to declare, instantiate, and invoke delegates for scenarios that require dynamic method invocation. Learn how to implement sorting and callback and sorting scenarios using custom delegates, and then replace the custom delegates with strongly typed delegates that provide the same functionality.'
+    description: 'Learn how to declare, instantiate, and invoke delegates for scenarios that require dynamic method invocation. Learn how to implement callback and sorting scenarios using custom delegates, and then replace the custom delegates with strongly typed delegates that reduce code complexity while providing the same functionality.'
 ---
 
 # Implement delegates in a C# app
