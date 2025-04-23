@@ -1,7 +1,7 @@
 ---
-title: 'Exercise: Implement events in C#'
-description: Practice creating, subscribing to, and raising events in C# using delegates and custom event data classes.
-durationInMinutes: 25
+lab:
+    title: 'Exercise: Implement events in C#'
+    description: Practice creating, subscribing to, and raising events in C# using delegates and custom event data classes.
 ---
 
 **Learning Objective:**
@@ -11,6 +11,8 @@ durationInMinutes: 25
 **Scenario:**
 
 - You are tasked with building a simple application that tracks a counter value and raises an event when the counter exceeds a predefined threshold. This application will demonstrate how to handle user interactions programmatically and dynamically respond to changes using the event-driven programming model in .NET.
+
+This exercise takes approximately **25** minutes to complete.
 
 ## Task 1: Set up a new C# project and create the Counter class
 
