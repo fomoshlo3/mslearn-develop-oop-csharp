@@ -4,6 +4,10 @@ lab:
     description: 'Practice creating, subscribing to, and raising events in C# using delegates and custom event data classes.'
 ---
 
+# Implement events in C#
+
+Events in C# are a powerful feature that allows objects to communicate with each other, making it easier to build interactive and dynamic applications.
+
 **Learning Objective:**
 
 - Learners will be able to subscribe to, handle, and raise events in C# using event handlers, delegates, and custom event data classes to create interactive applications.
