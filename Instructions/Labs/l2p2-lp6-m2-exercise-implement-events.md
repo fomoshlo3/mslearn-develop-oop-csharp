@@ -61,7 +61,7 @@ durationInMinutes: 25
    }
    ```
 
-**Check your work: Set up the Counter class**
+### Check your work: Set up the Counter class
 
 Ensure that the `Counter` class is correctly defined with the `Total` and `Threshold` properties. Verify that the `Add` method increments the `Total` property and outputs the current total.
 
@@ -135,7 +135,7 @@ Ensure that the `Counter` class is correctly defined with the `Total` and `Thres
     counter.Add(2); // This should trigger the event
     ```
 
-**Check your work:**
+### Check your work: implement the ThresholdReached event
 
 Run the application and confirm that the message is simlar to the following when running after pressing `a` ten times.
  
@@ -204,7 +204,7 @@ is displayed when the threshold is exceeded.
    }
    ```
 
-**Check your work: Create the custom event data class**
+### Check your work: Create the custom event data class
 
 Verify that the `ThresholdReachedEventArgs` class is correctly implemented and that the `ThresholdReached` event now includes additional event data.
 
@@ -233,7 +233,7 @@ Verify that the `ThresholdReachedEventArgs` class is correctly implemented and t
    }
    ```
 
-**Check your work: Write the event handler**
+### Check your work: Write the event handler
 
 Run the application and verify that the message is displayed when the threshold is reached.
 
@@ -267,10 +267,10 @@ Run the application and verify that the message is displayed when the threshold 
    counter.ThresholdReached -= Counter_ThresholdReached;
    ```
 
-**Check your work: Subscribe and unsubscribe from the event**
+### Check your work: Subscribe and unsubscribe from the event
 
 Test the application by pressing 'a' to increment the counter and verify that the event is triggered. Ensure that unsubscribing from the event prevents further notifications.
 
-**Clean up**
+### Clean up
 
 Now that you've finished the exercise, consider archiving your project files for review at a later time. Having your own projects available for review can be a valuable resource when you're learning to code. Also, building up a portfolio of projects can be a great way to demonstrate your skills to potential employers.
