@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Exercise: Implement events in C#'
-    description: Practice creating, subscribing to, and raising events in C# using delegates and custom event data classes.
+    description: 'Practice creating, subscribing to, and raising events in C# using delegates and custom event data classes.'
 ---
 
 **Learning Objective:**
